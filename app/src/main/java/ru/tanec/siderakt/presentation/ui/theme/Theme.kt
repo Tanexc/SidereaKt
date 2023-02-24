@@ -1,69 +1,103 @@
-package ru.tanec.siderakt.ui.theme
+package ru.tanec.siderakt.presentation.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
-import androidx.core.view.ViewCompat
+import ru.tanec.siderakt.common.Scheme
+import ru.tanec.siderakt.common.Scheme.*
+import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme
+import ru.tanec.siderakt.presentation.ui.theme.Colors.BlueColorScheme
+import ru.tanec.siderakt.presentation.ui.theme.Colors.DefaultColorScheme
+import ru.tanec.siderakt.presentation.ui.theme.Colors.GreenColorScheme
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
-)
 
 @Composable
-fun SidereaKtTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+fun SidereaTheme(
+  useDarkTheme: Boolean = isSystemInDarkTheme(),
+  colorScheme: Scheme,
+  content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-    val view = LocalView.current
-    if (!view.isInEditMode) {
-        SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
-            ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
-        }
+  MaterialTheme(
+    colorScheme = getTheme(colorScheme = colorScheme, useDarkTheme = useDarkTheme),
+    content = content
+  )
+}
+
+@Composable
+fun getTheme(colorScheme: Scheme, useDarkTheme: Boolean): ColorScheme {
+    val scheme: AppColorScheme = when (colorScheme) {
+        Default() -> DefaultColorScheme()
+        Blue() -> BlueColorScheme()
+        Green() -> GreenColorScheme()
+        else -> DefaultColorScheme()
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    return when(useDarkTheme) {
+        true -> darkColorScheme(
+            primary = scheme.md_theme_dark_primary,
+            onPrimary = scheme.md_theme_dark_onPrimary,
+            primaryContainer = scheme.md_theme_dark_primaryContainer,
+            onPrimaryContainer = scheme.md_theme_dark_onPrimaryContainer,
+            secondary = scheme.md_theme_dark_secondary,
+            onSecondary = scheme.md_theme_dark_onSecondary,
+            secondaryContainer = scheme.md_theme_dark_secondaryContainer,
+            onSecondaryContainer = scheme.md_theme_dark_onSecondaryContainer,
+            tertiary = scheme.md_theme_dark_tertiary,
+            onTertiary = scheme.md_theme_dark_onTertiary,
+            tertiaryContainer = scheme.md_theme_dark_tertiaryContainer,
+            onTertiaryContainer = scheme.md_theme_dark_onTertiaryContainer,
+            error = scheme.md_theme_dark_error,
+            errorContainer = scheme.md_theme_dark_errorContainer,
+            onError = scheme.md_theme_dark_onError,
+            onErrorContainer = scheme.md_theme_dark_onErrorContainer,
+            background = scheme.md_theme_dark_background,
+            onBackground = scheme.md_theme_dark_onBackground,
+            surface = scheme.md_theme_dark_surface,
+            onSurface = scheme.md_theme_dark_onSurface,
+            surfaceVariant = scheme.md_theme_dark_surfaceVariant,
+            onSurfaceVariant = scheme.md_theme_dark_onSurfaceVariant,
+            outline = scheme.md_theme_dark_outline,
+            inverseOnSurface = scheme.md_theme_dark_inverseOnSurface,
+            inverseSurface = scheme.md_theme_dark_inverseSurface,
+            inversePrimary = scheme.md_theme_dark_inversePrimary,
+            surfaceTint = scheme.md_theme_dark_surfaceTint,
+            outlineVariant = scheme.md_theme_dark_outlineVariant,
+            scrim = scheme.md_theme_dark_scrim,
+        )
+        else -> lightColorScheme(
+            primary = scheme.md_theme_light_primary,
+            onPrimary = scheme.md_theme_light_onPrimary,
+            primaryContainer = scheme.md_theme_light_primaryContainer,
+            onPrimaryContainer = scheme.md_theme_light_onPrimaryContainer,
+            secondary = scheme.md_theme_light_secondary,
+            onSecondary = scheme.md_theme_light_onSecondary,
+            secondaryContainer = scheme.md_theme_light_secondaryContainer,
+            onSecondaryContainer = scheme.md_theme_light_onSecondaryContainer,
+            tertiary = scheme.md_theme_light_tertiary,
+            onTertiary = scheme.md_theme_light_onTertiary,
+            tertiaryContainer = scheme.md_theme_light_tertiaryContainer,
+            onTertiaryContainer = scheme.md_theme_light_onTertiaryContainer,
+            error = scheme.md_theme_light_error,
+            errorContainer = scheme.md_theme_light_errorContainer,
+            onError = scheme.md_theme_light_onError,
+            onErrorContainer = scheme.md_theme_light_onErrorContainer,
+            background = scheme.md_theme_light_background,
+            onBackground = scheme.md_theme_light_onBackground,
+            surface = scheme.md_theme_light_surface,
+            onSurface = scheme.md_theme_light_onSurface,
+            surfaceVariant = scheme.md_theme_light_surfaceVariant,
+            onSurfaceVariant = scheme.md_theme_light_onSurfaceVariant,
+            outline = scheme.md_theme_light_outline,
+            inverseOnSurface = scheme.md_theme_light_inverseOnSurface,
+            inverseSurface = scheme.md_theme_light_inverseSurface,
+            inversePrimary = scheme.md_theme_light_inversePrimary,
+            surfaceTint = scheme.md_theme_light_surfaceTint,
+            outlineVariant = scheme.md_theme_light_outlineVariant,
+            scrim = scheme.md_theme_light_scrim,
+        )
+    }
 }
