@@ -6,30 +6,30 @@ import androidx.room.PrimaryKey
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.DatabaseEntity
 
-@Entity
+@Entity(tableName = "constellations")
 data class ConstellationEntity(
     @PrimaryKey
     val id: Long,
     val title: String,
     val info: String,
-    val image: String,
+    val imageURL: String,
     val declination: String,
     val ascent: String,
-    val polusharie: Int,
+    val hemisphere: Int,
     val lat: String,
-    val alpha: String,
-    val bitmap: Bitmap?
-): DatabaseEntity {
+    val alphaStar: String,
+    val imageCache: Bitmap?
+) : DatabaseEntity {
     override fun asDomain(): Constellation = Constellation(
-            id,
-            title,
-            info,
-            image,
-            declination,
-            ascent,
-            polusharie,
-            lat,
-            alpha,
-            bitmap
-        )
+        id,
+        title,
+        info,
+        imageURL,
+        declination,
+        ascent,
+        hemisphere,
+        lat,
+        alphaStar,
+        imageCache
+    )
 }

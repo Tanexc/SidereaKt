@@ -8,8 +8,9 @@ import javax.inject.Inject
 
 class ConstellationRepositoryImpl @Inject constructor(
     private val constellationDao: ConstellationDao
-): ConstellationRepository {
-    override suspend fun getConstellationList(limit: Int?, offset: Int?): State<List<Constellation>> {
+) : ConstellationRepository {
+    override suspend fun getConstellationList(
+    ): State<List<Constellation>> {
         runCatching {
             return State.Success(constellationDao.getConstellationList().map { it.asDomain() })
         }
@@ -17,11 +18,14 @@ class ConstellationRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun <T> insertConstellationList(data: List<Constellation>): State<T> {
-        TODO("Not yet implemented")
+    override suspend fun getConstellationById(id: Long): State<Constellation?> {
+        runCatching {
+            return State.Success(constellationDao.getConstellationById(id).asDomain())
+        }
+        return State.Error()
     }
 
-    override suspend fun getConstellationById(id: Long): State<Constellation?> {
+    override suspend fun <T> insertConstellationList(data: List<Constellation>): State<T> {
         TODO("Not yet implemented")
     }
 }

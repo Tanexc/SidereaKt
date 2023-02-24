@@ -7,25 +7,25 @@ data class Constellation(
     val id: Long,
     val title: String,
     val info: String,
-    val image: String,
+    val imageURL: String,
     val declination: String,
     val ascent: String,
-    val polusharie: Int,
+    val hemisphere: Int,
     val lat: String,
-    val alpha: String,
-    val bitmap: Bitmap?
+    val alphaStar: String,
+    val imageCache: Bitmap?
 ): Model {
     override fun asDataBaseEntity(): ConstellationEntity = ConstellationEntity(
         id,
         title,
         info,
-        image,
+        imageURL,
         declination,
         ascent,
-        polusharie,
+        hemisphere,
         lat,
-        alpha,
-        bitmap
+        alphaStar,
+        imageCache
     )
 
 }
