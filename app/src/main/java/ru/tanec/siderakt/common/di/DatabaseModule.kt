@@ -39,7 +39,7 @@ object DatabaseModule {
     @Singleton
     fun providePersonalInfoRepository(
         db: Database
-    ): PersonalInfoRepository = PersonalInfoRepositoryImpl(db.personalInfoEntity)
+    ): PersonalInfoRepository = PersonalInfoRepositoryImpl(db.personalInfoDao)
 
 
 }
