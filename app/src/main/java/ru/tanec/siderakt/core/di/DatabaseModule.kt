@@ -1,4 +1,4 @@
-package ru.tanec.siderakt.common.di
+package ru.tanec.siderakt.core.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import ru.tanec.siderakt.data.local.database.Database
+import ru.tanec.siderakt.data.local.database.MainDatabase
 import ru.tanec.siderakt.data.repository.ConstellationRepositoryImpl
 import ru.tanec.siderakt.data.repository.PersonalInfoRepositoryImpl
 import ru.tanec.siderakt.domain.repository.ConstellationRepository
@@ -22,9 +22,9 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext appContext: Context,
-    ): Database = Room.databaseBuilder(
+    ): MainDatabase = Room.databaseBuilder(
         context = appContext,
-        klass = Database::class.java,
+        klass = MainDatabase::class.java,
         name = "SidereaDatabase",
     )   .createFromAsset("database/main.db")
         .build()
@@ -32,13 +32,13 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun provideConstellationRepository(
-        db: Database
+        db: MainDatabase
     ): ConstellationRepository = ConstellationRepositoryImpl(db.constellationDao)
 
     @Provides
     @Singleton
     fun providePersonalInfoRepository(
-        db: Database
+        db: MainDatabase
     ): PersonalInfoRepository = PersonalInfoRepositoryImpl(db.personalInfoDao)
 
 

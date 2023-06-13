@@ -1,6 +1,7 @@
 package ru.tanec.siderakt.data.local.dao
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 import ru.tanec.siderakt.data.local.entity.ConstellationEntity
 
 @Dao

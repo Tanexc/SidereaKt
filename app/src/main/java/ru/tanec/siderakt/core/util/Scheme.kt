@@ -1,4 +1,4 @@
-package ru.tanec.siderakt.common
+package ru.tanec.siderakt.core.util
 
 sealed class Scheme(val id: Int) {
     class Default: Scheme(id=0)

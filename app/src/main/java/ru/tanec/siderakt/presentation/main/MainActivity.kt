@@ -1,0 +1,23 @@
+package ru.tanec.siderakt.presentation.main
+
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
+import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
+import ru.tanec.siderakt.presentation.main.components.SidereaApp
+import ru.tanec.siderakt.presentation.main.viewModel.MainViewModel
+
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val viewModel: MainViewModel by viewModels()
+        setContent {
+            actionBar?.hide()
+            SidereaApp(viewModel)
+        }
+    }
+}

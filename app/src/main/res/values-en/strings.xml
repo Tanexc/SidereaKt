@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Siderea</string>
+    <string name="catalog">Catalog</string>
+    <string name="settigs">Settings</string>
+    <string name="test">Test</string>
+    <string name="stats">Statistics</string>
+    <string name="theme">Theme</string>
+    <string name="style">Style</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
+    <string name="constellations">Constellations</string>
+    <string name="north">North</string>
+    <string name="south">South</string>
+</resources>

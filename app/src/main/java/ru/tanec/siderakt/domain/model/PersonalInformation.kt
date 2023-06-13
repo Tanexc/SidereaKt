@@ -1,6 +1,5 @@
 package ru.tanec.siderakt.domain.model
 
-import ru.tanec.siderakt.data.local.dao.PersonalInfoDao
 import ru.tanec.siderakt.data.local.entity.PersonalInfoEntity
 
 data class PersonalInformation(
@@ -10,11 +9,19 @@ data class PersonalInformation(
     val selectedTheme: Int,
     val useDarkTheme: Boolean
 ) : Model {
-    override fun asDataBaseEntity(): PersonalInfoEntity = PersonalInfoEntity(
+    override fun asDatabaseEntity(): PersonalInfoEntity = PersonalInfoEntity(
+        id=0,
         learnedConstellations = learnedConstellations,
         learnedNorth = learnedNorth,
         learnedSouth = learnedSouth,
         selectedTheme = selectedTheme,
-        useDarkTheme = useDarkTheme
+        useDarkTheme = useDarkTheme.toInt()
     )
+}
+
+fun Boolean.toInt(): Int {
+    return when(this) {
+        true -> 1
+        else -> 0
+    }
 }

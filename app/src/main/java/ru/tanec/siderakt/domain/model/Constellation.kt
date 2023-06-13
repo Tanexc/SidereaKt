@@ -15,7 +15,7 @@ data class Constellation(
     val alphaStar: String,
     val imageCache: Bitmap?
 ): Model {
-    override fun asDataBaseEntity(): ConstellationEntity = ConstellationEntity(
+    override fun asDatabaseEntity(): ConstellationEntity = ConstellationEntity(
         id,
         title,
         info,

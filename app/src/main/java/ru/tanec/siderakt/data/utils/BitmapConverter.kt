@@ -1,9 +1,10 @@
-package ru.tanec.siderakt.common.util.converters
+package ru.tanec.siderakt.data.utils
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import java.io.ByteArrayOutputStream
+
 
 class BitmapConverter {
 

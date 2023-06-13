@@ -6,8 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import ru.tanec.siderakt.common.Scheme
-import ru.tanec.siderakt.common.Scheme.*
+import ru.tanec.siderakt.core.util.Scheme
+import ru.tanec.siderakt.core.util.Scheme.*
 import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.BlueColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.DefaultColorScheme
@@ -16,27 +16,26 @@ import ru.tanec.siderakt.presentation.ui.theme.Colors.GreenColorScheme
 
 @Composable
 fun SidereaTheme(
-  useDarkTheme: Boolean = isSystemInDarkTheme(),
-  colorScheme: Scheme,
-  content: @Composable () -> Unit
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    colorScheme: Scheme,
+    content: @Composable () -> Unit
 ) {
-
-  MaterialTheme(
-    colorScheme = getTheme(colorScheme = colorScheme, useDarkTheme = useDarkTheme),
-    content = content
-  )
+    MaterialTheme(
+        colorScheme = getTheme(colorScheme = colorScheme, useDarkTheme = useDarkTheme),
+        content = content
+        )
 }
 
 @Composable
 fun getTheme(colorScheme: Scheme, useDarkTheme: Boolean): ColorScheme {
     val scheme: AppColorScheme = when (colorScheme) {
-        Default() -> DefaultColorScheme()
-        Blue() -> BlueColorScheme()
-        Green() -> GreenColorScheme()
+        is Default -> DefaultColorScheme()
+        is Blue -> BlueColorScheme()
+        is Green -> GreenColorScheme()
         else -> DefaultColorScheme()
     }
 
-    return when(useDarkTheme) {
+    return when (useDarkTheme) {
         true -> darkColorScheme(
             primary = scheme.md_theme_dark_primary,
             onPrimary = scheme.md_theme_dark_onPrimary,
@@ -68,6 +67,7 @@ fun getTheme(colorScheme: Scheme, useDarkTheme: Boolean): ColorScheme {
             outlineVariant = scheme.md_theme_dark_outlineVariant,
             scrim = scheme.md_theme_dark_scrim,
         )
+
         else -> lightColorScheme(
             primary = scheme.md_theme_light_primary,
             onPrimary = scheme.md_theme_light_onPrimary,

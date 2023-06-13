@@ -1,12 +1,13 @@
 package ru.tanec.siderakt.domain.repository
 
-import ru.tanec.siderakt.common.State
+import kotlinx.coroutines.flow.Flow
+import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.domain.model.Constellation
 
 interface ConstellationRepository {
-    suspend fun getConstellationList(): State<List<Constellation>>
+    suspend fun getConstellationList(): Flow<State<List<Constellation>?>>
 
     suspend fun <T> insertConstellationList(data: List<Constellation>): State<T>
 
-    suspend fun getConstellationById(id: Long): State<Constellation?>
+    suspend fun getConstellationById(id: Long): Flow<State<Constellation?>>
 }

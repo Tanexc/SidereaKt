@@ -3,9 +3,6 @@ package ru.tanec.siderakt.data.local.entity
 import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import ru.tanec.siderakt.common.util.converters.BitmapConverter
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.DatabaseEntity
 
