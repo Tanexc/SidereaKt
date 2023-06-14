@@ -52,24 +52,6 @@ class MainViewModel @Inject constructor(
 
     }
 
-    fun valueChange() {
-        _buttonValue.value++
-    }
-
-    fun changeTheme() {
-        var newThemeId = _theme.value.id
-        newThemeId++
-        if (newThemeId > 2) {
-            newThemeId = 0
-        }
-
-        viewModelScope.launch {
-            setPersonalInfoUseCase(personalInfo!!.copy(selectedTheme = newThemeId))
-            Log.i("cock", "esssss")
-        }
-
-    }
-
     fun screenChanged(screen: Screen) {
         _currentScreen.value = screen
     }

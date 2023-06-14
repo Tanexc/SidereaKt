@@ -1,5 +1,6 @@
 package ru.tanec.siderakt.presentation.main.components
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,8 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.Scheme
 import ru.tanec.siderakt.presentation.main.viewModel.MainViewModel
 import ru.tanec.siderakt.presentation.ui.theme.SidereaTheme
@@ -32,7 +36,8 @@ fun SidereaApp(viewModel: MainViewModel) {
                 title = {
                     Text(
                         stringResource(viewModel.currentScreen.label),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(R.font.montserrat))
                     )
                 },
                 modifier = modifier

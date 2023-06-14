@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -15,6 +16,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import dev.olshevski.navigation.reimagined.NavBackHandler
 import dev.olshevski.navigation.reimagined.NavHost
@@ -23,10 +26,12 @@ import dev.olshevski.navigation.reimagined.pop
 import dev.olshevski.navigation.reimagined.popAll
 import dev.olshevski.navigation.reimagined.rememberNavController
 import ru.tanec.siderakt.R
+import ru.tanec.siderakt.core.util.Scheme
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.CatalogScreen
 import ru.tanec.siderakt.presentation.settings.SettingsScreen
 import ru.tanec.siderakt.presentation.test.TestScreen
+import ru.tanec.siderakt.presentation.ui.theme.getTheme
 
 
 @Composable
@@ -53,10 +58,9 @@ fun NavHostScreen(
                         onClick = {
                             onScreenChanged(it)
                             navController.navigate(it)
-                            navController.popAll()
                             selectedScreen.value = it
                         },
-                        label = { Text(stringResource(it.label)) },
+                        label = { Text(stringResource(it.label), fontFamily= FontFamily(Font(R.font.montserrat))) },
                         icon = {
                             Icon(
                                 when (selectedScreen.value.label == it.label) {

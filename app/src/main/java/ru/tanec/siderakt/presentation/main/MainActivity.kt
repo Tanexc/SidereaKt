@@ -20,4 +20,6 @@ class MainActivity : ComponentActivity() {
             SidereaApp(viewModel)
         }
     }
+
+    override fun onBackPressed() {}
 }

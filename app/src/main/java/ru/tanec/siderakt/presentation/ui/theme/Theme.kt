@@ -22,11 +22,11 @@ fun SidereaTheme(
 ) {
     MaterialTheme(
         colorScheme = getTheme(colorScheme = colorScheme, useDarkTheme = useDarkTheme),
-        content = content
+        content = content,
+        typography = Typography
         )
 }
 
-@Composable
 fun getTheme(colorScheme: Scheme, useDarkTheme: Boolean): ColorScheme {
     val scheme: AppColorScheme = when (colorScheme) {
         is Default -> DefaultColorScheme()
