@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Siderea</string>
     <string name="catalog">Каталог</string>
-    <string name="settigs">Настройки</string>
+    <string name="profile">Профиль</string>
+    <string name="settings">Настройки</string>
     <string name="test">Тест</string>
     <string name="stats">Статистика</string>
     <string name="theme">Тема</string>
