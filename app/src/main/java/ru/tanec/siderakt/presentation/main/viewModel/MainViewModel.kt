@@ -1,5 +1,8 @@
 package ru.tanec.siderakt.presentation.main.viewModel
 
+
+import android.app.Application
+import android.content.res.Resources
 import android.util.Log
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
@@ -14,6 +17,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ru.tanec.siderakt.core.util.Scheme
 import ru.tanec.siderakt.core.util.Scheme.Companion.getScheme
+import ru.tanec.siderakt.data.utils.SettingsValues
 import ru.tanec.siderakt.domain.model.PersonalInformation
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
@@ -27,7 +31,7 @@ class MainViewModel @Inject constructor(
     private val setPersonalInfoUseCase: SetInfoUseCase
 ) : ViewModel() {
 
-    private val _currentScreen: MutableState<Screen> = mutableStateOf(Screen.Profile)
+    private val _currentScreen: MutableState<Screen> = mutableStateOf(Screen.Catalog)
     val currentScreen by _currentScreen
 
     private val _buttonValue: MutableState<Int> = mutableIntStateOf(0)
@@ -42,22 +46,23 @@ class MainViewModel @Inject constructor(
     private val _personalInfo: MutableState<PersonalInformation?> = mutableStateOf(null)
     val personalInfo by _personalInfo
 
-    private val _colorScheme: MutableState<ColorScheme> = mutableStateOf(getTheme(appTheme, useDarkTheme))
+    private val _colorScheme: MutableState<ColorScheme> =
+        mutableStateOf(getTheme(appTheme, useDarkTheme))
     val colorScheme by _colorScheme
-
 
     init {
 
         getPersonalInfoUseCase().onEach {
-            Log.i("cum", "CUM")
             _theme.value = getScheme(it.selectedTheme)
             _useDarkTheme.value = it.useDarkTheme
             _personalInfo.value = it
+            SettingsValues.updateValues(
+                appTheme,
+                useDarkTheme,
+                personalInfo
+            )
             _colorScheme.value = getTheme(colorScheme = appTheme, useDarkTheme = useDarkTheme)
-
-
         }.launchIn(viewModelScope)
-
     }
 
     fun screenChanged(screen: Screen) {

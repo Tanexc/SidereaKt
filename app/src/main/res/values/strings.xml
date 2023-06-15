@@ -13,4 +13,8 @@
     <string name="north">Северные</string>
     <string name="south">Южные</string>
     <string name="of">из</string>
+    <string name="app_default">Основной</string>
+    <string name="blue">Синий</string>
+    <string name="green">Зелёный</string>
+    <string name="dark_theme">Тёмная тема</string>
 </resources>

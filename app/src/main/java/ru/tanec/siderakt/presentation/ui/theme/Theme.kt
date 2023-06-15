@@ -6,6 +6,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import ru.tanec.siderakt.core.util.Scheme
 import ru.tanec.siderakt.core.util.Scheme.*
 import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme

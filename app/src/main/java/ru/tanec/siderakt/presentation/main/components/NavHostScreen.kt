@@ -3,6 +3,7 @@ package ru.tanec.siderakt.presentation.main.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -31,7 +32,7 @@ fun NavHostScreen(
     startDestination: Screen,
     onScreenChanged: (screen: Screen) -> Unit
 ) {
-    val navController = rememberNavController<Screen>(startDestination = Screen.Profile)
+    val navController = rememberNavController(startDestination = startDestination)
     val selectedScreen = remember { mutableStateOf(startDestination) }
 
     val screens = listOf(
