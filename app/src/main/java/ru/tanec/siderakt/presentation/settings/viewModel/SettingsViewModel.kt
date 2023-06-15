@@ -62,9 +62,4 @@ class SettingsViewModel @Inject constructor(
             setPersonalInfoUseCase(personalInfo!!.copy(useDarkTheme = !useDarkTheme))
         }
     }
-
-    fun setColorScheme(colorScheme: ColorScheme) {
-        _colorScheme.value = colorScheme
-    }
-
 }

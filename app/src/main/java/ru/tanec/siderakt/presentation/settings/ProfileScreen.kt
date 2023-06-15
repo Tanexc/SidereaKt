@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Check
 import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -211,12 +214,28 @@ fun ProfileScreen(
                         borderWidth = 1.dp,
                         backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
                     ) {
-                        Row (modifier = Modifier.padding(12.dp).wrapContentHeight().fillMaxWidth()) {
-                            Switch(checked = viewModel.useDarkTheme, onCheckedChange = {viewModel.changeUseDarkTheme()})
+                        Row(modifier = Modifier
+                            .padding(12.dp)
+                            .wrapContentHeight()
+                            .fillMaxWidth()) {
+                            Switch(
+                                checked = viewModel.useDarkTheme,
+                                onCheckedChange = { viewModel.changeUseDarkTheme() },
+                                modifier = Modifier.padding(8.dp),
+                                thumbContent = {
+                                    when(viewModel.useDarkTheme) {
+                                        true -> Icon(Icons.Outlined.Check, null, modifier = Modifier.padding(4.dp))
+                                        else -> null
+                                    }
+
+                                }
+                            )
                             Text(
                                 stringResource(R.string.dark_theme),
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.align(CenterVertically).padding(8.dp),
+                                modifier = Modifier
+                                    .align(CenterVertically)
+                                    .padding(8.dp),
                                 fontSize = 16.sp,
                                 fontFamily = FontFamily(Font(R.font.montserrat))
                             )
@@ -227,7 +246,6 @@ fun ProfileScreen(
 
 
         }
-
 
 
     }

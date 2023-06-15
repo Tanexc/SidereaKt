@@ -46,7 +46,8 @@ fun SelectButtonGroup(
     borderWidth: Dp = 1.dp,
     borderColor: Color,
     selectedColor: Color,
-    fontSize: Dp = 12.dp
+    fontSize: Dp = 12.dp,
+    fontWeight: FontWeight = FontWeight.ExtraLight
 ) {
     val selectedItem: MutableState<Int> = remember { mutableIntStateOf(selectedItemIndex) }
     val width: Float = 1f / items.size
@@ -88,6 +89,7 @@ fun SelectButtonGroup(
                         it.title,
                         modifier = Modifier.align(Alignment.Center),
                         fontSize = 16.sp,
+                        fontWeight = fontWeight
                     )
                 }
                 if (items.indexOf(it) != items.lastIndex) {
