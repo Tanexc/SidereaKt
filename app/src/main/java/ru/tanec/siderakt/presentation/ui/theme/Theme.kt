@@ -16,12 +16,11 @@ import ru.tanec.siderakt.presentation.ui.theme.Colors.GreenColorScheme
 
 @Composable
 fun SidereaTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
-    colorScheme: Scheme,
+    colorScheme: ColorScheme,
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
-        colorScheme = getTheme(colorScheme = colorScheme, useDarkTheme = useDarkTheme),
+        colorScheme = colorScheme,
         content = content,
         typography = Typography
         )

@@ -1,6 +1,7 @@
 package ru.tanec.siderakt.presentation.main.viewModel
 
 import android.util.Log
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -17,6 +18,7 @@ import ru.tanec.siderakt.domain.model.PersonalInformation
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
 import ru.tanec.siderakt.domain.use_case.personal_use_case.SetInfoUseCase
+import ru.tanec.siderakt.presentation.ui.theme.getTheme
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +27,7 @@ class MainViewModel @Inject constructor(
     private val setPersonalInfoUseCase: SetInfoUseCase
 ) : ViewModel() {
 
-    private val _currentScreen: MutableState<Screen> = mutableStateOf(Screen.Settings)
+    private val _currentScreen: MutableState<Screen> = mutableStateOf(Screen.Profile)
     val currentScreen by _currentScreen
 
     private val _buttonValue: MutableState<Int> = mutableIntStateOf(0)
@@ -34,11 +36,15 @@ class MainViewModel @Inject constructor(
     private val _theme: MutableState<Scheme> = mutableStateOf(Scheme.Default())
     val appTheme by _theme
 
-    private val _useDarkTheme: MutableState<Boolean?> = mutableStateOf(null)
+    private val _useDarkTheme: MutableState<Boolean> = mutableStateOf(true)
     val useDarkTheme by _useDarkTheme
 
     private val _personalInfo: MutableState<PersonalInformation?> = mutableStateOf(null)
     val personalInfo by _personalInfo
+
+    private val _colorScheme: MutableState<ColorScheme> = mutableStateOf(getTheme(appTheme, useDarkTheme))
+    val colorScheme by _colorScheme
+
 
     init {
 
@@ -47,6 +53,8 @@ class MainViewModel @Inject constructor(
             _theme.value = getScheme(it.selectedTheme)
             _useDarkTheme.value = it.useDarkTheme
             _personalInfo.value = it
+            _colorScheme.value = getTheme(colorScheme = appTheme, useDarkTheme = useDarkTheme)
+
 
         }.launchIn(viewModelScope)
 

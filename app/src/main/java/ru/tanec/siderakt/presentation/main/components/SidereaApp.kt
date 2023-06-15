@@ -29,7 +29,7 @@ import ru.tanec.siderakt.presentation.ui.theme.SidereaTheme
 @Composable
 fun SidereaApp(viewModel: MainViewModel) {
 
-    SidereaTheme(colorScheme = viewModel.appTheme) {
+    SidereaTheme(colorScheme = viewModel.colorScheme) {
         val modifier = Modifier
         Column {
             CenterAlignedTopAppBar(
