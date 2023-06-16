@@ -7,9 +7,10 @@ import ru.tanec.siderakt.data.local.entity.ConstellationEntity
 @Dao
 interface ConstellationDao {
     @Query("SELECT * FROM constellations")
-    fun getConstellationList(): List<ConstellationEntity>
+    suspend fun getConstellationList(): List<ConstellationEntity>
+
     @Query("SELECT * FROM constellations WHERE id = :id")
-    fun getConstellationById(id: Long): ConstellationEntity
+    suspend fun getConstellationById(id: Long): ConstellationEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setConstellationList(constellationList: List<ConstellationEntity>)

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetAllConstellationsUseCase @Inject constructor(
     private val constellationRepository: ConstellationRepository
 ) {
-    suspend operator fun invoke() = constellationRepository.getConstellationList()
+    operator fun invoke() = constellationRepository.getConstellationList()
 }

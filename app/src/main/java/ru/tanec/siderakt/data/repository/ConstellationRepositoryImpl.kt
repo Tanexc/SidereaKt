@@ -1,5 +1,6 @@
 package ru.tanec.siderakt.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import ru.tanec.siderakt.core.util.State
@@ -10,13 +11,17 @@ import javax.inject.Inject
 
 class ConstellationRepositoryImpl @Inject constructor(
     private val constellationDao: ConstellationDao
+
 ) : ConstellationRepository {
-    override suspend fun getConstellationList(
+    override fun getConstellationList(
     ): Flow<State<List<Constellation>?>> = flow {
+        Log.i("cum", "cock")
         emit(State.Loading())
         try {
+            Log.i("cum", "POT")
             emit(State.Success(constellationDao.getConstellationList().map { it.asDomain() }))
         } catch(e: Exception) {
+            Log.i("cum", "cringe")
             emit(State.Error(message=e.message))
         }
     }

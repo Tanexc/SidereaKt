@@ -5,7 +5,7 @@ import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.domain.model.Constellation
 
 interface ConstellationRepository {
-    suspend fun getConstellationList(): Flow<State<List<Constellation>?>>
+    fun getConstellationList(): Flow<State<List<Constellation>?>>
 
     suspend fun <T> insertConstellationList(data: List<Constellation>): State<T>
 
