@@ -214,31 +214,42 @@ fun ProfileScreen(
                         borderWidth = 1.dp,
                         backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
                     ) {
-                        Row(modifier = Modifier
-                            .padding(12.dp)
-                            .wrapContentHeight()
-                            .fillMaxWidth()) {
-                            Switch(
-                                checked = viewModel.useDarkTheme,
-                                onCheckedChange = { viewModel.changeUseDarkTheme() },
-                                modifier = Modifier.padding(8.dp),
-                                thumbContent = {
-                                    when(viewModel.useDarkTheme) {
-                                        true -> Icon(Icons.Outlined.Check, null, modifier = Modifier.padding(4.dp))
-                                        else -> null
-                                    }
+                        Row(
+                            modifier = Modifier
+                                .padding(12.dp)
+                                .wrapContentHeight()
+                                .fillMaxWidth()
+                        ) {
+                            Column(modifier = Modifier.fillMaxWidth(0.5f).wrapContentHeight().align(CenterVertically)) {
+                                Text(
+                                    stringResource(R.string.dark_theme),
+                                    textAlign = TextAlign.Start,
+                                    modifier = Modifier
+                                        .align(Alignment.Start)
+                                        .padding(8.dp),
+                                    fontSize = 16.sp,
+                                    fontFamily = FontFamily(Font(R.font.montserrat))
+                                )
+                            }
+                            Column(modifier = Modifier.fillMaxWidth()) {
+                                Switch(
+                                    checked = viewModel.useDarkTheme,
+                                    onCheckedChange = { viewModel.changeUseDarkTheme() },
+                                    modifier = Modifier.padding(8.dp).align(Alignment.End),
+                                    thumbContent = {
+                                        when (viewModel.useDarkTheme) {
+                                            true -> Icon(
+                                                Icons.Outlined.Check,
+                                                null,
+                                                modifier = Modifier.padding(4.dp)
+                                            )
 
-                                }
-                            )
-                            Text(
-                                stringResource(R.string.dark_theme),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .align(CenterVertically)
-                                    .padding(8.dp),
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat))
-                            )
+                                            else -> null
+                                        }
+
+                                    }
+                                )
+                            }
                         }
                     }
                 }
