@@ -18,4 +18,5 @@
     <string name="blue">Синий</string>
     <string name="green">Зеленый</string>
     <string name="dark_theme">Тёмная тема</string>
+    <string name="error">Ошибка</string>
 </resources>

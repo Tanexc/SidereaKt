@@ -18,4 +18,5 @@
     <string name="blue">Blue</string>
     <string name="green">Green</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="error">Error</string>
 </resources>
