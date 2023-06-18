@@ -1,32 +1,55 @@
 package ru.tanec.siderakt.presentation.catalog
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material.icons.outlined.Error
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.data.utils.SettingsValues
+import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
 import ru.tanec.siderakt.presentation.catalog.components.ConstellationItem
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CatalogScreen(
@@ -50,10 +73,12 @@ fun CatalogScreen(
                 Text(state.message ?: stringResource(R.string.error))
             }
 
-            is State.Success ->
+            is State.Success -> {
 
+                val lazyListState: LazyListState = rememberLazyListState()
+                val coroutineScope = rememberCoroutineScope()
 
-            LazyColumn {
+                LazyColumn(state = lazyListState) {
 
                     items(state.data ?: emptyList()) {
                         if (state.data!!.indexOf(it) == 0) {
@@ -61,11 +86,65 @@ fun CatalogScreen(
                         }
                         ConstellationItem(
                             constellation = it,
-                            backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.15f),
+                            backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
+                                if (SettingsValues.sidereaUseDarkTheme.value) {
+                                    0.2f
+                                } else {
+                                    0.7f
+                                }
+                            ),
                             borderColor = viewModel.colorScheme.outline
                         )
                     }
                 }
+
+                CatalogSearchBar(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .absoluteOffset(
+                            x = 0.dp,
+                            y =
+                            if (lazyListState.firstVisibleItemIndex == 0) {
+                                (-1 * lazyListState.firstVisibleItemScrollOffset).dp / 2
+                            } else {
+                                (-52).dp
+
+                            }
+                        ),
+                    backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
+                        if (SettingsValues.sidereaUseDarkTheme.value) {
+                            0.2f
+                        } else {
+                            0.7f
+                        }
+                    ),
+                    fontColor = viewModel.colorScheme.onSecondaryContainer,
+                    onActiveChange = {},
+                    onSearchChange = {}
+                )
+
+                FloatingActionButton(
+                    onClick = {
+                        coroutineScope.launch {
+                            lazyListState.animateScrollToItem(0)
+                        }
+                    },
+                    containerColor = viewModel.colorScheme.secondaryContainer,
+                    contentColor = contentColorFor(backgroundColor = viewModel.colorScheme.secondaryContainer),
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp)
+                        .height(56.dp)
+                ) {
+                    Icon(
+                        Icons.Outlined.ArrowUpward,
+                        contentDescription = null,
+                        modifier = Modifier.align(
+                            Alignment.Center
+                        )
+                    )
+                }
+            }
         }
     }
 }

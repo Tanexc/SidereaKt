@@ -54,6 +54,4 @@ class CatalogViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
-
-
 }
