@@ -5,9 +5,12 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.tanec.siderakt.core.util.Scheme
 import ru.tanec.siderakt.core.util.Scheme.*
 import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme
@@ -21,6 +24,7 @@ fun SidereaTheme(
     colorScheme: ColorScheme,
     content: @Composable () -> Unit
 ) {
+    rememberSystemUiController().setStatusBarColor(colorScheme.surface)
     MaterialTheme(
         colorScheme = colorScheme,
         content = content,

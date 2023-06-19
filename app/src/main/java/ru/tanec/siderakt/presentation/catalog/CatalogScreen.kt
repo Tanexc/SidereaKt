@@ -1,6 +1,12 @@
 package ru.tanec.siderakt.presentation.catalog
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -27,11 +33,18 @@ import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
@@ -48,9 +61,9 @@ import ru.tanec.siderakt.data.utils.SettingsValues
 import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
 import ru.tanec.siderakt.presentation.catalog.components.ConstellationItem
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel
+import ru.tanec.siderakt.presentation.utils.isScrollingUp
 
-@SuppressLint("FlowOperatorInvokedInComposition")
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("FlowOperatorInvokedInComposition", "CoroutineCreationDuringComposition")
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier
@@ -58,7 +71,9 @@ fun CatalogScreen(
     val viewModel: CatalogViewModel = hiltViewModel()
 
     Box(modifier = modifier.fillMaxSize()) {
+
         val state = viewModel.constellationListState
+
         when (state) {
             is State.Loading -> CircularProgressIndicator(
                 modifier = Modifier.align(Alignment.Center)
@@ -80,7 +95,7 @@ fun CatalogScreen(
 
                 LazyColumn(state = lazyListState) {
 
-                    items(state.data ?: emptyList()) {
+                    items(state.data?.filter { it.title.lowercase().contains(viewModel.searchString) } ?: emptyList()) {
                         if (state.data!!.indexOf(it) == 0) {
                             Spacer(modifier = Modifier.height(64.dp))
                         }
@@ -103,13 +118,13 @@ fun CatalogScreen(
                         .padding(4.dp)
                         .absoluteOffset(
                             x = 0.dp,
-                            y =
-                            if (lazyListState.firstVisibleItemIndex == 0) {
+                            y = if (lazyListState.firstVisibleItemIndex == 0) {
                                 (-1 * lazyListState.firstVisibleItemScrollOffset).dp / 2
                             } else {
                                 (-52).dp
 
                             }
+
                         ),
                     backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
                         if (SettingsValues.sidereaUseDarkTheme.value) {
@@ -120,30 +135,39 @@ fun CatalogScreen(
                     ),
                     fontColor = viewModel.colorScheme.onSecondaryContainer,
                     onActiveChange = {},
-                    onSearchChange = {}
+                    onSearchChange = {
+                        viewModel.updateSearchString(it)
+                    }
                 )
-
-                FloatingActionButton(
-                    onClick = {
-                        coroutineScope.launch {
-                            lazyListState.animateScrollToItem(0)
-                        }
-                    },
-                    containerColor = viewModel.colorScheme.secondaryContainer,
-                    contentColor = contentColorFor(backgroundColor = viewModel.colorScheme.secondaryContainer),
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(16.dp)
-                        .height(56.dp)
+                AnimatedVisibility(
+                    visible = lazyListState.isScrollingUp(),
+                    modifier = Modifier.align(Alignment.BottomEnd),
+                    enter = slideInHorizontally {it},
+                    exit = slideOutVertically {it}
                 ) {
-                    Icon(
-                        Icons.Outlined.ArrowUpward,
-                        contentDescription = null,
-                        modifier = Modifier.align(
-                            Alignment.Center
+                    FloatingActionButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                lazyListState.animateScrollToItem(0)
+                            }
+                        },
+                        containerColor = viewModel.colorScheme.secondaryContainer,
+                        contentColor = contentColorFor(backgroundColor = viewModel.colorScheme.secondaryContainer),
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp)
+                            .height(56.dp)
+                    ) {
+                        Icon(
+                            Icons.Outlined.ArrowUpward,
+                            contentDescription = null,
+                            modifier = Modifier.align(
+                                Alignment.Center
+                            )
                         )
-                    )
+                    }
                 }
+
             }
         }
     }

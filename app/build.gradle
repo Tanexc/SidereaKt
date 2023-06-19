@@ -96,6 +96,13 @@ dependencies {
     // Datastore
     implementation "androidx.datastore:datastore-core:1.0.0"
     implementation "androidx.datastore:datastore-preferences:1.0.0"
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.29.1-alpha"
+    implementation "com.google.accompanist:accompanist-flowlayout:0.29.1-alpha"
+    implementation "com.google.accompanist:accompanist-placeholder-material:0.29.1-alpha"
+    implementation "com.google.accompanist:accompanist-pager:0.29.1-alpha"
+    implementation "com.google.accompanist:accompanist-pager-indicators:0.29.1-alpha"
 }
 
 kapt {

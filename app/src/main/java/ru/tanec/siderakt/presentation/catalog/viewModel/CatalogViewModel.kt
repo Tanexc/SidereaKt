@@ -41,6 +41,9 @@ class CatalogViewModel @Inject constructor(
     )
     val colorScheme by _colorScheme
 
+    private val _searchString: MutableState<String> = mutableStateOf("")
+    val searchString by _searchString
+
     init {
         getAllConstellationsUseCase().onEach {
             _constellationListState.value = it
@@ -53,5 +56,9 @@ class CatalogViewModel @Inject constructor(
             )
 
         }.launchIn(viewModelScope)
+    }
+
+    fun updateSearchString(value: String) {
+        _searchString.value = value
     }
 }
