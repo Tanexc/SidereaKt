@@ -1,7 +1,7 @@
 # SidereaKt
 # License
 ```xml
-Designed and developed by 2022 Tannec
+Designed and developed by 2023 Tanexc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
