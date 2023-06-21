@@ -19,4 +19,14 @@
     <string name="green">Зеленый</string>
     <string name="dark_theme">Тёмная тема</string>
     <string name="error">Ошибка</string>
+    <string name="check_internet">Ошибка. Проверьте подключение к интернету.</string>
+    <string name="from">от</string>
+    <string name="to">до</string>
+    <string name="declination">Склонение</string>
+    <string name="ascent">Прямое восхождение</string>
+    <string name="equatorial">экваториальное</string>
+    <string name="north_1">северное</string>
+    <string name="south_1">южное</string>
+    <string name="location">Расположение</string>
+    <string name="alpha">Альфа</string>
 </resources>

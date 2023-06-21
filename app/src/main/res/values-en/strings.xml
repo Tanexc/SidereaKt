@@ -19,4 +19,14 @@
     <string name="green">Green</string>
     <string name="dark_theme">Dark theme</string>
     <string name="error">Error</string>
+    <string name="check_internet">Error. Check your internet connection.</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="declination">Declination</string>
+    <string name="ascent">Ascent</string>
+    <string name="equatorial">equatorial</string>
+    <string name="north_1">north</string>
+    <string name="south_1">south</string>
+    <string name="location">Location</string>
+    <string name="alpha">Alpha</string>
 </resources>
