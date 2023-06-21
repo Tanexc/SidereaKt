@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -58,6 +59,7 @@ import kotlinx.coroutines.withContext
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.data.utils.SettingsValues
+import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
 import ru.tanec.siderakt.presentation.catalog.components.ConstellationItem
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel
@@ -66,7 +68,8 @@ import ru.tanec.siderakt.presentation.utils.isScrollingUp
 @SuppressLint("FlowOperatorInvokedInComposition", "CoroutineCreationDuringComposition")
 @Composable
 fun CatalogScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onScreenChange: (Screen, @Composable () -> Unit) -> Unit
 ) {
     val viewModel: CatalogViewModel = hiltViewModel()
 
@@ -108,7 +111,8 @@ fun CatalogScreen(
                                     0.7f
                                 }
                             ),
-                            borderColor = viewModel.colorScheme.outline
+                            borderColor = viewModel.colorScheme.outline,
+                            onClick = {}
                         )
                     }
                 }
@@ -143,7 +147,7 @@ fun CatalogScreen(
                     visible = lazyListState.isScrollingUp(),
                     modifier = Modifier.align(Alignment.BottomEnd),
                     enter = slideInHorizontally {it},
-                    exit = slideOutVertically {it}
+                    exit = slideOutHorizontally {it}
                 ) {
                     FloatingActionButton(
                         onClick = {

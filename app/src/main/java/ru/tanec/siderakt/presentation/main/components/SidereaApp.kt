@@ -30,26 +30,23 @@ import ru.tanec.siderakt.presentation.ui.theme.SidereaTheme
 fun SidereaApp(viewModel: MainViewModel) {
 
     SidereaTheme(colorScheme = viewModel.colorScheme) {
-        val modifier = Modifier
-        Column {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        stringResource(viewModel.currentScreen.label),
-                        textAlign = TextAlign.Center,
-                        fontFamily = FontFamily(Font(R.font.montserrat))
-                    )
-                },
-                modifier = modifier
-            )
-            NavHostScreen(
-                modifier = modifier,
-                startDestination = viewModel.currentScreen,
-                onScreenChanged = {
-                    viewModel.screenChanged(it)
-                }
-            )
-        }
+        NavHostScreen(
+            startDestination = viewModel.currentScreen,
+            onScreenChanged = {
+                viewModel.screenChanged(it)
+            },
+            topBar = {
+                CenterAlignedTopAppBar(
+                    title = {
+                        Text(
+                            stringResource(viewModel.currentScreen.label),
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily(Font(R.font.montserrat))
+                        )
+                    }
+                )
+            }
+        )
 
     }
 

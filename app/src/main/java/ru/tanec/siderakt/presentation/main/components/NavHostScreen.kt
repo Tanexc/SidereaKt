@@ -1,6 +1,7 @@
 package ru.tanec.siderakt.presentation.main.components
 
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ColorScheme
@@ -30,10 +31,14 @@ import ru.tanec.siderakt.presentation.test.TestScreen
 fun NavHostScreen(
     modifier: Modifier = Modifier,
     startDestination: Screen,
-    onScreenChanged: (screen: Screen) -> Unit
+    onScreenChanged: (screen: Screen) -> Unit,
+    topBar: @Composable () -> Unit
 ) {
     val navController = rememberNavController(startDestination = startDestination)
     val selectedScreen = remember { mutableStateOf(startDestination) }
+    val bottomBarVisibility = remember { mutableStateOf(true) }
+
+    val topAppBar = remember { mutableStateOf(topBar) }
 
     val screens = listOf(
         Screen.Profile,
@@ -42,28 +47,36 @@ fun NavHostScreen(
     )
 
     Scaffold(modifier = modifier,
+        topBar = topBar,
         bottomBar = {
-            BottomAppBar {
-                screens.forEach {
-                    NavigationBarItem(
-                        selected = it.label == startDestination.label,
-                        onClick = {
-                            onScreenChanged(it)
-                            navController.navigate(it)
-                            selectedScreen.value = it
-                        },
-                        label = { Text(stringResource(it.label), fontFamily= FontFamily(Font(R.font.montserrat))) },
-                        icon = {
-                            Icon(
-                                when (selectedScreen.value.label == it.label) {
-                                    true -> it.iconFilled
-                                    false -> it.iconOutlined
-                                },
-                                contentDescription = null
-                            )
-                        },
-                        alwaysShowLabel = false
-                    )
+            AnimatedVisibility(visible = bottomBarVisibility.value) {
+                BottomAppBar(modifier) {
+                    screens.forEach {
+                        NavigationBarItem(
+                            selected = it.label == startDestination.label,
+                            onClick = {
+                                onScreenChanged(it)
+                                navController.navigate(it)
+                                selectedScreen.value = it
+                            },
+                            label = {
+                                Text(
+                                    stringResource(it.label),
+                                    fontFamily = FontFamily(Font(R.font.montserrat))
+                                )
+                            },
+                            icon = {
+                                Icon(
+                                    when (selectedScreen.value.label == it.label) {
+                                        true -> it.iconFilled
+                                        false -> it.iconOutlined
+                                    },
+                                    contentDescription = null
+                                )
+                            },
+                            alwaysShowLabel = false
+                        )
+                    }
                 }
             }
         }) { innerPadding ->
@@ -72,7 +85,15 @@ fun NavHostScreen(
         NavHost(navController) { screen ->
             when (screen) {
                 is Screen.Profile -> ProfileScreen(modifier.padding(innerPadding))
-                is Screen.Catalog -> CatalogScreen(modifier.padding(innerPadding))
+                is Screen.Catalog -> CatalogScreen(modifier.padding(innerPadding),
+                    onScreenChange = { _screen, topBar ->
+                        onScreenChanged(_screen)
+                        navController.navigate(_screen)
+                        selectedScreen.value = _screen
+                        bottomBarVisibility.value = false
+                        topAppBar.value = topBar
+                    })
+
                 is Screen.Test -> TestScreen(modifier.padding(innerPadding))
             }
 

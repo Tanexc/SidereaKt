@@ -3,6 +3,7 @@ package ru.tanec.siderakt.presentation.catalog.components
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +46,8 @@ fun ConstellationItem(
     borderRadius: Dp = 16.dp,
     borderColor: Color = MaterialTheme.colorScheme.outline,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(0.3f),
-    height: Dp = 256.dp
+    height: Dp = 256.dp,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -58,6 +60,7 @@ fun ConstellationItem(
             .background(backgroundColor, RoundedCornerShape(borderRadius))
             .fillMaxWidth()
             .height(height)
+            .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             SubcomposeAsyncImage(
