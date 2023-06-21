@@ -6,8 +6,12 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -24,14 +28,17 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowUpward
 import androidx.compose.material.icons.outlined.Error
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
@@ -45,6 +52,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.times
@@ -59,17 +68,20 @@ import kotlinx.coroutines.withContext
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.data.utils.SettingsValues
+import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
 import ru.tanec.siderakt.presentation.catalog.components.ConstellationItem
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel
 import ru.tanec.siderakt.presentation.utils.isScrollingUp
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @SuppressLint("FlowOperatorInvokedInComposition", "CoroutineCreationDuringComposition")
 @Composable
 fun CatalogScreen(
     modifier: Modifier = Modifier,
-    onScreenChange: (Screen, @Composable () -> Unit) -> Unit
+    onScreenChange: (Screen, Constellation, @Composable () -> Unit) -> Unit,
+    navigationIconAction: () -> Unit
 ) {
     val viewModel: CatalogViewModel = hiltViewModel()
 
@@ -98,7 +110,9 @@ fun CatalogScreen(
 
                 LazyColumn(state = lazyListState) {
 
-                    items(state.data?.filter { it.title.lowercase().contains(viewModel.searchString) } ?: emptyList()) {
+                    items(state.data?.filter {
+                        it.title.lowercase().contains(viewModel.searchString)
+                    } ?: emptyList()) {
                         if (state.data!!.indexOf(it) == 0) {
                             Spacer(modifier = Modifier.height(64.dp))
                         }
@@ -111,9 +125,22 @@ fun CatalogScreen(
                                     0.7f
                                 }
                             ),
-                            borderColor = viewModel.colorScheme.outline,
-                            onClick = {}
-                        )
+                            borderColor = viewModel.colorScheme.outline
+                        ) {
+                            onScreenChange(
+                                Screen.Constellation,
+                                it
+                            ) {
+                                CenterAlignedTopAppBar(title = {
+                                    Text(
+                                        it.title + "( " + it.lat + " )",
+                                        modifier = Modifier.basicMarquee(),
+                                        fontFamily = FontFamily(Font(R.font.montserrat))
+                                    )
+                                },
+                                navigationIcon = {Icon(Icons.Outlined.ArrowBack, null, modifier = Modifier.clickable(onClick = { navigationIconAction() }))})
+                            }
+                        }
                     }
                 }
 
@@ -146,8 +173,8 @@ fun CatalogScreen(
                 AnimatedVisibility(
                     visible = lazyListState.isScrollingUp(),
                     modifier = Modifier.align(Alignment.BottomEnd),
-                    enter = slideInHorizontally {it},
-                    exit = slideOutHorizontally {it}
+                    enter = slideInVertically { it },
+                    exit = slideOutVertically { it }
                 ) {
                     FloatingActionButton(
                         onClick = {

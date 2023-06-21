@@ -32,19 +32,24 @@ fun SidereaApp(viewModel: MainViewModel) {
     SidereaTheme(colorScheme = viewModel.colorScheme) {
         NavHostScreen(
             startDestination = viewModel.currentScreen,
-            onScreenChanged = {
-                viewModel.screenChanged(it)
+            onScreenChanged = { screen, topAppBar ->
+                viewModel.screenChanged(screen)
+                viewModel.setTopAppBar(topAppBar)
             },
             topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            stringResource(viewModel.currentScreen.label),
-                            textAlign = TextAlign.Center,
-                            fontFamily = FontFamily(Font(R.font.montserrat))
-                        )
-                    }
-                )
+                when (viewModel.topAppBar) {
+                    null -> CenterAlignedTopAppBar(
+                        title = {
+                            Text(
+                                stringResource(viewModel.currentScreen.label),
+                                textAlign = TextAlign.Center,
+                                fontFamily = FontFamily(Font(R.font.montserrat))
+                            )
+                        }
+                    )
+                    else -> viewModel.topAppBar!!()
+                }
+
             }
         )
 

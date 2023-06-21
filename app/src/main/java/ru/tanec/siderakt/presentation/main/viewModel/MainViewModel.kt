@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.res.Resources
 import android.util.Log
 import androidx.compose.material3.ColorScheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -50,6 +51,10 @@ class MainViewModel @Inject constructor(
         mutableStateOf(getTheme(appTheme, useDarkTheme))
     val colorScheme by _colorScheme
 
+    private val _topAppBar: MutableState<(@Composable () -> Unit)?> =
+        mutableStateOf(null)
+    val topAppBar by _topAppBar
+
     init {
 
         getPersonalInfoUseCase().onEach {
@@ -67,5 +72,9 @@ class MainViewModel @Inject constructor(
 
     fun screenChanged(screen: Screen) {
         _currentScreen.value = screen
+    }
+
+    fun setTopAppBar(topAppBar: (@Composable () -> Unit)?) {
+        _topAppBar.value = topAppBar
     }
 }
