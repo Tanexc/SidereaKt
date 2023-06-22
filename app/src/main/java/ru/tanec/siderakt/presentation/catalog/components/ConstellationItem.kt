@@ -48,7 +48,7 @@ import ru.tanec.siderakt.domain.model.Constellation
 fun ConstellationItem(
     modifier: Modifier = Modifier,
     constellation: Constellation,
-    borderWidth: Dp = 1.dp,
+    borderWidth: Dp = 0.dp,
     borderRadius: Dp = 16.dp,
     borderColor: Color = MaterialTheme.colorScheme.outline,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(0.3f),
@@ -59,7 +59,7 @@ fun ConstellationItem(
         modifier = modifier
             .padding(4.dp)
             .border(
-                width = 0.dp,
+                width = borderWidth,
                 shape = RoundedCornerShape(borderRadius),
                 brush = Brush.horizontalGradient(listOf(borderColor.copy(0f), borderColor.copy(0f)))
             )

@@ -19,14 +19,10 @@ import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.UnfoldLess
 import androidx.compose.material.icons.outlined.UnfoldMore
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
@@ -43,7 +39,6 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanec.siderakt.R
-import ru.tanec.siderakt.presentation.utils.SettingsValuesTODELETE
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.presentation.constellation.components.ItemCard
 import ru.tanec.siderakt.presentation.constellation.viewModel.ConstellationViewModel
@@ -84,7 +79,7 @@ fun ConstellationScreen(
                                 is AsyncImagePainter.State.Loading ->
                                     Box(
                                         modifier = Modifier
-                                            .align(Alignment.Center)
+                                            .align(Center)
                                     ) {
                                         CircularProgressIndicator(
                                             modifier = Modifier
@@ -160,9 +155,9 @@ fun ConstellationScreen(
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
                             .height(128.dp),
-                        borderColor = viewModel.colorScheme.outline,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                            if (SettingsValuesTODELETE.sidereaUseDarkTheme.value) {
+                        borderColor = viewModel.settings.colorScheme.outline,
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
                             } else {
                                 0f
@@ -209,9 +204,9 @@ fun ConstellationScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(128.dp),
-                        borderColor = viewModel.colorScheme.outline,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                            if (SettingsValuesTODELETE.sidereaUseDarkTheme.value) {
+                        borderColor = viewModel.settings.colorScheme.outline,
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
                             } else {
                                 0f
@@ -262,9 +257,9 @@ fun ConstellationScreen(
                 Row(Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp)) {
 
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth(0.5f), borderColor = viewModel.colorScheme.outline,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                            if (SettingsValuesTODELETE.sidereaUseDarkTheme.value) {
+                        modifier = Modifier.fillMaxWidth(0.5f), borderColor = viewModel.settings.colorScheme.outline,
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
                             } else {
                                 0f
@@ -293,9 +288,9 @@ fun ConstellationScreen(
 
                     }
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth(), borderColor = viewModel.colorScheme.outline,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                            if (SettingsValuesTODELETE.sidereaUseDarkTheme.value) {
+                        modifier = Modifier.fillMaxWidth(), borderColor = viewModel.settings.colorScheme.outline,
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
                             } else {
                                 0f
@@ -327,9 +322,9 @@ fun ConstellationScreen(
             item {
                 ItemCard(
                     Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp),
-                    borderColor = viewModel.colorScheme.outline,
-                    backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                        if (SettingsValuesTODELETE.sidereaUseDarkTheme.value) {
+                    borderColor = viewModel.settings.colorScheme.outline,
+                    backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                        if (viewModel.settings.isThemeInDarkMode()) {
                             0.2f
                         } else {
                             0f

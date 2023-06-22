@@ -19,9 +19,6 @@ class ConstellationViewModel @Inject constructor(
     private val _imageCollapsedState: MutableState<Boolean> = mutableStateOf(false)
     val isImageCollapsed by _imageCollapsedState
 
-    private val _colorScheme: MutableState<ColorScheme> = mutableStateOf(getTheme(settings.theme()?: Theme.Default(), settings.isThemeInDarkMode()))
-    val colorScheme by _colorScheme
-
     fun changeImageCollapsedState() {
         _imageCollapsedState.value = !_imageCollapsedState.value
     }
