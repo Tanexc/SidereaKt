@@ -29,4 +29,7 @@
     <string name="south_1">южное</string>
     <string name="location">Расположение</string>
     <string name="alpha">Альфа</string>
+    <string name="about">О приложении</string>
+    <string name="version">версия:</string>
+    <string name="code">Исходный код</string>
 </resources>
