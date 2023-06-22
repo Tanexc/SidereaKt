@@ -1,9 +1,9 @@
 package ru.tanec.siderakt.core.util
 
-sealed class Scheme(val id: Int) {
-    class Default: Scheme(id=0)
-    class Blue: Scheme(id=1)
-    class Green: Scheme(id=2)
+sealed class Theme(val id: Int) {
+    class Default: Theme(id=0)
+    class Blue: Theme(id=1)
+    class Green: Theme(id=2)
 
     companion object {
         fun getScheme(id: Int)
