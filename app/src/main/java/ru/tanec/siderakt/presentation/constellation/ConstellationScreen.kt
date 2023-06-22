@@ -35,15 +35,20 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.BottomCenter
 import androidx.compose.ui.Alignment.Companion.BottomEnd
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.SubcomposeLayout
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
@@ -66,7 +71,9 @@ fun ConstellationScreen(
         LazyColumn(modifier = modifier) {
             item {
                 AnimatedContent(targetState = imageCollapsed) { targetState ->
-                    Box(modifier = Modifier.wrapContentHeight().fillMaxWidth()) {
+                    Box(modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()) {
                         SubcomposeAsyncImage(
                             modifier = if (!targetState.value) {
                                 Modifier
@@ -134,7 +141,7 @@ fun ConstellationScreen(
                             onClick = { imageCollapsed.value = !imageCollapsed.value },
                             modifier = Modifier
                                 .size(48.dp)
-                                .align(BottomEnd)
+                                .align(TopEnd)
                                 .padding(10.dp)
                         ) {
                             when (imageCollapsed.value) {
@@ -162,7 +169,7 @@ fun ConstellationScreen(
                     ItemCard(
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
-                            .height(104.dp),
+                            .height(128.dp),
                         borderColor = colorScheme.outline,
                         backgroundColor = colorScheme.secondaryContainer.copy(
                             if (SettingsValues.sidereaUseDarkTheme.value) {
@@ -176,32 +183,39 @@ fun ConstellationScreen(
                             Text(
                                 stringResource(R.string.ascent),
                                 modifier = Modifier
-                                    .basicMarquee()
                                     .padding(top = 8.dp, bottom = 4.dp)
-                                    .align(CenterHorizontally),
-                                maxLines = 1
+                                    .fillMaxWidth(),
+                                maxLines = 2,
+                                textAlign = TextAlign.Center,
+                                lineHeight = 16.5.sp
                             )
-                            Text(
-                                stringResource(R.string.from) + " " + constellation.ascent.split("/")[0],
-                                modifier = Modifier
-                                    .align(CenterHorizontally)
-                                    .padding(top = 4.dp, bottom = 2.dp)
-                            )
-                            Text(
-                                stringResource(R.string.to) + " " + constellation.ascent.split(
-                                    "/"
-                                )[1],
-                                modifier = Modifier
-                                    .align(CenterHorizontally)
-                                    .padding(top = 2.dp, bottom = 8.dp)
-                            )
+                            Box(Modifier.fillMaxSize()) {
+                                Column(Modifier.wrapContentHeight().align(Center)) {
+                                    Text(
+                                        stringResource(R.string.from) + " " + constellation.ascent.split(
+                                            "/"
+                                        )[0],
+                                        modifier = Modifier
+                                            .align(CenterHorizontally)
+                                            .padding(top = 4.dp, bottom = 2.dp)
+                                    )
+                                    Text(
+                                        stringResource(R.string.to) + " " + constellation.ascent.split(
+                                            "/"
+                                        )[1],
+                                        modifier = Modifier
+                                            .align(CenterHorizontally)
+                                            .padding(bottom = 8.dp, top = 2.dp)
+                                    )
+                                }
+                            }
                         }
 
                     }
                     ItemCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(104.dp),
+                            .height(128.dp),
                         borderColor = colorScheme.outline,
                         backgroundColor = colorScheme.secondaryContainer.copy(
                             if (SettingsValues.sidereaUseDarkTheme.value) {
@@ -220,22 +234,27 @@ fun ConstellationScreen(
                                     .align(CenterHorizontally),
                                 maxLines = 1
                             )
-                            Text(
-                                stringResource(R.string.from) + " " + constellation.declination.split(
-                                    "/"
-                                )[0],
-                                modifier = Modifier
-                                    .align(CenterHorizontally)
-                                    .padding(top = 4.dp, bottom = 2.dp)
-                            )
-                            Text(
-                                stringResource(R.string.to) + " " + constellation.declination.split(
-                                    "/"
-                                )[1],
-                                modifier = Modifier
-                                    .align(CenterHorizontally)
-                                    .padding(bottom = 8.dp, top = 2.dp)
-                            )
+                            Box(Modifier.fillMaxSize()) {
+                                Column(Modifier.wrapContentHeight().align(Center)) {
+                                    Text(
+                                        stringResource(R.string.from) + " " + constellation.declination.split(
+                                            "/"
+                                        )[0],
+                                        modifier = Modifier
+                                            .align(CenterHorizontally)
+                                            .padding(top = 4.dp, bottom = 2.dp)
+                                    )
+                                    Text(
+                                        stringResource(R.string.to) + " " + constellation.declination.split(
+                                            "/"
+                                        )[1],
+                                        modifier = Modifier
+                                            .align(CenterHorizontally)
+                                            .padding(bottom = 8.dp, top = 2.dp)
+                                    )
+                                }
+                            }
+
                         }
 
                     }
