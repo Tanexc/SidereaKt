@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.tanec.siderakt.domain.model.Constellation
-import ru.tanec.siderakt.domain.model.DatabaseEntity
+import ru.tanec.siderakt.domain.model.interfaces.DatabaseEntity
 
 @Entity(tableName = "constellations")
 data class ConstellationEntity(
