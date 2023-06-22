@@ -1,5 +1,7 @@
 package ru.tanec.siderakt.domain.model
 
-interface Model {
+import android.os.Parcelable
+
+interface Model: Parcelable {
     fun asDatabaseEntity(): DatabaseEntity
 }
