@@ -1,6 +1,5 @@
 package ru.tanec.siderakt.presentation.catalog.viewModel
 
-import android.util.Log
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
@@ -8,14 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import ru.tanec.siderakt.core.util.Scheme
+import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.core.util.State
-import ru.tanec.siderakt.data.utils.SettingsValues
 import ru.tanec.siderakt.domain.model.Constellation
+import ru.tanec.siderakt.domain.model.interfaces.SettingsController
 import ru.tanec.siderakt.domain.use_case.constellation_use_case.GetAllConstellationsUseCase
 import ru.tanec.siderakt.domain.use_case.constellation_use_case.GetConstellationById
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
@@ -25,36 +23,22 @@ import javax.inject.Inject
 @HiltViewModel
 class CatalogViewModel @Inject constructor(
     getConstellationById: GetConstellationById,
+    getAllConstellationsUseCase: GetAllConstellationsUseCase,
     getPersonalInfoUseCase: GetPersonalInfoUseCase,
-    private val getAllConstellationsUseCase: GetAllConstellationsUseCase
+    val settings: SettingsController
 ) : ViewModel() {
 
     private val _constellationListState: MutableState<State<List<Constellation>?>> =
         mutableStateOf(State.Loading(emptyList()))
     val constellationListState by _constellationListState
 
-    private val _colorScheme: MutableState<ColorScheme> = mutableStateOf(
-        getTheme(
-            SettingsValues.sidereaScheme.value,
-            SettingsValues.sidereaUseDarkTheme.value
-        )
-    )
-    val colorScheme by _colorScheme
-
     private val _searchString: MutableState<String> = mutableStateOf("")
     val searchString by _searchString
+
 
     init {
         getAllConstellationsUseCase().onEach {
             _constellationListState.value = it
-        }.launchIn(viewModelScope)
-
-        getPersonalInfoUseCase().onEach {
-            _colorScheme.value = getTheme(
-                colorScheme = Scheme.getScheme(it.selectedTheme),
-                useDarkTheme = it.useDarkTheme
-            )
-
         }.launchIn(viewModelScope)
     }
 
