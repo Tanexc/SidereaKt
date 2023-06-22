@@ -1,10 +1,10 @@
 package ru.tanec.siderakt.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import ru.tanec.siderakt.domain.model.PersonalInformation
+import ru.tanec.siderakt.domain.model.SettingsData
 
 interface PersonalInfoRepository {
-    fun getInfo(): Flow<PersonalInformation>
+    fun getInfo(): Flow<SettingsData>
 
-    suspend fun setInformation(info: PersonalInformation)
+    suspend fun setInformation(info: SettingsData)
 }
