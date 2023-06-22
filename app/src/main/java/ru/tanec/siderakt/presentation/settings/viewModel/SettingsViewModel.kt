@@ -5,6 +5,7 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController

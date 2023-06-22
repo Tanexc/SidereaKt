@@ -29,7 +29,9 @@
     <string name="south_1">south</string>
     <string name="location">Location</string>
     <string name="alpha">Alpha</string>
-    <string name="about">About application</string>
-    <string name="version">version:</string>
+    <string name="about">About app</string>
+    <string name="version">Version:</string>
     <string name="code">Source code</string>
+    <string name="data_source">Constellations data source</string>
+    <string name="error_report">Report a problem</string>
 </resources>

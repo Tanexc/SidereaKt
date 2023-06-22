@@ -29,6 +29,8 @@
     <string name="location">Расположение</string>
     <string name="alpha">Альфа</string>
     <string name="about">О приложении</string>
-    <string name="version">версия:</string>
+    <string name="version">Версия:</string>
     <string name="code">Исходный код</string>
+    <string name="data_source">Инофрмация о созвездиях</string>
+    <string name="error_report">Сообщить о проблеме</string>
 </resources>
