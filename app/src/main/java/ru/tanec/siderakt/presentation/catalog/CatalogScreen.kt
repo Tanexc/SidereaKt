@@ -40,7 +40,6 @@ import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import kotlinx.coroutines.launch
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.State
-import ru.tanec.siderakt.data.utils.SettingsValues
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
@@ -92,14 +91,14 @@ fun CatalogScreen(
                         }
                         ConstellationItem(
                             constellation = it,
-                            backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                                if (SettingsValues.sidereaUseDarkTheme.value) {
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                                if (viewModel.settings.isThemeInDarkMode()) {
                                     0.2f
                                 } else {
                                     0.7f
                                 }
                             ),
-                            borderColor = viewModel.colorScheme.outline
+                            borderColor = viewModel.settings.colorScheme.outline
                         ) {
                             onScreenChange(
                                 Screen.Constellation,
@@ -131,14 +130,14 @@ fun CatalogScreen(
                             }
 
                         ),
-                    backgroundColor = viewModel.colorScheme.secondaryContainer.copy(
-                        if (SettingsValues.sidereaUseDarkTheme.value) {
+                    backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                        if (viewModel.settings.isThemeInDarkMode()) {
                             0.2f
                         } else {
                             0.7f
                         }
                     ),
-                    fontColor = viewModel.colorScheme.onSecondaryContainer,
+                    fontColor = viewModel.settings.colorScheme.onSecondaryContainer,
                     onActiveChange = {},
                     onSearchChange = {
                         viewModel.updateSearchString(it)
@@ -156,8 +155,8 @@ fun CatalogScreen(
                                 lazyListState.animateScrollToItem(0)
                             }
                         },
-                        containerColor = viewModel.colorScheme.secondaryContainer,
-                        contentColor = contentColorFor(backgroundColor = viewModel.colorScheme.secondaryContainer),
+                        containerColor = viewModel.settings.colorScheme.secondaryContainer,
+                        contentColor = contentColorFor(backgroundColor = viewModel.settings.colorScheme.secondaryContainer),
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(16.dp)
@@ -175,7 +174,6 @@ fun CatalogScreen(
 
             }
 
-            else -> {}
         }
     }
 }

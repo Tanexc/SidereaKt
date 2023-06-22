@@ -46,7 +46,7 @@ import ru.tanec.siderakt.core.util.GITHUB_PROFILE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_ISSUE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_URL
 import ru.tanec.siderakt.core.util.SOURCE_SITE
-import ru.tanec.siderakt.core.util.Scheme
+import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.presentation.main.components.Picture
 import ru.tanec.siderakt.presentation.main.components.SelectButtonGroup
 import ru.tanec.siderakt.presentation.main.components.SelectButtonItem
@@ -76,10 +76,10 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .height(96.dp),
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(
@@ -90,7 +90,7 @@ fun ProfileScreen(
                                 fontFamily = FontFamily(Font(R.font.montserrat))
                             )
                             Text(
-                                "${viewModel.personalInfo?.learnedConstellations ?: "NA"} " + stringResource(
+                                "${viewModel.settings.learnedNorth() + viewModel.settings.learnedSouth()} " + stringResource(
                                     R.string.of
                                 ) + " 88",
                                 textAlign = TextAlign.Center,
@@ -106,10 +106,10 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .height(96.dp)
                                 .fillMaxWidth(0.5f),
-                            borderColor = viewModel.colorScheme.outline,
+                            borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
-                            backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
                                 Text(
@@ -122,7 +122,7 @@ fun ProfileScreen(
                                     fontFamily = FontFamily(Font(R.font.montserrat))
                                 )
                                 Text(
-                                    "${viewModel.personalInfo?.learnedNorth}",
+                                    "${viewModel.settings.learnedNorth()}",
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -135,10 +135,10 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .height(96.dp)
                                 .fillMaxWidth(),
-                            borderColor = viewModel.colorScheme.outline,
+                            borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
-                            backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
                         )
                         {
                             Column(modifier = Modifier.padding(12.dp)) {
@@ -152,7 +152,7 @@ fun ProfileScreen(
                                     fontFamily = FontFamily(Font(R.font.montserrat)),
                                 )
                                 Text(
-                                    "${viewModel.personalInfo?.learnedSouth}",
+                                    "${viewModel.settings.learnedSouth()}",
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -170,19 +170,19 @@ fun ProfileScreen(
                     SelectButtonItem(
                         title = stringResource(R.string.app_default),
                         onSelected = {
-                            viewModel.changeTheme(Scheme.Default())
+                            viewModel.changeTheme(Theme.Default())
                         }
                     ),
                     SelectButtonItem(
                         title = stringResource(R.string.blue),
                         onSelected = {
-                            viewModel.changeTheme(Scheme.Blue())
+                            viewModel.changeTheme(Theme.Blue())
                         }
                     ),
                     SelectButtonItem(
                         title = stringResource(R.string.green),
                         onSelected = {
-                            viewModel.changeTheme(Scheme.Green())
+                            viewModel.changeTheme(Theme.Green())
                         }
                     )
                 )
@@ -200,10 +200,10 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .height(108.dp),
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(
@@ -218,9 +218,9 @@ fun ProfileScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                selectedItemIndex = viewModel.appTheme.id,
-                                borderColor = viewModel.colorScheme.outline,
-                                selectedColor = viewModel.colorScheme.secondaryContainer,
+                                selectedItemIndex = viewModel.settings.theme()?.id?: 0,
+                                borderColor = viewModel.settings.colorScheme.outline,
+                                selectedColor = viewModel.settings.colorScheme.secondaryContainer,
                                 items = items,
                                 fontSize = 16.dp
                             )
@@ -229,10 +229,10 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .wrapContentHeight(),
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
                     ) {
                         Row(
                             modifier = Modifier
@@ -258,13 +258,13 @@ fun ProfileScreen(
                             }
                             Column(modifier = Modifier.fillMaxWidth()) {
                                 Switch(
-                                    checked = viewModel.useDarkTheme,
+                                    checked = viewModel.settings.isThemeInDarkMode(),
                                     onCheckedChange = { viewModel.changeUseDarkTheme() },
                                     modifier = Modifier
                                         .padding(8.dp)
                                         .align(Alignment.End),
                                     thumbContent = {
-                                        when (viewModel.useDarkTheme) {
+                                        when (viewModel.settings.isThemeInDarkMode()) {
                                             true -> Icon(
                                                 Icons.Outlined.Check,
                                                 null,
@@ -298,10 +298,10 @@ fun ProfileScreen(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable { uriHandler.openUri(GITHUB_REPO_URL) },
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
                     ) {
                         Row {
                             Box(
@@ -310,7 +310,7 @@ fun ProfileScreen(
                                     .padding(12.dp)
                                     .border(
                                         1.dp,
-                                        SolidColor(viewModel.colorScheme.outline),
+                                        SolidColor(viewModel.settings.colorScheme.outline),
                                         RoundedCornerShape(16.dp)
                                     )
                             ) {
@@ -338,14 +338,14 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
                                     )
                                     Text(
                                         " " + BuildConfig.VERSION_NAME,
                                         modifier = Modifier,
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
                                     )
                                 }
                             }
@@ -356,10 +356,10 @@ fun ProfileScreen(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable { uriHandler.openUri(GITHUB_PROFILE_URL) },
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
                     ) {
                         Row {
                             Picture(
@@ -368,7 +368,7 @@ fun ProfileScreen(
                                     .padding(12.dp)
                                     .border(
                                         1.dp,
-                                        SolidColor(viewModel.colorScheme.outline),
+                                        SolidColor(viewModel.settings.colorScheme.outline),
                                         RoundedCornerShape(16.dp)
                                     ),
                                 imageURL = AUTHOR_PICTURE_URL
@@ -390,14 +390,14 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
                                     )
                                     Text(
                                         AUTHOR_NICKNAME,
                                         modifier = Modifier,
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
                                     )
                                 }
                             }
@@ -408,10 +408,10 @@ fun ProfileScreen(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable { uriHandler.openUri(CONSTELLATION_DATA_SOURCE_URL) },
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
                     ) {
                         Row {
                             Box(
@@ -420,7 +420,7 @@ fun ProfileScreen(
                                     .padding(12.dp)
                                     .border(
                                         1.dp,
-                                        SolidColor(viewModel.colorScheme.outline),
+                                        SolidColor(viewModel.settings.colorScheme.outline),
                                         RoundedCornerShape(16.dp)
                                     )
                             ) {
@@ -448,7 +448,7 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
                                     )
                                 }
                             }
@@ -458,10 +458,10 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier.wrapContentHeight()
                             .clickable { uriHandler.openUri(GITHUB_REPO_ISSUE_URL) },
-                        borderColor = viewModel.colorScheme.outline,
+                        borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
                     ) {
                         Row {
                             Box(
@@ -470,7 +470,7 @@ fun ProfileScreen(
                                     .padding(12.dp)
                                     .border(
                                         1.dp,
-                                        SolidColor(viewModel.colorScheme.outline),
+                                        SolidColor(viewModel.settings.colorScheme.outline),
                                         RoundedCornerShape(16.dp)
                                     )
                             ) {

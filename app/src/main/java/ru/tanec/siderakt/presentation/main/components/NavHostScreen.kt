@@ -4,10 +4,8 @@ package ru.tanec.siderakt.presentation.main.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
@@ -25,15 +23,12 @@ import dev.olshevski.navigation.reimagined.NavHost
 import dev.olshevski.navigation.reimagined.navigate
 import dev.olshevski.navigation.reimagined.rememberNavController
 import ru.tanec.siderakt.R
-import ru.tanec.siderakt.data.utils.SettingsValues
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.Screen
-import ru.tanec.siderakt.domain.model.Settings
 import ru.tanec.siderakt.presentation.catalog.CatalogScreen
 import ru.tanec.siderakt.presentation.constellation.ConstellationScreen
 import ru.tanec.siderakt.presentation.settings.ProfileScreen
 import ru.tanec.siderakt.presentation.test.TestScreen
-import ru.tanec.siderakt.presentation.ui.theme.getTheme
 
 
 @Composable
@@ -43,6 +38,7 @@ fun NavHostScreen(
     onScreenChanged: (screen: Screen, topBar: (@Composable () -> Unit)?) -> Unit,
     topBar: @Composable () -> Unit
 ) {
+
     val navController = rememberNavController(startDestination = startDestination)
     val selectedScreen = remember { mutableStateOf(startDestination) }
 
@@ -128,8 +124,7 @@ fun NavHostScreen(
                 is Screen.Constellation -> {
                     ConstellationScreen(
                         modifier.padding(innerPadding),
-                        constellationScreenData.value,
-                        getTheme(SettingsValues.sidereaScheme.value, SettingsValues.sidereaUseDarkTheme.value)
+                        constellationScreenData.value
                     )
                 }
             }
