@@ -34,4 +34,10 @@
     <string name="code">Исходный код</string>
     <string name="data_source">Инофрмация о созвездиях</string>
     <string name="error_report">Сообщить о проблеме</string>
+    <string name="exit">Выход</string>
+    <string name="yes">Да</string>
+    <string name="dismiss">Отмена</string>
+    <string name="exit_question">Вы действительно хотите выйти?</string>
+    <string name="link">Ссылка</string>
+    <string name="open_link">Откроется внешнее приложение. Вы хотите перейти по ссылке?</string>
 </resources>

@@ -34,4 +34,10 @@
     <string name="code">Source code</string>
     <string name="data_source">Constellations data source</string>
     <string name="error_report">Report a problem</string>
+    <string name="exit">Exit</string>
+    <string name="yes">Yes</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="exit_question">Are you sure you want to exit?</string>
+    <string name="link">Link</string>
+    <string name="open_link">An external application will open. Do you want to follow the link?</string>
 </resources>
