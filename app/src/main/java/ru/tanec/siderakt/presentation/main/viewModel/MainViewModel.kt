@@ -11,6 +11,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.domain.model.interfaces.SettingsController
@@ -28,6 +29,9 @@ class MainViewModel @Inject constructor(
     private val _currentScreen: MutableState<Screen> = mutableStateOf(Screen.Catalog)
     val currentScreen by _currentScreen
 
+    private val _dialogState: MutableState<DialogState?> = mutableStateOf(null)
+    val dialogState by _dialogState
+
     private val _topAppBar: MutableState<(@Composable () -> Unit)?> = mutableStateOf(null)
     val topAppBar by _topAppBar
 
@@ -43,5 +47,13 @@ class MainViewModel @Inject constructor(
 
     fun setTopAppBar(topAppBar: (@Composable () -> Unit)?) {
         _topAppBar.value = topAppBar
+    }
+
+    fun hideDialog() {
+        _dialogState.value = null
+    }
+
+    fun showDialog(dialog: DialogState) {
+        _dialogState.value = dialog
     }
 }

@@ -1,7 +1,9 @@
 package ru.tanec.siderakt.presentation.settings
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,6 +44,7 @@ import ru.tanec.siderakt.core.util.AUTHOR
 import ru.tanec.siderakt.core.util.AUTHOR_NICKNAME
 import ru.tanec.siderakt.core.util.AUTHOR_PICTURE_URL
 import ru.tanec.siderakt.core.util.CONSTELLATION_DATA_SOURCE_URL
+import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.core.util.GITHUB_PROFILE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_ISSUE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_URL
@@ -52,6 +55,8 @@ import ru.tanec.siderakt.presentation.main.components.SelectButtonGroup
 import ru.tanec.siderakt.presentation.main.components.SelectButtonItem
 import ru.tanec.siderakt.presentation.settings.components.SettingsCard
 import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
+import ru.tanec.siderakt.presentation.utils.dialogs.ExitDialog
+import ru.tanec.siderakt.presentation.utils.dialogs.OpenLinkDialog
 
 @Composable
 fun ProfileScreen(
@@ -79,7 +84,9 @@ fun ProfileScreen(
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        )
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(
@@ -109,7 +116,9 @@ fun ProfileScreen(
                             borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
-                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                                0.3f
+                            )
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
                                 Text(
@@ -138,7 +147,9 @@ fun ProfileScreen(
                             borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
-                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                                0.3f
+                            )
                         )
                         {
                             Column(modifier = Modifier.padding(12.dp)) {
@@ -203,7 +214,9 @@ fun ProfileScreen(
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        )
                     ) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Text(
@@ -218,7 +231,7 @@ fun ProfileScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(8.dp),
-                                selectedItemIndex = viewModel.settings.theme()?.id?: 0,
+                                selectedItemIndex = viewModel.settings.theme()?.id ?: 0,
                                 borderColor = viewModel.settings.colorScheme.outline,
                                 selectedColor = viewModel.settings.colorScheme.secondaryContainer,
                                 items = items,
@@ -232,7 +245,9 @@ fun ProfileScreen(
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f)
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        )
                     ) {
                         Row(
                             modifier = Modifier
@@ -297,11 +312,19 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .wrapContentHeight()
-                            .clickable { uriHandler.openUri(GITHUB_REPO_URL) },
+                            .clickable(
+                                interactionSource = MutableInteractionSource(),
+                                indication = null
+                            ) {
+                                viewModel.setUri(GITHUB_REPO_URL)
+                                viewModel.showDialog(DialogState.OpenLink)
+                              },
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        ),
                     ) {
                         Row {
                             Box(
@@ -338,14 +361,18 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                            0.5f
+                                        )
                                     )
                                     Text(
                                         " " + BuildConfig.VERSION_NAME,
                                         modifier = Modifier,
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                            0.5f
+                                        )
                                     )
                                 }
                             }
@@ -355,11 +382,19 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .wrapContentHeight()
-                            .clickable { uriHandler.openUri(GITHUB_PROFILE_URL) },
+                            .clickable(
+                                interactionSource = MutableInteractionSource(),
+                                indication = null
+                            ) {
+                                viewModel.setUri(GITHUB_PROFILE_URL)
+                                viewModel.showDialog(DialogState.OpenLink)
+                              },
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        ),
                     ) {
                         Row {
                             Picture(
@@ -390,14 +425,18 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                            0.5f
+                                        )
                                     )
                                     Text(
                                         AUTHOR_NICKNAME,
                                         modifier = Modifier,
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                            0.5f
+                                        )
                                     )
                                 }
                             }
@@ -407,11 +446,19 @@ fun ProfileScreen(
                     SettingsCard(
                         modifier = Modifier
                             .wrapContentHeight()
-                            .clickable { uriHandler.openUri(CONSTELLATION_DATA_SOURCE_URL) },
+                            .clickable(
+                                interactionSource = MutableInteractionSource(),
+                                indication = null
+                            ) {
+                                viewModel.setUri(CONSTELLATION_DATA_SOURCE_URL)
+                                viewModel.showDialog(DialogState.OpenLink)
+                                       },
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        ),
                     ) {
                         Row {
                             Box(
@@ -448,7 +495,9 @@ fun ProfileScreen(
                                         fontSize = 14.sp,
                                         fontFamily = FontFamily(Font(R.font.montserrat)),
                                         fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(0.5f)
+                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                            0.5f
+                                        )
                                     )
                                 }
                             }
@@ -456,12 +505,21 @@ fun ProfileScreen(
                     }
 
                     SettingsCard(
-                        modifier = Modifier.wrapContentHeight()
-                            .clickable { uriHandler.openUri(GITHUB_REPO_ISSUE_URL) },
+                        modifier = Modifier
+                            .wrapContentHeight()
+                            .clickable(
+                                interactionSource = MutableInteractionSource(),
+                                indication = null
+                            ) {
+                                viewModel.setUri(GITHUB_REPO_ISSUE_URL)
+                                viewModel.showDialog(DialogState.OpenLink)
+                              },
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(0.3f),
+                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                            0.3f
+                        ),
                     ) {
                         Row {
                             Box(
@@ -496,5 +554,15 @@ fun ProfileScreen(
                 }
             }
         }
+    }
+    when (viewModel.dialogState) {
+        is DialogState.OpenLink -> OpenLinkDialog(
+            onDismiss = { viewModel.hideDialog() },
+            onConfirm = {
+                uriHandler.openUri(viewModel.uri!!)
+                viewModel.hideDialog()
+            }
+        )
+        else -> {}
     }
 }
