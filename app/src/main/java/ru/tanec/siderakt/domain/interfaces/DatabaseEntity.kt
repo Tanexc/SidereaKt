@@ -1,4 +1,4 @@
-package ru.tanec.siderakt.domain.model.interfaces
+package ru.tanec.siderakt.domain.interfaces
 
 interface DatabaseEntity {
     fun asDomain(): Model

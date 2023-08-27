@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ru.tanec.siderakt.domain.model.interfaces.SettingsController
+import ru.tanec.siderakt.domain.interfaces.SettingsController
 import javax.inject.Inject
 
 @HiltViewModel

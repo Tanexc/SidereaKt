@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.domain.model.Screen
-import ru.tanec.siderakt.domain.model.interfaces.SettingsController
+import ru.tanec.siderakt.domain.interfaces.SettingsController
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
 import javax.inject.Inject
 

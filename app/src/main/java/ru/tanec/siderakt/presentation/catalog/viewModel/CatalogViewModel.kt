@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.domain.model.Constellation
-import ru.tanec.siderakt.domain.model.interfaces.SettingsController
+import ru.tanec.siderakt.domain.interfaces.SettingsController
 import ru.tanec.siderakt.domain.use_case.constellation_use_case.GetAllConstellationsUseCase
 import ru.tanec.siderakt.domain.use_case.constellation_use_case.GetConstellationById
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase

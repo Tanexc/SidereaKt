@@ -2,7 +2,7 @@ package ru.tanec.siderakt.domain.model
 
 import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.data.local.entity.PersonalInfoEntity
-import ru.tanec.siderakt.domain.model.interfaces.Model
+import ru.tanec.siderakt.domain.interfaces.Model
 
 data class SettingsData(
     val learnedConstellations: Int,

@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.core.util.Theme
-import ru.tanec.siderakt.domain.model.interfaces.SettingsController
+import ru.tanec.siderakt.domain.interfaces.SettingsController
 import ru.tanec.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
 import ru.tanec.siderakt.domain.use_case.personal_use_case.SetInfoUseCase
 import javax.inject.Inject
