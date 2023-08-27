@@ -40,4 +40,6 @@
     <string name="exit_question">Are you sure you want to exit?</string>
     <string name="link">Link</string>
     <string name="open_link">An external application will open. Do you want to follow the link?</string>
+    <string name="not_learned">Only not learned constellations</string>
+    <string name="questions_count">Count of questions</string>
 </resources>

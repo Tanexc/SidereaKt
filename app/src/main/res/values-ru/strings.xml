@@ -40,4 +40,6 @@
     <string name="exit_question">Вы действительно хотите выйти?</string>
     <string name="link">Ссылка</string>
     <string name="open_link">Откроется внешнее приложение. Вы хотите перейти по ссылке?</string>
+    <string name="not_learned">Только не изученные сохвездия</string>
+    <string name="questions_count">Количество вопросов</string>
 </resources>
