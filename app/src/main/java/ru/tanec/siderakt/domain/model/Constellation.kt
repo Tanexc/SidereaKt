@@ -3,7 +3,7 @@ package ru.tanec.siderakt.domain.model
 import android.graphics.Bitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import ru.tanec.siderakt.data.local.entity.ConstellationEntity
-import ru.tanec.siderakt.domain.model.interfaces.Model
+import ru.tanec.siderakt.domain.interfaces.Model
 
 data class Constellation(
     val id: Long,
@@ -15,7 +15,8 @@ data class Constellation(
     val hemisphere: Int,
     val lat: String,
     val alphaStar: String,
-    val imageCache: Bitmap?
+    val imageCache: Bitmap?,
+    val learned: Boolean
 ): Model {
 
     val icon: ImageVector? = null
@@ -30,6 +31,7 @@ data class Constellation(
         hemisphere,
         lat,
         alphaStar,
-        imageCache
+        imageCache,
+        learned
     )
 }
