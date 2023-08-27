@@ -6,6 +6,11 @@ import androidx.room.PrimaryKey
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.interfaces.DatabaseEntity
 
+// hemisphere
+// 1 - north
+// 2 - south
+// 0 - equatorial
+
 @Entity(tableName = "constellations")
 data class ConstellationEntity(
     @PrimaryKey
