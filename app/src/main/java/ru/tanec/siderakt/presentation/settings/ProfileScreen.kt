@@ -1,6 +1,5 @@
 package ru.tanec.siderakt.presentation.settings
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -55,8 +54,7 @@ import ru.tanec.siderakt.presentation.main.components.SelectButtonGroup
 import ru.tanec.siderakt.presentation.main.components.SelectButtonItem
 import ru.tanec.siderakt.presentation.settings.components.SettingsCard
 import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
-import ru.tanec.siderakt.presentation.utils.dialogs.ExitDialog
-import ru.tanec.siderakt.presentation.utils.dialogs.OpenLinkDialog
+import ru.tanec.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
 
 @Composable
 fun ProfileScreen(

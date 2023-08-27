@@ -1,4 +1,4 @@
-package ru.tanec.siderakt.presentation.utils.dialogs
+package ru.tanec.siderakt.presentation.utils.widgets.dialogs
 
 
 import androidx.compose.foundation.clickable

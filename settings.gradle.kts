@@ -16,4 +16,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SidereaKt"
-include ':app'
+include(":app")

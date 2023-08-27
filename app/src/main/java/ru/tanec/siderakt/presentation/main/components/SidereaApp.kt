@@ -16,8 +16,7 @@ import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.presentation.main.viewModel.MainViewModel
 import ru.tanec.siderakt.presentation.ui.theme.SidereaTheme
-import ru.tanec.siderakt.presentation.utils.dialogs.ExitDialog
-import ru.tanec.siderakt.presentation.utils.dialogs.OpenLinkDialog
+import ru.tanec.siderakt.presentation.utils.widgets.dialogs.ExitDialog
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
