@@ -7,7 +7,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.tanec.siderakt.core.util.Theme
-import ru.tanec.siderakt.core.util.Theme.*
+import ru.tanec.siderakt.core.util.Theme.Blue
+import ru.tanec.siderakt.core.util.Theme.Default
+import ru.tanec.siderakt.core.util.Theme.Green
 import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.BlueColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.DefaultColorScheme

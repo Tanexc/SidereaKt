@@ -1,7 +1,6 @@
 package ru.tanec.siderakt.domain.model
 
 
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -13,7 +12,6 @@ import androidx.compose.material.icons.outlined.Task
 import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-
 import ru.tanec.siderakt.R
 
 @Parcelize

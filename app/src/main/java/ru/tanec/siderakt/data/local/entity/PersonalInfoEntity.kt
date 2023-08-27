@@ -3,8 +3,8 @@ package ru.tanec.siderakt.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.tanec.siderakt.core.util.Theme
-import ru.tanec.siderakt.domain.model.interfaces.DatabaseEntity
 import ru.tanec.siderakt.domain.model.SettingsData
+import ru.tanec.siderakt.domain.model.interfaces.DatabaseEntity
 
 @Entity(tableName = "personalInformation")
 data class PersonalInfoEntity(

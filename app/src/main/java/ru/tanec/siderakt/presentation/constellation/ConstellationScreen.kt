@@ -40,8 +40,8 @@ import coil.compose.SubcomposeAsyncImageContent
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.domain.model.Constellation
-import ru.tanec.siderakt.presentation.constellation.components.ItemCard
 import ru.tanec.siderakt.presentation.constellation.viewModel.ConstellationViewModel
+import ru.tanec.siderakt.presentation.utils.widgets.ItemCard
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

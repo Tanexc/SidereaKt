@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
@@ -52,9 +53,10 @@ import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.presentation.main.components.Picture
 import ru.tanec.siderakt.presentation.main.components.SelectButtonGroup
 import ru.tanec.siderakt.presentation.main.components.SelectButtonItem
-import ru.tanec.siderakt.presentation.settings.components.SettingsCard
 import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
+import ru.tanec.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanec.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
+
 
 @Composable
 fun ProfileScreen(
@@ -76,7 +78,7 @@ fun ProfileScreen(
                         fontWeight = FontWeight.ExtraLight,
                         fontSize = 22.sp,
                     )
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .height(96.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
@@ -107,7 +109,7 @@ fun ProfileScreen(
                         }
                     }
                     Row {
-                        SettingsCard(
+                        ItemCard(
                             modifier = Modifier
                                 .height(96.dp)
                                 .fillMaxWidth(0.5f),
@@ -138,7 +140,7 @@ fun ProfileScreen(
                                 )
                             }
                         }
-                        SettingsCard(
+                        ItemCard(
                             modifier = Modifier
                                 .height(96.dp)
                                 .fillMaxWidth(),
@@ -206,7 +208,7 @@ fun ProfileScreen(
                         fontSize = 22.sp,
                     )
 
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .height(108.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
@@ -237,7 +239,7 @@ fun ProfileScreen(
                             )
                         }
                     }
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .wrapContentHeight(),
                         borderColor = viewModel.settings.colorScheme.outline,
@@ -307,11 +309,11 @@ fun ProfileScreen(
                         fontSize = 22.sp,
                     )
 
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable(
-                                interactionSource = MutableInteractionSource(),
+                                interactionSource = remember {MutableInteractionSource()},
                                 indication = null
                             ) {
                                 viewModel.setUri(GITHUB_REPO_URL)
@@ -377,11 +379,11 @@ fun ProfileScreen(
                         }
                     }
 
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable(
-                                interactionSource = MutableInteractionSource(),
+                                interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             ) {
                                 viewModel.setUri(GITHUB_PROFILE_URL)
@@ -441,11 +443,11 @@ fun ProfileScreen(
                         }
                     }
 
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable(
-                                interactionSource = MutableInteractionSource(),
+                                interactionSource = remember { MutableInteractionSource() },
                                 indication = null
                             ) {
                                 viewModel.setUri(CONSTELLATION_DATA_SOURCE_URL)
@@ -502,11 +504,11 @@ fun ProfileScreen(
                         }
                     }
 
-                    SettingsCard(
+                    ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
                             .clickable(
-                                interactionSource = MutableInteractionSource(),
+                                interactionSource = remember { MutableInteractionSource()},
                                 indication = null
                             ) {
                                 viewModel.setUri(GITHUB_REPO_ISSUE_URL)

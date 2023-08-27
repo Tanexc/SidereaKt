@@ -1,8 +1,6 @@
 package ru.tanec.siderakt.domain.model
 
 import android.graphics.Bitmap
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.compose.ui.graphics.vector.ImageVector
 import ru.tanec.siderakt.data.local.entity.ConstellationEntity
 import ru.tanec.siderakt.domain.model.interfaces.Model

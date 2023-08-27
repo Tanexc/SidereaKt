@@ -4,7 +4,6 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import ru.tanec.siderakt.core.util.DialogState
 import ru.tanec.siderakt.core.util.Theme
 import ru.tanec.siderakt.domain.model.SettingsData
 import ru.tanec.siderakt.domain.model.interfaces.SettingsController

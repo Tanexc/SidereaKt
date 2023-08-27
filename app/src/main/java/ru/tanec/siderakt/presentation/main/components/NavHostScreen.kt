@@ -22,7 +22,6 @@ import dev.olshevski.navigation.reimagined.NavBackHandler
 import dev.olshevski.navigation.reimagined.NavHost
 import dev.olshevski.navigation.reimagined.navigate
 import dev.olshevski.navigation.reimagined.popAll
-import dev.olshevski.navigation.reimagined.popUpTo
 import dev.olshevski.navigation.reimagined.rememberNavController
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.domain.model.Constellation

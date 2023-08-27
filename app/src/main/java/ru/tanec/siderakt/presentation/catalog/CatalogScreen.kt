@@ -42,10 +42,10 @@ import ru.tanec.siderakt.R
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.Screen
-import ru.tanec.siderakt.presentation.catalog.components.CatalogSearchBar
-import ru.tanec.siderakt.presentation.catalog.components.ConstellationItem
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel
 import ru.tanec.siderakt.presentation.utils.isScrollingUp
+import ru.tanec.siderakt.presentation.utils.widgets.CatalogSearchBar
+import ru.tanec.siderakt.presentation.utils.widgets.ConstellationItem
 
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
