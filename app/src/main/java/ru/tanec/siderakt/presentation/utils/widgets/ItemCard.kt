@@ -18,18 +18,17 @@ fun ItemCard(
     modifier: Modifier = Modifier,
     borderWidth: Dp = 1.dp,
     borderRadius: Dp = 16.dp,
-    borderColor: Color = MaterialTheme.colorScheme.outline,
+    borderColor: Color = Color.Transparent,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(0.3f),
     content: @Composable () -> Unit
 
 ) {
     Box(
         modifier = modifier
-            .padding(4.dp)
             .border(
                 width = borderWidth,
                 shape = RoundedCornerShape(borderRadius),
-                brush = SolidColor(Color.Transparent)
+                brush = SolidColor(borderColor)
             )
             .background(backgroundColor, RoundedCornerShape(borderRadius))
     ) {
