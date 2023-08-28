@@ -8,6 +8,7 @@ data class SettingsData(
     val learnedConstellations: Int,
     val learnedNorth: Int,
     val learnedSouth: Int,
+    val learnedEquatorial: Int,
     val selectedTheme: Theme,
     val useDarkTheme: Boolean
 ) : Model {
@@ -18,6 +19,7 @@ data class SettingsData(
         learnedConstellations = learnedConstellations,
         learnedNorth = learnedNorth,
         learnedSouth = learnedSouth,
+        learnedEquatorial = learnedEquatorial,
         selectedTheme = selectedTheme.id,
         useDarkTheme = useDarkTheme.toInt()
     )

@@ -80,7 +80,8 @@ fun ProfileScreen(
                     )
                     ItemCard(
                         modifier = Modifier
-                            .height(96.dp),
+                            .height(96.dp)
+                            .padding(4.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
@@ -112,7 +113,8 @@ fun ProfileScreen(
                         ItemCard(
                             modifier = Modifier
                                 .height(96.dp)
-                                .fillMaxWidth(0.5f),
+                                .fillMaxWidth(0.5f)
+                                .padding(4.dp),
                             borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
@@ -143,7 +145,8 @@ fun ProfileScreen(
                         ItemCard(
                             modifier = Modifier
                                 .height(96.dp)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .padding(4.dp),
                             borderColor = viewModel.settings.colorScheme.outline,
                             borderRadius = 16.dp,
                             borderWidth = 1.dp,
@@ -210,7 +213,8 @@ fun ProfileScreen(
 
                     ItemCard(
                         modifier = Modifier
-                            .height(108.dp),
+                            .height(108.dp)
+                            .padding(4.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
@@ -241,7 +245,8 @@ fun ProfileScreen(
                     }
                     ItemCard(
                         modifier = Modifier
-                            .wrapContentHeight(),
+                            .wrapContentHeight()
+                            .padding(4.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
                         borderRadius = 16.dp,
                         borderWidth = 1.dp,
@@ -312,6 +317,7 @@ fun ProfileScreen(
                     ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
+                            .padding(4.dp)
                             .clickable(
                                 interactionSource = remember {MutableInteractionSource()},
                                 indication = null
@@ -382,6 +388,7 @@ fun ProfileScreen(
                     ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
+                            .padding(4.dp)
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
@@ -446,6 +453,7 @@ fun ProfileScreen(
                     ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
+                            .padding(4.dp)
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource() },
                                 indication = null
@@ -507,6 +515,7 @@ fun ProfileScreen(
                     ItemCard(
                         modifier = Modifier
                             .wrapContentHeight()
+                            .padding(4.dp)
                             .clickable(
                                 interactionSource = remember { MutableInteractionSource()},
                                 indication = null

@@ -14,6 +14,7 @@ data class PersonalInfoEntity(
     val learnedConstellations: Int,
     val learnedNorth: Int,
     val learnedSouth: Int,
+    val learnedEquatorial: Int,
     val useDarkTheme: Int
 ) : DatabaseEntity {
 
@@ -21,6 +22,7 @@ data class PersonalInfoEntity(
         learnedConstellations = learnedConstellations,
         learnedNorth = learnedNorth,
         learnedSouth = learnedSouth,
+        learnedEquatorial = learnedEquatorial,
         selectedTheme = Theme.getScheme(selectedTheme),
         useDarkTheme = when(useDarkTheme) {
             1 -> true
