@@ -10,8 +10,10 @@ import dagger.hilt.components.SingletonComponent
 import ru.tanec.siderakt.data.local.database.MainDatabase
 import ru.tanec.siderakt.data.repository.ConstellationRepositoryImpl
 import ru.tanec.siderakt.data.repository.PersonalInfoRepositoryImpl
+import ru.tanec.siderakt.data.repository.TestRepositoryImpl
 import ru.tanec.siderakt.domain.repository.ConstellationRepository
 import ru.tanec.siderakt.domain.repository.PersonalInfoRepository
+import ru.tanec.siderakt.domain.repository.TestRepository
 import javax.inject.Singleton
 
 @Module
@@ -41,5 +43,10 @@ object DatabaseModule {
         db: MainDatabase
     ): PersonalInfoRepository = PersonalInfoRepositoryImpl(db.personalInfoDao)
 
+    @Provides
+    @Singleton
+    fun provideTestRepository(
+        db: MainDatabase
+    ): TestRepository = TestRepositoryImpl(db.constellationDao)
 
 }
