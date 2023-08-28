@@ -29,7 +29,7 @@ import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.CatalogScreen
 import ru.tanec.siderakt.presentation.constellation.ConstellationScreen
 import ru.tanec.siderakt.presentation.settings.ProfileScreen
-import ru.tanec.siderakt.presentation.test.TestScreen
+import ru.tanec.siderakt.presentation.test.screen.TestScreen
 
 
 @Composable
