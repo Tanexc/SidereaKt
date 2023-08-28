@@ -46,4 +46,5 @@
     <string name="enable_timer">Enable timer</string>
     <string name="timer_info">The test will be limited in time for 15 minutes</string>
     <string name="start">Start</string>
+    <string name="correct_answer">Correct answer:</string>
 </resources>
