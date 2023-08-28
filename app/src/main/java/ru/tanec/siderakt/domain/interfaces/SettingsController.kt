@@ -7,6 +7,7 @@ import ru.tanec.siderakt.domain.model.SettingsData
 interface SettingsController {
     val data: SettingsData?
     val colorScheme: ColorScheme
+
     fun updateSettingsData(data: SettingsData)
 
     fun theme(): Theme?
@@ -14,6 +15,8 @@ interface SettingsController {
     fun learnedNorth(): Int
 
     fun learnedSouth(): Int
+
+    fun learnedEquatorial(): Int
 
     fun isThemeInDarkMode(): Boolean
 }

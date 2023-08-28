@@ -22,12 +22,13 @@ class SettingsControllerImpl : SettingsController {
         _colorScheme.value = getTheme(theme(), isThemeInDarkMode())
     }
 
-    override fun theme() = data?.selectedTheme?: Theme.Default()
+    override fun theme(): Theme = data?.selectedTheme?: Theme.Default()
 
-    override fun learnedNorth() = data?.learnedNorth?: 0
+    override fun learnedNorth(): Int = data?.learnedNorth?: 0
 
-    override fun learnedSouth() = data?.learnedSouth?: 0
+    override fun learnedSouth(): Int = data?.learnedSouth?: 0
+    override fun learnedEquatorial(): Int = data?.learnedEquatorial?: 0
 
-    override fun isThemeInDarkMode() = data?.useDarkTheme?: true
+    override fun isThemeInDarkMode(): Boolean = data?.useDarkTheme?: true
 
 }
