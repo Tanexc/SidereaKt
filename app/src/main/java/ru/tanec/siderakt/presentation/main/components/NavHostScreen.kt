@@ -2,6 +2,7 @@ package ru.tanec.siderakt.presentation.main.components
 
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.padding
@@ -56,7 +57,7 @@ fun NavHostScreen(
     Scaffold(modifier = modifier,
         topBar = topBar,
         bottomBar = {
-            AnimatedVisibility(visible = bottomBarVisibility.value, exit = ExitTransition.None, enter = slideInVertically {it}) {
+            AnimatedVisibility(visible = bottomBarVisibility.value, exit = ExitTransition.None, enter = EnterTransition.None) {
                 BottomAppBar(modifier) {
                     screens.forEach {
                         NavigationBarItem(
