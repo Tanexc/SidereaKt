@@ -41,6 +41,7 @@ import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanec.siderakt.R
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.presentation.constellation.viewModel.ConstellationViewModel
+import ru.tanec.siderakt.presentation.ui.theme.Typography
 import ru.tanec.siderakt.presentation.utils.widgets.ItemCard
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -55,7 +56,7 @@ fun ConstellationScreen(
     if (constellation != null) {
         LazyColumn(modifier = modifier) {
             item {
-                AnimatedContent(targetState = viewModel.isImageCollapsed) { targetState ->
+                AnimatedContent(targetState = viewModel.isImageCollapsed, label = "") { targetState ->
                     Box(modifier = Modifier
                         .wrapContentHeight()
                         .fillMaxWidth()) {
@@ -110,7 +111,6 @@ fun ConstellationScreen(
                                             text = stringResource(R.string.check_internet),
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .basicMarquee()
                                                 .align(Alignment.BottomCenter)
                                                 .padding(4.dp),
                                             textAlign = TextAlign.Center,
@@ -154,7 +154,8 @@ fun ConstellationScreen(
                     ItemCard(
                         modifier = Modifier
                             .fillMaxWidth(0.5f)
-                            .height(128.dp),
+                            .height(128.dp)
+                            .padding(4.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
@@ -203,7 +204,8 @@ fun ConstellationScreen(
                     ItemCard(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(128.dp),
+                            .height(128.dp)
+                            .padding(4.dp),
                         borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
@@ -257,7 +259,7 @@ fun ConstellationScreen(
                 Row(Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp)) {
 
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth(0.5f), borderColor = viewModel.settings.colorScheme.outline,
+                        modifier = Modifier.fillMaxWidth(0.5f).padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
@@ -288,7 +290,7 @@ fun ConstellationScreen(
 
                     }
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth(), borderColor = viewModel.settings.colorScheme.outline,
+                        modifier = Modifier.fillMaxWidth().padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
@@ -321,7 +323,7 @@ fun ConstellationScreen(
 
             item {
                 ItemCard(
-                    Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp),
+                    Modifier.padding(4.dp, 4.dp, 4.dp, 0.dp),
                     borderColor = viewModel.settings.colorScheme.outline,
                     backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                         if (viewModel.settings.isThemeInDarkMode()) {
@@ -333,7 +335,9 @@ fun ConstellationScreen(
                 ) {
                     Text(
                         text = constellation.info,
-                        modifier = Modifier.padding(8.dp)
+                        modifier = Modifier.padding(16.dp),
+                        textAlign = TextAlign.Justify,
+                        style = Typography.bodyLarge
                     )
                 }
             }

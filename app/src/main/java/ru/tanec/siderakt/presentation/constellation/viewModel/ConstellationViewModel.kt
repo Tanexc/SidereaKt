@@ -13,7 +13,7 @@ class ConstellationViewModel @Inject constructor(
     val settings: SettingsController
 ): ViewModel() {
 
-    private val _imageCollapsedState: MutableState<Boolean> = mutableStateOf(false)
+    private val _imageCollapsedState: MutableState<Boolean> = mutableStateOf(true)
     val isImageCollapsed by _imageCollapsedState
 
     fun changeImageCollapsedState() {

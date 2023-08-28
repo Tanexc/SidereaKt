@@ -104,14 +104,21 @@ fun CatalogScreen(
                                 Screen.Constellation,
                                 it
                             ) {
-                                CenterAlignedTopAppBar(title = {
-                                    Text(
-                                        it.title + "( " + it.lat + " )",
-                                        modifier = Modifier.basicMarquee(),
-                                        fontFamily = FontFamily(Font(R.font.montserrat))
-                                    )
-                                },
-                                navigationIcon = {Icon(Icons.Outlined.ArrowBack, null, modifier = Modifier.clickable(onClick = { navigationIconAction() }))})
+                                CenterAlignedTopAppBar(
+                                    title = {
+                                        Text(
+                                            it.title + "( " + it.lat + " )",
+                                            modifier = Modifier.basicMarquee(),
+                                            fontFamily = FontFamily(Font(R.font.montserrat))
+                                        )
+                                    },
+                                    navigationIcon = {
+                                        Icon(
+                                            Icons.Outlined.ArrowBack,
+                                            null,
+                                            modifier = Modifier.clickable(onClick = { navigationIconAction() })
+                                        )
+                                    })
                             }
                         }
                     }
