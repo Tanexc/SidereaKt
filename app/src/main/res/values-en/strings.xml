@@ -13,6 +13,7 @@
     <string name="constellations">Constellations</string>
     <string name="north">North</string>
     <string name="south">South</string>
+    <string name="equatorials">Equatorial</string>
     <string name="of">of</string>
     <string name="app_default">Default</string>
     <string name="blue">Blue</string>
@@ -42,4 +43,7 @@
     <string name="open_link">An external application will open. Do you want to follow the link?</string>
     <string name="not_learned">Only not learned constellations</string>
     <string name="questions_count">Count of questions</string>
+    <string name="enable_timer">Enable timer</string>
+    <string name="timer_info">The test will be limited in time for 15 minutes</string>
+    <string name="start">Start</string>
 </resources>
