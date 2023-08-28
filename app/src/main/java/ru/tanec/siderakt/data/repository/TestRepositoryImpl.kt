@@ -12,7 +12,7 @@ import kotlin.random.Random
 
 class TestRepositoryImpl @Inject constructor(
     private val constellationDao: ConstellationDao
-): TestRepository {
+) : TestRepository {
 
     override fun getTest(
         questionsCount: Int,
@@ -53,9 +53,14 @@ class TestRepositoryImpl @Inject constructor(
                 data.removeAt(Random.nextInt(questionsCount))
             }
 
-            emit(State.Success(data.map { question -> TestItem(question, catalog.filter { it !in data }.shuffled().subList(0, 4)) }))
+            emit(State.Success(data.map { question ->
+                TestItem(
+                    question,
+                    (catalog.filter { it !in data }.shuffled().subList(0, 3) + question).shuffled()
+                )
+            }))
         } catch (e: Exception) {
-            emit(State.Error(message = e.message?: "error"))
+            emit(State.Error(message = e.message ?: "error"))
         }
     }
 }
