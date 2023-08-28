@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import ru.tanec.siderakt.core.util.State
 import ru.tanec.siderakt.core.util.TestState
 import ru.tanec.siderakt.domain.interfaces.SettingsController
+import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.TestItem
 import ru.tanec.siderakt.domain.use_case.test_use_case.GetTestUseCase
 import javax.inject.Inject
@@ -107,6 +108,10 @@ class TestViewModel @Inject constructor(
 
     private fun endTimer() {
         timer?.cancel(null)
+    }
+
+    fun setItemAnswer(value: Constellation, index: Int) {
+        _testData.value = _testData.value?.mapIndexed { ind, testItem -> if (ind == index) testItem.copy(answer = value) else testItem }
     }
 
 }

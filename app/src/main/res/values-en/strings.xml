@@ -48,4 +48,7 @@
     <string name="start">Start</string>
     <string name="correct_answer">Correct answer:</string>
     <string name="orange">Orange</string>
+    <string name="answers_given">Answers given:</string>
+    <string name="close_test">Close test</string>
+    <string name="end_test">Finish test</string>
 </resources>
