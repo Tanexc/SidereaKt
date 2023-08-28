@@ -7,12 +7,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.tanec.siderakt.core.util.Theme
-import ru.tanec.siderakt.core.util.Theme.Blue
+import ru.tanec.siderakt.core.util.Theme.Orange
 import ru.tanec.siderakt.core.util.Theme.Default
 import ru.tanec.siderakt.core.util.Theme.Green
 import ru.tanec.siderakt.presentation.ui.theme.Colors.AppColorScheme
-import ru.tanec.siderakt.presentation.ui.theme.Colors.BlueColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.DefaultColorScheme
+import ru.tanec.siderakt.presentation.ui.theme.Colors.OrangeColorScheme
 import ru.tanec.siderakt.presentation.ui.theme.Colors.GreenColorScheme
 
 
@@ -31,8 +31,8 @@ fun SidereaTheme(
 
 fun getTheme(colorTheme: Theme, useDarkTheme: Boolean): ColorScheme {
     val scheme: AppColorScheme = when (colorTheme) {
+        is Orange -> OrangeColorScheme()
         is Default -> DefaultColorScheme()
-        is Blue -> BlueColorScheme()
         is Green -> GreenColorScheme()
         else -> DefaultColorScheme()
     }

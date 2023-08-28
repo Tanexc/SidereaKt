@@ -47,4 +47,5 @@
     <string name="timer_info">The test will be limited in time for 15 minutes</string>
     <string name="start">Start</string>
     <string name="correct_answer">Correct answer:</string>
+    <string name="orange">Orange</string>
 </resources>

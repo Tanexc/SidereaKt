@@ -46,4 +46,5 @@
     <string name="timer_info">Тест будет ограничен по времени на 15 минут</string>
     <string name="start">Начать</string>
     <string name="correct_answer">Правильный ответ:</string>
+    <string name="orange">Оранжевый</string>
 </resources>

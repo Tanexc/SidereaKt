@@ -188,9 +188,9 @@ fun ProfileScreen(
                         }
                     ),
                     SelectButtonItem(
-                        title = stringResource(R.string.blue),
+                        title = stringResource(R.string.orange),
                         onSelected = {
-                            viewModel.changeTheme(Theme.Blue())
+                            viewModel.changeTheme(Theme.Orange())
                         }
                     ),
                     SelectButtonItem(
