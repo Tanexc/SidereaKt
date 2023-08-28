@@ -16,7 +16,7 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.2.2-alpha"
+        versionName = "1.3.0-beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -46,7 +46,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.0"
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += ("/META-INF/{AL2.0,LGPL2.1}")
         }
