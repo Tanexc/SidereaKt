@@ -51,4 +51,9 @@
     <string name="answers_given">Answers given:</string>
     <string name="close_test">Close test</string>
     <string name="end_test">Finish test</string>
+    <string name="correct_answers_count">Correct answers count:</string>
+    <string name="check_answers">Check answers</string>
+    <string name="ok">Ok</string>
+    <string name="advices">Advices</string>
+    <string name="advices_swap">Swipe across the screen to switch between cards</string>
 </resources>

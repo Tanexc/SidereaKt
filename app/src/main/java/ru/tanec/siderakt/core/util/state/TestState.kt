@@ -1,4 +1,4 @@
-package ru.tanec.siderakt.core.util
+package ru.tanec.siderakt.core.util.state
 
 sealed class TestState {
     data object Started : TestState()

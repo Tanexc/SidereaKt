@@ -182,6 +182,7 @@ fun TestCard(
         for (it in item.answers) {
             Row(Modifier.padding(8.dp, 2.dp)) {
                 RadioButton(
+                    enabled = if (showAnswer) { testItem.answer?.id == it.id } else {true},
                     selected = testItem.answer?.id == it.id,
                     onClick = {
                         testItem = testItem.copy(answer = it)

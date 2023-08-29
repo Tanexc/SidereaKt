@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import ru.tanec.siderakt.R
-import ru.tanec.siderakt.core.util.DialogState
+import ru.tanec.siderakt.core.util.state.DialogState
 import ru.tanec.siderakt.presentation.main.viewModel.MainViewModel
 import ru.tanec.siderakt.presentation.ui.theme.SidereaTheme
 import ru.tanec.siderakt.presentation.utils.widgets.dialogs.ExitDialog

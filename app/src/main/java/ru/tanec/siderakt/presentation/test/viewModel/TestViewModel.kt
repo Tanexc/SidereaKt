@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.tanec.siderakt.core.util.State
-import ru.tanec.siderakt.core.util.TestState
+import ru.tanec.siderakt.core.util.state.State
+import ru.tanec.siderakt.core.util.state.TestState
 import ru.tanec.siderakt.domain.interfaces.SettingsController
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.TestItem
@@ -79,6 +79,7 @@ class TestViewModel @Inject constructor(
     fun endTest() {
         _testState.value = TestState.Ended
         endTimer()
+        TODO("create editConstellationUseCase")
     }
 
     fun closeTest() {

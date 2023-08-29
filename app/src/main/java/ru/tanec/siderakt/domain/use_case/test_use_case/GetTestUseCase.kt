@@ -1,7 +1,7 @@
 package ru.tanec.siderakt.domain.use_case.test_use_case
 
 import kotlinx.coroutines.flow.Flow
-import ru.tanec.siderakt.core.util.State
+import ru.tanec.siderakt.core.util.state.State
 import ru.tanec.siderakt.domain.model.TestItem
 import ru.tanec.siderakt.domain.repository.TestRepository
 import javax.inject.Inject

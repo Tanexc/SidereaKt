@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import kotlinx.coroutines.launch
 import ru.tanec.siderakt.R
-import ru.tanec.siderakt.core.util.State
+import ru.tanec.siderakt.core.util.state.State
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.model.Screen
 import ru.tanec.siderakt.presentation.catalog.viewModel.CatalogViewModel

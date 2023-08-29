@@ -51,4 +51,9 @@
     <string name="answers_given">Дано ответов:</string>
     <string name="close_test">Закрыть тест</string>
     <string name="end_test">Завершить тест</string>
+    <string name="correct_answers_count">Количество верных ответов:</string>
+    <string name="check_answers">Проверить ответы</string>
+    <string name="ok">Хорошо</string>
+    <string name="advices">Советы</string>
+    <string name="advices_swap">Для перехода между карточками проведите по экрану</string>
 </resources>

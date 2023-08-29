@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,12 +42,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanec.siderakt.R
-import ru.tanec.siderakt.core.util.TestState
+import ru.tanec.siderakt.core.util.state.DialogState
+import ru.tanec.siderakt.core.util.state.TestState
 import ru.tanec.siderakt.presentation.test.components.TestCard
 import ru.tanec.siderakt.presentation.test.components.TestConfig
 import ru.tanec.siderakt.presentation.test.components.TestResult
 import ru.tanec.siderakt.presentation.test.viewModel.TestViewModel
 import ru.tanec.siderakt.presentation.utils.widgets.ItemCard
+import ru.tanec.siderakt.presentation.utils.widgets.dialogs.TestInfoDialog
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -55,6 +58,7 @@ fun TestScreen(
 ) {
     val viewModel: TestViewModel = hiltViewModel()
     var countOfAnswer: Int by remember { mutableIntStateOf(0) }
+    var dialogState: DialogState? by remember { mutableStateOf(null) }
 
     when (viewModel.testState) {
         is TestState.NotStarted -> TestConfig(modifier.fillMaxSize(), viewModel)
@@ -69,11 +73,13 @@ fun TestScreen(
             val testLazyListState = rememberLazyListState()
 
 
-            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth().zIndex(11f)) {
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                .fillMaxWidth()
+                .zIndex(11f)) {
                 IconButton(onClick = { viewModel.closeTest() }, modifier = Modifier.padding(8.dp)) {
                     Icon(Icons.Outlined.ArrowBack, null)
                 }
-                IconButton(onClick = { viewModel.closeTest() }, modifier = Modifier.padding(8.dp)) {
+                IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
                     Icon(Icons.Outlined.Info, null)
                 }
             }
@@ -161,8 +167,22 @@ fun TestScreen(
 
         }
 
-        is TestState.Ended -> TestResult(modifier.fillMaxSize())
+        is TestState.Ended -> TestResult(
+            modifier.fillMaxSize(),
+            answerGiven = countOfAnswer,
+            items = viewModel.testData?: emptyList(),
+            cardColor = viewModel.settngsController.colorScheme.tertiaryContainer,
+            showInfoDialog = { dialogState = DialogState.TestInfo },
+            surfaceColor = viewModel.settngsController.colorScheme.surface,
+            onCloseTest = { viewModel.closeTest() }
 
+        )
+
+    }
+
+    when(dialogState) {
+        is DialogState.TestInfo -> TestInfoDialog(onConfirm = { dialogState = null })
+        else -> {}
     }
 
 }

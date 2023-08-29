@@ -44,7 +44,7 @@ import ru.tanec.siderakt.core.util.AUTHOR
 import ru.tanec.siderakt.core.util.AUTHOR_NICKNAME
 import ru.tanec.siderakt.core.util.AUTHOR_PICTURE_URL
 import ru.tanec.siderakt.core.util.CONSTELLATION_DATA_SOURCE_URL
-import ru.tanec.siderakt.core.util.DialogState
+import ru.tanec.siderakt.core.util.state.DialogState
 import ru.tanec.siderakt.core.util.GITHUB_PROFILE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_ISSUE_URL
 import ru.tanec.siderakt.core.util.GITHUB_REPO_URL

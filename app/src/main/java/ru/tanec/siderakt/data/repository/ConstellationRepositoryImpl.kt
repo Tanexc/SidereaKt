@@ -3,7 +3,7 @@ package ru.tanec.siderakt.data.repository
 import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ru.tanec.siderakt.core.util.State
+import ru.tanec.siderakt.core.util.state.State
 import ru.tanec.siderakt.data.local.dao.ConstellationDao
 import ru.tanec.siderakt.domain.model.Constellation
 import ru.tanec.siderakt.domain.repository.ConstellationRepository
