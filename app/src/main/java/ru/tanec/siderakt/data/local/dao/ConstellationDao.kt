@@ -12,6 +12,6 @@ interface ConstellationDao {
     suspend fun getConstellationById(id: Long): ConstellationEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun setConstellationList(constellationList: List<ConstellationEntity>)
+    suspend fun editConstellation(constellation: ConstellationEntity)
 
 }
