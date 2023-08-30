@@ -113,7 +113,7 @@ fun TestResult(
 
         Column(modifier = modifier.padding(16.dp)) {
             Spacer(modifier = Modifier.size(12.dp))
-            Row(Modifier.padding(8.dp, 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(Modifier.padding(8.dp, 4.dp)) {
                 Text(
                     stringResource(R.string.answers_given), modifier = Modifier
                         .fillMaxWidth()
@@ -133,8 +133,8 @@ fun TestResult(
             }
 
             Row(
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.padding(8.dp, 4.dp)
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.padding(8.dp, 4.dp).fillMaxWidth()
             ) {
                 TextButton(
                     onClick = { showAnswers = true },
