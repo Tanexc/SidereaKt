@@ -98,7 +98,7 @@ fun ProfileScreen(
                                 fontFamily = FontFamily(Font(R.font.montserrat))
                             )
                             Text(
-                                "${viewModel.settings.learnedNorth() + viewModel.settings.learnedSouth()} " + stringResource(
+                                "${viewModel.settings.learnedNorth() + viewModel.settings.learnedSouth() + viewModel.settings.learnedEquatorial() } " + stringResource(
                                     R.string.of
                                 ) + " 88",
                                 textAlign = TextAlign.Center,
