@@ -66,7 +66,7 @@ fun TestScreen(
         is TestState.Started -> Box(
             modifier = Modifier
                 .fillMaxSize()
-                .background(viewModel.settngsController.colorScheme.surface)
+                .background(viewModel.settingsController.colorScheme.surface)
                 .zIndex(10f)
         ) {
 
@@ -102,7 +102,7 @@ fun TestScreen(
                                     .fillParentMaxWidth()
                                     .padding(16.dp, 64.dp, 16.dp, 0.dp)
                                     .background(
-                                        viewModel.settngsController.colorScheme.tertiaryContainer,
+                                        viewModel.settingsController.colorScheme.tertiaryContainer,
                                         RoundedCornerShape(16.dp)
                                     )
                                     .border(
@@ -133,7 +133,7 @@ fun TestScreen(
                             .padding(16.dp)
                             .align(Alignment.Center),
                         borderRadius = 16.dp,
-                        backgroundColor = viewModel.settngsController.colorScheme.tertiaryContainer
+                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer
                     ) {
 
                         Column(
@@ -171,9 +171,9 @@ fun TestScreen(
             modifier.fillMaxSize(),
             answerGiven = countOfAnswer,
             items = viewModel.testData?: emptyList(),
-            cardColor = viewModel.settngsController.colorScheme.tertiaryContainer,
+            cardColor = viewModel.settingsController.colorScheme.tertiaryContainer,
             showInfoDialog = { dialogState = DialogState.TestInfo },
-            surfaceColor = viewModel.settngsController.colorScheme.surface,
+            surfaceColor = viewModel.settingsController.colorScheme.surface,
             onCloseTest = { viewModel.closeTest() }
 
         )

@@ -10,19 +10,27 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.tanec.siderakt.core.util.state.State
 import ru.tanec.siderakt.core.util.state.TestState
 import ru.tanec.siderakt.domain.interfaces.SettingsController
 import ru.tanec.siderakt.domain.model.Constellation
+import ru.tanec.siderakt.domain.model.SettingsData
 import ru.tanec.siderakt.domain.model.TestItem
+import ru.tanec.siderakt.domain.use_case.constellation_use_case.EditConstellationUseCase
+import ru.tanec.siderakt.domain.use_case.constellation_use_case.GetAllConstellationsUseCase
+import ru.tanec.siderakt.domain.use_case.personal_use_case.UpdateLearnedConstellationInfoUseCase
 import ru.tanec.siderakt.domain.use_case.test_use_case.GetTestUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class TestViewModel @Inject constructor(
+    private val getAllConstellationsUseCase: GetAllConstellationsUseCase,
     private val getTestUseCase: GetTestUseCase,
-    val settngsController: SettingsController
+    private val editConstellationUseCase: EditConstellationUseCase,
+    private val updateLearnedConstellationsInfo: UpdateLearnedConstellationInfoUseCase,
+    val settingsController: SettingsController
 ) : ViewModel() {
     private val _enableTimer: MutableState<Boolean> = mutableStateOf(false)
     val enableTimer: Boolean by _enableTimer
@@ -64,11 +72,12 @@ class TestViewModel @Inject constructor(
                     south,
                     equatorial
                 ).collect {
-                    when(it) {
+                    when (it) {
                         is State.Success -> {
                             _testData.value = it.data
                             startTimer()
                         }
+
                         else -> {}
                     }
                 }
@@ -79,7 +88,21 @@ class TestViewModel @Inject constructor(
     fun endTest() {
         _testState.value = TestState.Ended
         endTimer()
-        TODO("create editConstellationUseCase")
+        viewModelScope.launch(Dispatchers.IO) {
+            for (item in testData ?: emptyList()) {
+                editConstellationUseCase(item.constellation.copy(
+                    learned = (item.constellation.id == item.answer?.id || item.constellation.learned))
+                )
+            }
+
+            getAllConstellationsUseCase().collect {
+                when(it) {
+                    is State.Success -> updateLearnedConstellationsInfo(it.data?: emptyList())
+                    else -> {}
+                }
+            }
+
+        }
     }
 
     fun closeTest() {
@@ -98,7 +121,7 @@ class TestViewModel @Inject constructor(
         _timerTime.value = 800
         timer = viewModelScope.launch(Dispatchers.Default) {
 
-            while(timerTime > 0) {
+            while (timerTime > 0) {
                 delay(1000)
                 _timerTime.value -= 1
             }
@@ -112,7 +135,10 @@ class TestViewModel @Inject constructor(
     }
 
     fun setItemAnswer(value: Constellation, index: Int) {
-        _testData.value = _testData.value?.mapIndexed { ind, testItem -> if (ind == index) testItem.copy(answer = value) else testItem }
+        _testData.value =
+            _testData.value?.mapIndexed { ind, testItem ->
+                if (ind == index) testItem.copy(answer = value) else testItem
+            }
     }
 
 }

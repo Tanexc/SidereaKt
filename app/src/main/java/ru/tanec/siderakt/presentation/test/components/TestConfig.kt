@@ -54,9 +54,9 @@ fun TestConfig(
     var equatorial: Boolean by remember { mutableStateOf(false) }
     var count: Int by remember { mutableIntStateOf(0) }
     val maxCount =
-        (if (north) 28 - (if (notLearned) viewModel.settngsController.learnedNorth() else 0) else 0) +
-                (if (south) 45 - (if (notLearned) viewModel.settngsController.learnedSouth() else 0) else 0) +
-                (if (equatorial) 15 - (if (notLearned) viewModel.settngsController.learnedEquatorial() else 0) else 0)
+        (if (north) 28 - (if (notLearned) viewModel.settingsController.learnedNorth() else 0) else 0) +
+                (if (south) 45 - (if (notLearned) viewModel.settingsController.learnedSouth() else 0) else 0) +
+                (if (equatorial) 15 - (if (notLearned) viewModel.settingsController.learnedEquatorial() else 0) else 0)
 
     LaunchedEffect(maxCount) {
         if (count > maxCount) {
@@ -71,8 +71,8 @@ fun TestConfig(
                 Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                borderColor = viewModel.settngsController.colorScheme.outline,
-                backgroundColor = viewModel.settngsController.colorScheme.secondaryContainer.copy(
+                borderColor = viewModel.settingsController.colorScheme.outline,
+                backgroundColor = viewModel.settingsController.colorScheme.secondaryContainer.copy(
                     0.3f
                 )
             ) {
@@ -91,7 +91,7 @@ fun TestConfig(
 
                     Row {
                         Checkbox(
-                            enabled = if (notLearned) viewModel.settngsController.learnedNorth() < 28 else true,
+                            enabled = if (notLearned) viewModel.settingsController.learnedNorth() < 28 else true,
                             checked = north,
                             onCheckedChange = {
                                 north = !north
@@ -106,7 +106,7 @@ fun TestConfig(
 
                     Row {
                         Checkbox(
-                            enabled = if (notLearned) viewModel.settngsController.learnedSouth() < 45 else true,
+                            enabled = if (notLearned) viewModel.settingsController.learnedSouth() < 45 else true,
                             checked = south,
                             onCheckedChange = {
                                 south = !south
@@ -121,7 +121,7 @@ fun TestConfig(
 
                     Row {
                         Checkbox(
-                            enabled = if (notLearned) viewModel.settngsController.learnedEquatorial() < 15 else true,
+                            enabled = if (notLearned) viewModel.settingsController.learnedEquatorial() < 15 else true,
                             checked = equatorial,
                             onCheckedChange = {
                                 equatorial = !equatorial
