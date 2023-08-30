@@ -56,4 +56,5 @@
     <string name="ok">Хорошо</string>
     <string name="advices">Советы</string>
     <string name="advices_swap">Для перехода между карточками проведите по экрану</string>
+    <string name="end_test_question">Вы действительно хотите завершить тест?</string>
 </resources>
