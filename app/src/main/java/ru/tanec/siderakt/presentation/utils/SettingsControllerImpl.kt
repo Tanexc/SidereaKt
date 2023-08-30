@@ -27,6 +27,7 @@ class SettingsControllerImpl : SettingsController {
     override fun learnedNorth(): Int = data?.learnedNorth?: 0
 
     override fun learnedSouth(): Int = data?.learnedSouth?: 0
+
     override fun learnedEquatorial(): Int = data?.learnedEquatorial?: 0
 
     override fun isThemeInDarkMode(): Boolean = data?.useDarkTheme?: true
