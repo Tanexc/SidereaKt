@@ -113,7 +113,7 @@ fun TestResult(
 
         Column(modifier = modifier.padding(16.dp)) {
             Spacer(modifier = Modifier.size(12.dp))
-            Row(Modifier.padding(8.dp, 4.dp)) {
+            Row(Modifier.padding(8.dp, 4.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     stringResource(R.string.answers_given), modifier = Modifier
                         .fillMaxWidth()

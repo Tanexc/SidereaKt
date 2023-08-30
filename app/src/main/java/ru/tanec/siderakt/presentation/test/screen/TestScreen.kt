@@ -49,6 +49,7 @@ import ru.tanec.siderakt.presentation.test.components.TestConfig
 import ru.tanec.siderakt.presentation.test.components.TestResult
 import ru.tanec.siderakt.presentation.test.viewModel.TestViewModel
 import ru.tanec.siderakt.presentation.utils.widgets.ItemCard
+import ru.tanec.siderakt.presentation.utils.widgets.dialogs.EndTestDialog
 import ru.tanec.siderakt.presentation.utils.widgets.dialogs.TestInfoDialog
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -76,9 +77,15 @@ fun TestScreen(
             Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                 .fillMaxWidth()
                 .zIndex(11f)) {
-                IconButton(onClick = { viewModel.closeTest() }, modifier = Modifier.padding(8.dp)) {
+                IconButton(onClick = { dialogState = DialogState.FinishTest }, modifier = Modifier.padding(8.dp)) {
                     Icon(Icons.Outlined.ArrowBack, null)
                 }
+
+                Text(
+                    modifier = Modifier.align(CenterVertically),
+                    text = "${viewModel.timerTime / 60}".padStart(2, '0') + ":" + "${viewModel.timerTime % 60}" .padStart(2, '0')
+                )
+
                 IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
                     Icon(Icons.Outlined.Info, null)
                 }
@@ -182,6 +189,10 @@ fun TestScreen(
 
     when(dialogState) {
         is DialogState.TestInfo -> TestInfoDialog(onConfirm = { dialogState = null })
+        is DialogState.FinishTest -> EndTestDialog(onDismiss = { dialogState = null }) {
+            viewModel.endTest()
+            dialogState = null
+        }
         else -> {}
     }
 

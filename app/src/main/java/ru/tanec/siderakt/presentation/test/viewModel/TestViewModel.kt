@@ -37,7 +37,7 @@ class TestViewModel @Inject constructor(
 
     private var timer: Job? = null
 
-    private val _timerTime: MutableState<Long> = mutableLongStateOf(900)
+    private val _timerTime: MutableState<Long> = mutableLongStateOf(600)
     val timerTime: Long by _timerTime
 
     private val _testData: MutableState<List<TestItem>?> = mutableStateOf(null)
@@ -101,7 +101,6 @@ class TestViewModel @Inject constructor(
                     else -> {}
                 }
             }
-
         }
     }
 
@@ -118,7 +117,7 @@ class TestViewModel @Inject constructor(
     }
 
     private fun startTimer() {
-        _timerTime.value = 800
+        _timerTime.value = 600
         timer = viewModelScope.launch(Dispatchers.Default) {
 
             while (timerTime > 0) {
