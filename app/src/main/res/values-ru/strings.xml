@@ -44,7 +44,7 @@
     <string name="not_learned">Только не изученные созвездия</string>
     <string name="questions_count">Количество вопросов</string>
     <string name="enable_timer">Включить таймер</string>
-    <string name="timer_info">Тест будет ограничен по времени на 15 минут</string>
+    <string name="timer_info">Тест будет ограничен по времени</string>
     <string name="start">Начать</string>
     <string name="correct_answer">Правильный ответ:</string>
     <string name="orange">Оранжевый</string>

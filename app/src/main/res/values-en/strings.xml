@@ -44,7 +44,7 @@
     <string name="not_learned">Only not learned constellations</string>
     <string name="questions_count">Count of questions</string>
     <string name="enable_timer">Enable timer</string>
-    <string name="timer_info">The test will be limited in time for 15 minutes</string>
+    <string name="timer_info">The test will be limited in time</string>
     <string name="start">Start</string>
     <string name="correct_answer">Correct answer:</string>
     <string name="orange">Orange</string>
