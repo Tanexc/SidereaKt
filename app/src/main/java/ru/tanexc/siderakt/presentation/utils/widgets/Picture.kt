@@ -1,4 +1,4 @@
-package ru.tanexc.siderakt.presentation.main.components
+package ru.tanexc.siderakt.presentation.utils.widgets
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -22,11 +22,12 @@ import coil.compose.SubcomposeAsyncImageContent
 fun Picture(
     modifier: Modifier = Modifier,
     imageURL: String,
+    contentDescription: String?
 ) {
     SubcomposeAsyncImage(
         modifier = modifier,
         model = imageURL,
-        contentDescription = "",
+        contentDescription = contentDescription,
     ) {
         when (painter.state) {
             is AsyncImagePainter.State.Loading ->

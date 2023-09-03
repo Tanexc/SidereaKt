@@ -1,4 +1,4 @@
-package ru.tanexc.siderakt.presentation.main.components
+package ru.tanexc.siderakt.presentation.utils.widgets.select_group
 
 
 data class SelectButtonItem(
