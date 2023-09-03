@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,16 +41,15 @@ import coil.compose.SubcomposeAsyncImageContent
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.domain.model.Constellation
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ConstellationItem(
     modifier: Modifier = Modifier,
     constellation: Constellation,
-    borderWidth: Dp = 0.dp,
+    borderWidth: Dp = 1.dp,
     borderRadius: Dp = 16.dp,
-    borderColor: Color = MaterialTheme.colorScheme.outline,
+    borderColor: Color = Color.Transparent,
     backgroundColor: Color = MaterialTheme.colorScheme.secondary.copy(0.3f),
-    height: Dp = 256.dp,
+    height: Dp = 248.dp,
     onClick: () -> Unit
 ) {
     Box(
@@ -58,61 +58,19 @@ fun ConstellationItem(
             .border(
                 width = borderWidth,
                 shape = RoundedCornerShape(borderRadius),
-                brush = Brush.horizontalGradient(listOf(borderColor.copy(0f), borderColor.copy(0f)))
+                brush = SolidColor(borderColor)
             )
             .background(backgroundColor, RoundedCornerShape(borderRadius))
             .fillMaxWidth()
-            .height(height)
             .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            SubcomposeAsyncImage(
-                modifier = Modifier.fillMaxWidth(),
-                model = constellation.imageURL,
+            Picture(
+                modifier = Modifier.fillMaxWidth().height(height),
+                imageURL = constellation.imageURL,
                 contentDescription = "",
-            ) {
-                when (painter.state) {
-                    is AsyncImagePainter.State.Loading ->
-                        Box(modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxHeight(0.8f)) {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .height(48.dp)
-                            )
-                        }
-
-                    is AsyncImagePainter.State.Success ->
-                        SubcomposeAsyncImageContent(
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .fillMaxHeight(0.8f)
-                                .clip(RoundedCornerShape(borderRadius)),
-                            contentScale = ContentScale.FillWidth
-
-                        )
-
-                    else ->
-                        Box(modifier = Modifier
-                            .align(Alignment.Center)
-                            .fillMaxHeight(0.8f)) {
-                                Icon(
-                                    Icons.Default.Error,
-                                    null,
-                                    modifier = Modifier.align(Alignment.Center)
-                                )
-                                Text(text = stringResource(R.string.check_internet), modifier = Modifier
-                                    .fillMaxWidth()
-                                    .basicMarquee()
-                                    .align(BottomCenter)
-                                    .padding(4.dp), textAlign = TextAlign.Center, maxLines = 1)
-
-                        }
-
-                }
-            }
-            Row(modifier = Modifier.fillMaxSize()) {
+            )
+            Row(modifier = Modifier.fillMaxSize().padding(8.dp, 12.dp)) {
                 Text(
                     constellation.title,
                     textAlign = TextAlign.Center,

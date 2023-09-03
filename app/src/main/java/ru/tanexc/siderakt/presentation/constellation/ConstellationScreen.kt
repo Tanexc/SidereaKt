@@ -6,6 +6,7 @@ import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,34 +16,28 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.outlined.UnfoldLess
 import androidx.compose.material.icons.outlined.UnfoldMore
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
-import ru.tanexc.siderakt.presentation.ui.theme.Typography
-import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.domain.model.Constellation
 import ru.tanexc.siderakt.presentation.constellation.viewModel.ConstellationViewModel
+import ru.tanexc.siderakt.presentation.ui.theme.Typography
+import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
+import ru.tanexc.siderakt.presentation.utils.widgets.Picture
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -60,7 +55,7 @@ fun ConstellationScreen(
                     Box(modifier = Modifier
                         .wrapContentHeight()
                         .fillMaxWidth()) {
-                        SubcomposeAsyncImage(
+                        Picture(
                             modifier = if (!targetState) {
                                 Modifier
                                     .fillMaxWidth()
@@ -73,55 +68,9 @@ fun ConstellationScreen(
                                     .padding(6.dp)
                                     .height(256.dp)
                             },
-                            model = constellation.imageURL,
+                            imageURL = constellation.imageURL,
                             contentDescription = "",
-                        ) {
-                            when (painter.state) {
-                                is AsyncImagePainter.State.Loading ->
-                                    Box(
-                                        modifier = Modifier
-                                            .align(Center)
-                                    ) {
-                                        CircularProgressIndicator(
-                                            modifier = Modifier
-                                                .align(Center)
-                                                .height(48.dp)
-                                        )
-                                    }
-
-                                is AsyncImagePainter.State.Success ->
-                                    SubcomposeAsyncImageContent(
-                                        modifier = Modifier
-                                            .align(Center)
-                                            .clip(RoundedCornerShape(16.dp)),
-                                        contentScale = ContentScale.FillWidth
-                                    )
-
-                                else ->
-                                    Box(
-                                        modifier = Modifier
-                                            .align(Center)
-                                    ) {
-                                        Icon(
-                                            Icons.Default.Error,
-                                            null,
-                                            modifier = Modifier.align(Center)
-                                        )
-                                        Text(
-                                            text = stringResource(R.string.check_internet),
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .align(Alignment.BottomCenter)
-                                                .padding(4.dp),
-                                            textAlign = TextAlign.Center,
-                                            maxLines = 1
-                                        )
-
-                                    }
-
-                            }
-
-                        }
+                        )
                         FilledIconButton(
                             onClick = { viewModel.changeImageCollapsedState() },
                             modifier = Modifier
@@ -259,7 +208,9 @@ fun ConstellationScreen(
                 Row(Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp)) {
 
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth(0.5f).padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
+                        modifier = Modifier
+                            .fillMaxWidth(0.5f)
+                            .padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
@@ -290,7 +241,9 @@ fun ConstellationScreen(
 
                     }
                     ItemCard(
-                        modifier = Modifier.fillMaxWidth().padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp), borderColor = viewModel.settings.colorScheme.outline,
                         backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
                             if (viewModel.settings.isThemeInDarkMode()) {
                                 0.2f
@@ -340,6 +293,8 @@ fun ConstellationScreen(
                         style = Typography.bodyLarge
                     )
                 }
+
+                Spacer(modifier = Modifier.size(16.dp))
             }
 
         }

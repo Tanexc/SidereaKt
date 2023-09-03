@@ -40,9 +40,9 @@ import androidx.compose.ui.unit.sp
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanexc.siderakt.BuildConfig
 import ru.tanexc.siderakt.R
-import ru.tanexc.siderakt.presentation.main.components.Picture
-import ru.tanexc.siderakt.presentation.main.components.SelectButtonGroup
-import ru.tanexc.siderakt.presentation.main.components.SelectButtonItem
+import ru.tanexc.siderakt.presentation.utils.widgets.Picture
+import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonGroup
+import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonItem
 import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
 import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
@@ -413,7 +413,8 @@ fun ProfileScreen(
                                         SolidColor(viewModel.settings.colorScheme.outline),
                                         RoundedCornerShape(16.dp)
                                     ),
-                                imageURL = AUTHOR_PICTURE_URL
+                                imageURL = AUTHOR_PICTURE_URL,
+                                contentDescription = null
                             )
                             Column(modifier = Modifier.padding(top = 12.dp)) {
                                 Text(
