@@ -198,6 +198,7 @@ fun TestConfig(
             Spacer(modifier = Modifier.size(24.dp))
 
             OutlinedButton(
+                enabled = count != 0,
                 onClick = { viewModel.startTest(count, notLearned, north, south, equatorial) },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
@@ -228,6 +229,8 @@ fun TestConfig(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .padding(4.dp)
+                            .fillMaxWidth(),
+                        textAlign = TextAlign.Center
                     )
                 }
             }
