@@ -2,8 +2,11 @@ package ru.tanec.siderakt.presentation.test.viewModel
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,6 +52,9 @@ class TestViewModel @Inject constructor(
     private val _isSnackBarVisible: MutableState<Boolean> = mutableStateOf(false)
     val isSnackBarVisible: Boolean by _isSnackBarVisible
 
+    private val _countOfAnswer: MutableState<Int> = mutableIntStateOf(0)
+    val countOfAnswer: Int by _countOfAnswer
+
     fun updateEnableTimer() {
         _enableTimer.value = !enableTimer
     }
@@ -90,14 +96,16 @@ class TestViewModel @Inject constructor(
         endTimer()
         viewModelScope.launch(Dispatchers.IO) {
             for (item in testData ?: emptyList()) {
-                editConstellationUseCase(item.constellation.copy(
-                    learned = (item.constellation.id == item.answer?.id || item.constellation.learned))
+                editConstellationUseCase(
+                    item.constellation.copy(
+                        learned = (item.constellation.id == item.answer?.id || item.constellation.learned)
+                    )
                 )
             }
 
             getAllConstellationsUseCase().collect {
-                when(it) {
-                    is State.Success -> updateLearnedConstellationsInfo(it.data?: emptyList())
+                when (it) {
+                    is State.Success -> updateLearnedConstellationsInfo(it.data ?: emptyList())
                     else -> {}
                 }
             }
@@ -125,7 +133,7 @@ class TestViewModel @Inject constructor(
                 _timerTime.value -= 1
             }
 
-            endTimer()
+            endTest()
         }
     }
 
@@ -134,6 +142,11 @@ class TestViewModel @Inject constructor(
     }
 
     fun setItemAnswer(value: Constellation, index: Int) {
+        testData?.let {
+            if (it[index].answer == null) {
+                _countOfAnswer.value++
+            }
+        }
         _testData.value =
             _testData.value?.mapIndexed { ind, testItem ->
                 if (ind == index) testItem.copy(answer = value) else testItem

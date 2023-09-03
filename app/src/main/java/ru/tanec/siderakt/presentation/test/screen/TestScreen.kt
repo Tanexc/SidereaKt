@@ -58,7 +58,6 @@ fun TestScreen(
     modifier: Modifier = Modifier
 ) {
     val viewModel: TestViewModel = hiltViewModel()
-    var countOfAnswer: Int by remember { mutableIntStateOf(0) }
     var dialogState: DialogState? by remember { mutableStateOf(null) }
 
     when (viewModel.testState) {
@@ -120,9 +119,6 @@ fun TestScreen(
                                 item = it,
                                 setAnswer = { answer ->
                                     viewModel.setItemAnswer(answer, items.indexOf(it))
-                                    if (it.answer == null) {
-                                        countOfAnswer += 1
-                                    }
                                 }
                             )
                         }
@@ -156,7 +152,7 @@ fun TestScreen(
                                         .fillMaxWidth()
                                         .weight(1f)
                                 )
-                                Text("$countOfAnswer")
+                                Text("${viewModel.countOfAnswer}")
                             }
                             FilledTonalButton(onClick = { viewModel.endTest() }) {
                                 Row {
@@ -176,7 +172,7 @@ fun TestScreen(
 
         is TestState.Ended -> TestResult(
             modifier.fillMaxSize(),
-            answerGiven = countOfAnswer,
+            answerGiven = viewModel.countOfAnswer,
             items = viewModel.testData?: emptyList(),
             cardColor = viewModel.settingsController.colorScheme.tertiaryContainer,
             showInfoDialog = { dialogState = DialogState.TestInfo },
