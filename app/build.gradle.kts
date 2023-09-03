@@ -8,15 +8,16 @@ plugins {
 }
 
 android {
-    namespace = "ru.tanec.siderakt"
+    namespace = "ru.tanexc.siderakt"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "ru.tanec.siderakt"
+        applicationId = "ru.tanexc.siderakt"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.3.2-beta"
+        versionCode = 2
+        versionName = "1.3.3"
+        versionNameSuffix = "beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
