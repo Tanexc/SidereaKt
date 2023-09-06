@@ -28,9 +28,6 @@ class MainViewModel @Inject constructor(
     private val _dialogState: MutableState<DialogState?> = mutableStateOf(null)
     val dialogState by _dialogState
 
-    private val _topAppBar: MutableState<(@Composable () -> Unit)?> = mutableStateOf(null)
-    val topAppBar by _topAppBar
-
     init {
         getPersonalInfoUseCase().onEach {
             settings.updateSettingsData(it)
@@ -39,10 +36,6 @@ class MainViewModel @Inject constructor(
 
     fun screenChanged(screen: Screen) {
         _currentScreen.value = screen
-    }
-
-    fun setTopAppBar(topAppBar: (@Composable () -> Unit)?) {
-        _topAppBar.value = topAppBar
     }
 
     fun hideDialog() {
