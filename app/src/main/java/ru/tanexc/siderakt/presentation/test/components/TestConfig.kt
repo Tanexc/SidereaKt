@@ -1,8 +1,11 @@
 package ru.tanexc.siderakt.presentation.test.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,11 +21,16 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.HorizontalRule
 import androidx.compose.material.icons.filled.Start
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,14 +42,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.tanexc.siderakt.R
+import ru.tanexc.siderakt.core.util.state.TimerTimeState
 import ru.tanexc.siderakt.presentation.test.viewModel.TestViewModel
 import ru.tanexc.siderakt.presentation.ui.theme.Typography
 import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TestConfig(
     modifier: Modifier,
@@ -58,6 +70,8 @@ fun TestConfig(
                 (if (south) 45 - (if (notLearned) viewModel.settingsController.learnedSouth() else 0) else 0) +
                 (if (equatorial) 15 - (if (notLearned) viewModel.settingsController.learnedEquatorial() else 0) else 0)
 
+    var timeState: TimerTimeState by remember { mutableStateOf(TimerTimeState.Short) }
+    
     LaunchedEffect(maxCount) {
         if (count > maxCount) {
             count = maxCount
@@ -192,6 +206,23 @@ fun TestConfig(
                             Icon(Icons.Outlined.Info, null)
                         }
                     }
+                    
+                    AnimatedVisibility(visible = viewModel.enableTimer, enter = expandVertically(), exit = shrinkVertically()) {
+                        SingleChoiceSegmentedButtonRow(modifier = Modifier.border(1.dp, brush = SolidColor(viewModel.settingsController.colorScheme.outline), shape = RoundedCornerShape(50)).clip(RoundedCornerShape(50)).fillMaxWidth()) {
+                            for (state: TimerTimeState in listOf(TimerTimeState.Short, TimerTimeState.SemiShort, TimerTimeState.Medium, TimerTimeState.Large)) {
+                                SegmentedButton(
+                                    selected = timeState == state,
+                                    onClick = { timeState = state }
+                                ) {
+                                    Text(text = "${state.time / 60} ${stringResource(R.string.minutes)}")
+                                }
+                            }
+                        }
+                    }
+                    
+                    Row {
+                        
+                    }
                 }
             }
 
@@ -199,7 +230,7 @@ fun TestConfig(
 
             OutlinedButton(
                 enabled = count != 0,
-                onClick = { viewModel.startTest(count, notLearned, north, south, equatorial) },
+                onClick = { viewModel.startTest(count, notLearned, north, south, equatorial, timeState.time) },
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(stringResource(R.string.start), modifier = Modifier.padding(4.dp, 0.dp))

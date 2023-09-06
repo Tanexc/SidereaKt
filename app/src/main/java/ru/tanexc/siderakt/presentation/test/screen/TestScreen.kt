@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanexc.siderakt.R
+import ru.tanexc.siderakt.core.util.state.DialogState
+import ru.tanexc.siderakt.core.util.state.TestState
 import ru.tanexc.siderakt.presentation.test.components.TestCard
 import ru.tanexc.siderakt.presentation.test.components.TestConfig
 import ru.tanexc.siderakt.presentation.test.components.TestResult
@@ -48,8 +50,6 @@ import ru.tanexc.siderakt.presentation.test.viewModel.TestViewModel
 import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.EndTestDialog
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.TestInfoDialog
-import ru.tanexc.siderakt.core.util.state.DialogState
-import ru.tanexc.siderakt.core.util.state.TestState
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
