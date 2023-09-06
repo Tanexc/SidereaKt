@@ -6,14 +6,14 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.AppColorScheme
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.DefaultColorScheme
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.GreenColorScheme
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.OrangeColorScheme
 import ru.tanexc.siderakt.core.util.Theme
 import ru.tanexc.siderakt.core.util.Theme.Default
 import ru.tanexc.siderakt.core.util.Theme.Green
 import ru.tanexc.siderakt.core.util.Theme.Orange
+import ru.tanexc.siderakt.presentation.ui.theme.Colors.AppColorScheme
+import ru.tanexc.siderakt.presentation.ui.theme.Colors.DefaultColorScheme
+import ru.tanexc.siderakt.presentation.ui.theme.Colors.GreenColorScheme
+import ru.tanexc.siderakt.presentation.ui.theme.Colors.OrangeColorScheme
 
 
 @Composable
@@ -34,7 +34,6 @@ fun getTheme(colorTheme: Theme, useDarkTheme: Boolean): ColorScheme {
         is Orange -> OrangeColorScheme()
         is Default -> DefaultColorScheme()
         is Green -> GreenColorScheme()
-        else -> DefaultColorScheme()
     }
 
     return when (useDarkTheme) {

@@ -40,10 +40,4 @@ sealed class Screen(
         iconOutlined = Icons.Outlined.ManageAccounts,
         iconFilled = Icons.Filled.ManageAccounts
     )
-
-    object Constellation : Screen(
-        label = R.string.catalog,
-        iconOutlined = Icons.Outlined.AutoAwesome,
-        iconFilled = Icons.Filled.AutoAwesome
-    )
 }

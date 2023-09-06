@@ -3,7 +3,6 @@ package ru.tanexc.siderakt.presentation.test.viewModel
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,8 +35,8 @@ class TestViewModel @Inject constructor(
 
     private var timer: Job? = null
 
-    private val _timerTime: MutableState<Long> = mutableLongStateOf(600)
-    val timerTime: Long by _timerTime
+    private val _timerTime: MutableState<Int> = mutableIntStateOf(600)
+    val timerTime: Int by _timerTime
 
     private val _testData: MutableState<List<TestItem>?> = mutableStateOf(null)
     val testData by _testData
@@ -60,10 +59,12 @@ class TestViewModel @Inject constructor(
         notLearned: Boolean,
         north: Boolean,
         south: Boolean,
-        equatorial: Boolean
+        equatorial: Boolean,
+        timerTime: Int
     ) {
 
         _testState.value = TestState.Started
+        _timerTime.value = timerTime
 
         viewModelScope
             .launch(Dispatchers.IO) {
@@ -121,7 +122,6 @@ class TestViewModel @Inject constructor(
     }
 
     private fun startTimer() {
-        _timerTime.value = 600
         timer = viewModelScope.launch(Dispatchers.Default) {
 
             while (timerTime > 0) {

@@ -4,10 +4,10 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import ru.tanexc.siderakt.presentation.ui.theme.getTheme
 import ru.tanexc.siderakt.core.util.Theme
 import ru.tanexc.siderakt.domain.interfaces.SettingsController
 import ru.tanexc.siderakt.domain.model.SettingsData
+import ru.tanexc.siderakt.presentation.ui.theme.getTheme
 
 class SettingsControllerImpl : SettingsController {
 

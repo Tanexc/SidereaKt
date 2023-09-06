@@ -38,14 +38,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
+import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
 import ru.tanexc.siderakt.BuildConfig
 import ru.tanexc.siderakt.R
-import ru.tanexc.siderakt.presentation.utils.widgets.Picture
-import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonGroup
-import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonItem
-import ru.tanec.siderakt.presentation.settings.viewModel.SettingsViewModel
-import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
-import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
 import ru.tanexc.siderakt.core.util.AUTHOR
 import ru.tanexc.siderakt.core.util.AUTHOR_NICKNAME
 import ru.tanexc.siderakt.core.util.AUTHOR_PICTURE_URL
@@ -56,6 +51,11 @@ import ru.tanexc.siderakt.core.util.GITHUB_REPO_URL
 import ru.tanexc.siderakt.core.util.SOURCE_SITE
 import ru.tanexc.siderakt.core.util.Theme
 import ru.tanexc.siderakt.core.util.state.DialogState
+import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
+import ru.tanexc.siderakt.presentation.utils.widgets.Picture
+import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
+import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonGroup
+import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonItem
 
 
 @Composable

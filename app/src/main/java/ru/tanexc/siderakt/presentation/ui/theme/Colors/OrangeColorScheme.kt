@@ -1,7 +1,6 @@
 package ru.tanexc.siderakt.presentation.ui.theme.Colors
 
 import androidx.compose.ui.graphics.Color
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.AppColorScheme
 
 data class OrangeColorScheme(
 

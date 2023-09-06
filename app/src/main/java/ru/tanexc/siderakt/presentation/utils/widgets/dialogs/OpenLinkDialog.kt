@@ -10,6 +10,7 @@ import androidx.compose.material.icons.outlined.Link
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -34,18 +35,10 @@ fun OpenLinkDialog(
         text = { Text(stringResource(R.string.open_link)) },
         icon = { Icon(Icons.Outlined.Link, null) },
         confirmButton = {
-            Text(
-                stringResource(R.string.yes),
-                modifier = Modifier
-                    .clickable { onConfirm() })
+            TextButton(onClick = { onConfirm() }) { Text(stringResource(R.string.yes)) }
         },
         dismissButton = {
-            Text(
-                stringResource(R.string.dismiss),
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .clickable { onDismiss() }
-            )
+            TextButton(onClick = { onDismiss() }) { Text(stringResource(R.string.dismiss)) }
         },
         shape = RoundedCornerShape(28.dp),
         modifier = Modifier

@@ -1,7 +1,6 @@
 package ru.tanexc.siderakt.presentation.ui.theme.Colors
 
 import androidx.compose.ui.graphics.Color
-import ru.tanexc.siderakt.presentation.ui.theme.Colors.AppColorScheme
 
 data class DefaultColorScheme(
     override val md_theme_light_primary: Color = Color(0xFF006491),
