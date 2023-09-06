@@ -65,6 +65,7 @@ class TestViewModel @Inject constructor(
 
         _testState.value = TestState.Started
         _timerTime.value = timerTime
+        _countOfAnswer.value = 0
 
         viewModelScope
             .launch(Dispatchers.IO) {
