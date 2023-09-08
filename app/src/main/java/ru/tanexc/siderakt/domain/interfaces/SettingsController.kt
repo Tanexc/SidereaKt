@@ -18,5 +18,9 @@ interface SettingsController {
 
     fun learnedEquatorial(): Int
 
+    fun learned(): Int
+
     fun isThemeInDarkMode(): Boolean
+
+    fun isOutlieElements(): Boolean
 }

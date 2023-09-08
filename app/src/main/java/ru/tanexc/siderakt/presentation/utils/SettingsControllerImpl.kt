@@ -30,6 +30,10 @@ class SettingsControllerImpl : SettingsController {
 
     override fun learnedEquatorial(): Int = data?.learnedEquatorial?: 0
 
+    override fun learned(): Int = learnedEquatorial() + learnedNorth() + learnedSouth()
+
     override fun isThemeInDarkMode(): Boolean = data?.useDarkTheme?: true
+
+    override fun isOutlieElements(): Boolean = data?.outlineElements?: false
 
 }

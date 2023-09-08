@@ -10,7 +10,8 @@ data class SettingsData(
     val learnedSouth: Int,
     val learnedEquatorial: Int,
     val selectedTheme: Theme,
-    val useDarkTheme: Boolean
+    val useDarkTheme: Boolean,
+    val outlineElements: Boolean
 ) : Model {
 
 
@@ -21,7 +22,8 @@ data class SettingsData(
         learnedSouth = learnedSouth,
         learnedEquatorial = learnedEquatorial,
         selectedTheme = selectedTheme.id,
-        useDarkTheme = useDarkTheme.toInt()
+        useDarkTheme = useDarkTheme.toInt(),
+        outlineElements = outlineElements.toInt()
     )
 
     fun Boolean.toInt(): Int {
