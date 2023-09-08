@@ -14,9 +14,9 @@ android {
         applicationId = "ru.tanexc.siderakt"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.3.3"
-        versionNameSuffix = "beta"
+        versionCode = 1
+        versionName = "1.3.4"
+        versionNameSuffix = "Cassiopeia"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
