@@ -57,4 +57,7 @@
     <string name="advices_swap">Для перехода между карточками проведите по экрану</string>
     <string name="end_test_question">Вы действительно хотите завершить тест?</string>
     <string name="minutes">мин</string>
+    <string name="use_border">Обводка элементов</string>
+    <string name="main_color">Основной цвет</string>
+    <string name="mark_learned">Отмечать изученные созвездия</string>
 </resources>

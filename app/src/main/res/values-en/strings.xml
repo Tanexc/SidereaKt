@@ -58,4 +58,7 @@
     <string name="advices_swap">Swipe across the screen to switch between cards</string>
     <string name="end_test_question">Do you really want to complete the test?</string>
     <string name="minutes">min</string>
+    <string name="use_border">Elements outline</string>
+    <string name="main_color">Main color</string>
+    <string name="mark_learned">Mark learned constellations</string>
 </resources>
