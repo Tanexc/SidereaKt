@@ -79,9 +79,10 @@ class TestViewModel @Inject constructor(
                     when (it) {
                         is State.Success -> {
                             _testData.value = it.data
-                            startTimer()
+                            if (enableTimer) {
+                                startTimer()
+                            }
                         }
-
                         else -> {}
                     }
                 }

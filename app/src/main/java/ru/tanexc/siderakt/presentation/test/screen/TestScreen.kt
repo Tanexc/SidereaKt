@@ -79,10 +79,15 @@ fun TestScreen(
                     Icon(Icons.Outlined.ArrowBack, null)
                 }
 
-                Text(
-                    modifier = Modifier.align(CenterVertically),
-                    text = "${viewModel.timerTime / 60}".padStart(2, '0') + ":" + "${viewModel.timerTime % 60}" .padStart(2, '0')
-                )
+                if (viewModel.enableTimer) {
+                    Text(
+                        modifier = Modifier.align(CenterVertically),
+                        text = "${viewModel.timerTime / 60}".padStart(
+                            2,
+                            '0'
+                        ) + ":" + "${viewModel.timerTime % 60}".padStart(2, '0')
+                    )
+                }
 
                 IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
                     Icon(Icons.Outlined.Info, null)

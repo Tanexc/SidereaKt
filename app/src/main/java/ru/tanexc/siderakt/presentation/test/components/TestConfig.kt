@@ -219,10 +219,6 @@ fun TestConfig(
                             }
                         }
                     }
-                    
-                    Row {
-                        
-                    }
                 }
             }
 
