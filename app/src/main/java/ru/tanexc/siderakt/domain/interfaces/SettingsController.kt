@@ -22,5 +22,7 @@ interface SettingsController {
 
     fun isThemeInDarkMode(): Boolean
 
-    fun isOutlieElements(): Boolean
+    fun isOutlineElements(): Boolean
+
+    fun isMarkLearned(): Boolean
 }

@@ -7,7 +7,5 @@ import javax.inject.Inject
 class EditConstellationUseCase @Inject constructor(
     private val repository: ConstellationRepository
 ) {
-
     suspend operator fun invoke(constellation: Constellation) = repository.editConstellation(constellation)
-
 }

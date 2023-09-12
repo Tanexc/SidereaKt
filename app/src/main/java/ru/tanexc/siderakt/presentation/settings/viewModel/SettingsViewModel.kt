@@ -40,6 +40,18 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun changeOutlineElemnts() {
+        viewModelScope.launch {
+            setPersonalInfoUseCase(settings.data!!.copy(outlineElements = !settings.isOutlineElements()))
+        }
+    }
+
+    fun changeMarkLearned() {
+        viewModelScope.launch {
+            setPersonalInfoUseCase(settings.data!!.copy(markLearned = !settings.isMarkLearned()))
+        }
+    }
+
     fun hideDialog() {
         _dialogState.value = null
     }

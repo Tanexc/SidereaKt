@@ -34,6 +34,8 @@ class SettingsControllerImpl : SettingsController {
 
     override fun isThemeInDarkMode(): Boolean = data?.useDarkTheme?: true
 
-    override fun isOutlieElements(): Boolean = data?.outlineElements?: false
+    override fun isOutlineElements(): Boolean = data?.outlineElements?: false
+
+    override fun isMarkLearned(): Boolean = data?.markLearned?: true
 
 }

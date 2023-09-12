@@ -17,7 +17,8 @@ data class PersonalInfoEntity(
     val learnedSouth: Int,
     val learnedEquatorial: Int,
     val useDarkTheme: Int,
-    val outlineElements: Int
+    val outlineElements: Int,
+    val markLearned: Int
 ) : DatabaseEntity {
 
     override fun asDomain(): SettingsData = SettingsData(
@@ -27,6 +28,7 @@ data class PersonalInfoEntity(
         learnedEquatorial = learnedEquatorial,
         selectedTheme = Theme.getScheme(selectedTheme),
         useDarkTheme = useDarkTheme.toBoolean(),
-        outlineElements = outlineElements.toBoolean()
+        outlineElements = outlineElements.toBoolean(),
+        markLearned = markLearned.toBoolean()
     )
 }
