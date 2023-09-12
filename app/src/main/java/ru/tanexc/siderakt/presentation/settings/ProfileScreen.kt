@@ -1,32 +1,43 @@
 package ru.tanexc.siderakt.presentation.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BorderStyle
+import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.Check
+import androidx.compose.material.icons.outlined.ColorLens
+import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Link
-import androidx.compose.material.icons.outlined.QuestionMark
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
@@ -45,7 +56,6 @@ import ru.tanexc.siderakt.core.util.AUTHOR
 import ru.tanexc.siderakt.core.util.AUTHOR_NICKNAME
 import ru.tanexc.siderakt.core.util.AUTHOR_PICTURE_URL
 import ru.tanexc.siderakt.core.util.CONSTELLATION_DATA_SOURCE_URL
-import ru.tanexc.siderakt.core.util.GITHUB_PROFILE_URL
 import ru.tanexc.siderakt.core.util.GITHUB_REPO_ISSUE_URL
 import ru.tanexc.siderakt.core.util.GITHUB_REPO_URL
 import ru.tanexc.siderakt.core.util.SOURCE_SITE
@@ -54,10 +64,9 @@ import ru.tanexc.siderakt.core.util.state.DialogState
 import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.Picture
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.OpenLinkDialog
-import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonGroup
-import ru.tanexc.siderakt.presentation.utils.widgets.select_group.SelectButtonItem
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier
@@ -65,506 +74,586 @@ fun ProfileScreen(
     val viewModel: SettingsViewModel = hiltViewModel()
     val uriHandler = LocalUriHandler.current
 
-    Column(modifier = modifier.padding(10.dp, 0.dp)) {
-        LazyColumn {
-            item {
+    var selectedTheme: Theme? by remember { mutableStateOf(viewModel.settings.theme()) }
+
+    LaunchedEffect(selectedTheme) {
+        viewModel.changeTheme(selectedTheme!!)
+    }
+
+    LazyColumn(modifier.padding(16.dp, 0.dp)) {
+
+        item {
+
+            Text(
+                stringResource(R.string.stats),
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                fontWeight = FontWeight.ExtraLight,
+                fontSize = 22.sp,
+            )
+
+            ItemCard(
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                borderRadius = 22.dp
+            ) {
                 Column {
-                    Text(
-                        stringResource(R.string.stats),
-                        textAlign = TextAlign.Start,
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            painter = painterResource(R.drawable.alpha_a),
+                            contentDescription = null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.constellations) + ": ",
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Text(
+                            "${viewModel.settings.learned()}",
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+
+                    Spacer(
                         modifier = Modifier
+                            .padding(8.dp, 16.dp)
                             .fillMaxWidth()
-                            .padding(4.dp),
-                        fontWeight = FontWeight.ExtraLight,
-                        fontSize = 22.sp,
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
-                    ItemCard(
+
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            painterResource(R.drawable.alpha_n),
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.north) + ": ",
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Text(
+                            "${viewModel.settings.learnedNorth()}",
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+
+                    Spacer(
                         modifier = Modifier
-                            .height(96.dp)
-                            .padding(4.dp),
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            painterResource(R.drawable.alpha_s),
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
                         )
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Text(
-                                stringResource(R.string.constellations),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat))
-                            )
-                            Text(
-                                "${viewModel.settings.learnedNorth() + viewModel.settings.learnedSouth() + viewModel.settings.learnedEquatorial() } " + stringResource(
-                                    R.string.of
-                                ) + " 88",
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(2.dp),
-                                fontSize = 36.sp
-                            )
-                        }
-                    }
-                    Row {
-                        ItemCard(
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.south) + ": ",
                             modifier = Modifier
-                                .height(96.dp)
-                                .fillMaxWidth(0.5f)
-                                .padding(4.dp),
-                            borderColor = viewModel.settings.colorScheme.outline,
-                            borderRadius = 16.dp,
-                            borderWidth = 1.dp,
-                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                0.3f
-                            )
-                        ) {
-                            Column(modifier = Modifier.padding(12.dp)) {
-                                Text(
-                                    stringResource(R.string.north),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(2.dp),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
-                                )
-                                Text(
-                                    "${viewModel.settings.learnedNorth()}",
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(4.dp),
-                                    fontSize = 24.sp
-                                )
-                            }
-                        }
-                        ItemCard(
-                            modifier = Modifier
-                                .height(96.dp)
-                                .fillMaxWidth()
-                                .padding(4.dp),
-                            borderColor = viewModel.settings.colorScheme.outline,
-                            borderRadius = 16.dp,
-                            borderWidth = 1.dp,
-                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                0.3f
-                            )
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
                         )
-                        {
-                            Column(modifier = Modifier.padding(12.dp)) {
-                                Text(
-                                    stringResource(R.string.south),
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(2.dp),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat)),
-                                )
-                                Text(
-                                    "${viewModel.settings.learnedSouth()}",
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(4.dp),
-                                    fontSize = 24.sp
-                                )
-                            }
-                        }
+                        Text(
+                            "${viewModel.settings.learnedSouth()}",
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
                     }
+
+                    Spacer(
+                        modifier = Modifier
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            painterResource(R.drawable.alpha_e),
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.equatorials) + ": ",
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Text(
+                            "${viewModel.settings.learnedEquatorial()}",
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                    }
+                    Spacer(modifier = Modifier.size(16.dp))
                 }
+
             }
 
-            item {
-                val items = listOf(
-                    SelectButtonItem(
-                        title = stringResource(R.string.app_default),
-                        onSelected = {
-                            viewModel.changeTheme(Theme.Default())
-                        }
-                    ),
-                    SelectButtonItem(
-                        title = stringResource(R.string.orange),
-                        onSelected = {
-                            viewModel.changeTheme(Theme.Orange())
-                        }
-                    ),
-                    SelectButtonItem(
-                        title = stringResource(R.string.green),
-                        onSelected = {
-                            viewModel.changeTheme(Theme.Green())
-                        }
-                    )
-                )
+
+        }
+
+        item {
+
+            Text(
+                stringResource(R.string.settings),
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                fontWeight = FontWeight.ExtraLight,
+                fontSize = 22.sp,
+            )
+
+            ItemCard(
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                borderRadius = 22.dp
+            ) {
                 Column {
-                    Text(
-                        stringResource(R.string.settings),
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(4.dp),
-                        fontWeight = FontWeight.ExtraLight,
-                        fontSize = 22.sp,
-                    )
+                    Spacer(modifier = Modifier.size(16.dp))
 
-                    ItemCard(
-                        modifier = Modifier
-                            .height(108.dp)
-                            .padding(4.dp),
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+
+                        val items = listOf(
+                            Theme.Default(),
+                            Theme.Orange(),
+                            Theme.Green()
                         )
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Text(
-                                stringResource(R.string.style),
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth(),
-                                fontSize = 16.sp,
-                                fontFamily = FontFamily(Font(R.font.montserrat))
-                            )
 
-                            SelectButtonGroup(
+                        Column {
+
+                            Row {
+
+                                Icon(
+                                    Icons.Outlined.ColorLens,
+                                    null,
+                                    tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                                    modifier = Modifier.align(CenterVertically)
+                                )
+
+                                Spacer(modifier = Modifier.size(12.dp))
+
+                                Text(
+                                    stringResource(R.string.main_color),
+                                    color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                                )
+
+                            }
+                            Spacer(modifier = Modifier.size(8.dp))
+
+                            SingleChoiceSegmentedButtonRow(
                                 modifier = Modifier
+                                    .border(
+                                        1.dp,
+                                        brush = SolidColor(viewModel.settings.colorScheme.outline),
+                                        shape = RoundedCornerShape(50),
+                                    )
+                                    .clip(RoundedCornerShape(50))
                                     .fillMaxWidth()
-                                    .padding(8.dp),
-                                selectedItemIndex = viewModel.settings.theme()?.id ?: 0,
-                                borderColor = viewModel.settings.colorScheme.outline,
-                                selectedColor = viewModel.settings.colorScheme.secondaryContainer,
-                                items = items,
-                                fontSize = 16.dp
-                            )
-                        }
-                    }
-                    ItemCard(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(4.dp),
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
-                        )
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(12.dp)
-                                .wrapContentHeight()
-                                .fillMaxWidth()
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth(0.5f)
-                                    .wrapContentHeight()
-                                    .align(CenterVertically)
                             ) {
-                                Text(
-                                    stringResource(R.string.dark_theme),
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier
-                                        .align(Start)
-                                        .padding(8.dp),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
-                                )
-                            }
-                            Column(modifier = Modifier.fillMaxWidth()) {
-                                Switch(
-                                    checked = viewModel.settings.isThemeInDarkMode(),
-                                    onCheckedChange = { viewModel.changeUseDarkTheme() },
-                                    modifier = Modifier
-                                        .padding(8.dp)
-                                        .align(Alignment.End),
-                                    thumbContent = {
-                                        when (viewModel.settings.isThemeInDarkMode()) {
-                                            true -> Icon(
-                                                Icons.Outlined.Check,
-                                                null,
-                                                modifier = Modifier.padding(4.dp)
-                                            )
-
-                                            else -> {}
-                                        }
-
+                                for (theme in items) {
+                                    SegmentedButton(
+                                        selected = selectedTheme?.id == theme.id,
+                                        onClick = { selectedTheme = theme }
+                                    ) {
+                                        Text(stringResource(theme.label))
                                     }
-                                )
+                                }
                             }
                         }
                     }
-                }
-            }
 
-            item {
-                Column {
-                    Text(
-                        stringResource(R.string.about),
-                        textAlign = TextAlign.Start,
+                    Spacer(
                         modifier = Modifier
+                            .padding(8.dp, 12.dp)
                             .fillMaxWidth()
-                            .padding(4.dp),
-                        fontWeight = FontWeight.ExtraLight,
-                        fontSize = 22.sp,
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
 
-                    ItemCard(
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            Icons.Outlined.DarkMode,
+                            contentDescription = null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.dark_theme),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Switch(
+                            checked = viewModel.settings.isThemeInDarkMode(),
+                            onCheckedChange = { viewModel.changeUseDarkTheme() },
+                            modifier = Modifier,
+                            thumbContent = {
+                                when (viewModel.settings.isThemeInDarkMode()) {
+                                    true -> Icon(
+                                        Icons.Outlined.Check,
+                                        null,
+                                        modifier = Modifier.padding(4.dp)
+                                    )
+
+                                    else -> {}
+                                }
+
+                            }
+                        )
+                    }
+
+                    Spacer(
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(4.dp)
-                            .clickable(
-                                interactionSource = remember {MutableInteractionSource()},
-                                indication = null
-                            ) {
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            Icons.Outlined.BorderStyle,
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.use_border),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Switch(
+                            checked = viewModel.settings.isOutlineElements(),
+                            onCheckedChange = { viewModel.changeOutlineElemnts() },
+                            modifier = Modifier,
+                            thumbContent = {
+                                when (viewModel.settings.isOutlineElements()) {
+                                    true -> Icon(
+                                        Icons.Outlined.Check,
+                                        null,
+                                        modifier = Modifier.padding(4.dp)
+                                    )
+
+                                    else -> {}
+                                }
+
+                            }
+                        )
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Icon(
+                            Icons.Outlined.Bookmark,
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier.align(CenterVertically)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.mark_learned),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .weight(1f),
+                            color = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer)
+                        )
+                        Switch(
+                            checked = viewModel.settings.isMarkLearned(),
+                            onCheckedChange = { viewModel.changeMarkLearned() },
+                            modifier = Modifier,
+                            thumbContent = {
+                                when (viewModel.settings.isMarkLearned()) {
+                                    true -> Icon(
+                                        Icons.Outlined.Check,
+                                        null,
+                                        modifier = Modifier.padding(4.dp)
+                                    )
+
+                                    else -> {}
+                                }
+
+                            }
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.size(16.dp))
+                }
+
+            }
+
+
+        }
+
+        item {
+
+            Text(
+                stringResource(R.string.about),
+                textAlign = TextAlign.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+                fontWeight = FontWeight.ExtraLight,
+                fontSize = 22.sp,
+            )
+
+            ItemCard(
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                borderRadius = 22.dp
+            ) {
+                Column {
+                    Spacer(modifier = Modifier.size(16.dp))
+
+                    Row(
+                        Modifier
+                            .padding(22.dp, 0.dp)
+                            .clickable {
                                 viewModel.setUri(GITHUB_REPO_URL)
                                 viewModel.showDialog(DialogState.OpenLink)
-                              },
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
-                        ),
-                    ) {
-                        Row {
-                            Box(
-                                modifier = Modifier
-                                    .size(72.dp)
-                                    .padding(12.dp)
-                                    .border(
-                                        1.dp,
-                                        SolidColor(viewModel.settings.colorScheme.outline),
-                                        RoundedCornerShape(16.dp)
-                                    )
-                            ) {
-                                Icon(
-                                    painterResource(R.drawable.github),
-                                    modifier = Modifier.padding(12.dp),
-                                    contentDescription = null
-                                )
-                            }
-
-                            Column(modifier = Modifier.padding(top = 12.dp)) {
-                                Text(
-                                    stringResource(R.string.code),
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
-                                )
-                                Row(
-                                    modifier = Modifier.align(Start)
-                                ) {
-                                    Text(
-                                        stringResource(R.string.version),
-                                        modifier = Modifier,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
-                                            0.5f
-                                        )
-                                    )
-                                    Text(
-                                        " " + BuildConfig.VERSION_NAME,
-                                        modifier = Modifier,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
-                                            0.5f
-                                        )
-                                    )
-                                }
-                            }
-                        }
-                    }
-
-                    ItemCard(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(4.dp)
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null
-                            ) {
-                                viewModel.setUri(GITHUB_PROFILE_URL)
-                                viewModel.showDialog(DialogState.OpenLink)
-                              },
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
-                        ),
-                    ) {
-                        Row {
-                            Picture(
-                                modifier = Modifier
-                                    .size(72.dp)
-                                    .padding(12.dp)
-                                    .border(
-                                        1.dp,
-                                        SolidColor(viewModel.settings.colorScheme.outline),
-                                        RoundedCornerShape(16.dp)
-                                    ),
-                                imageURL = AUTHOR_PICTURE_URL,
-                                contentDescription = null
+                            }) {
+                        Icon(
+                            painterResource(R.drawable.github),
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(
+                            modifier = Modifier
+                                .align(CenterVertically)
+                        ) {
+                            Text(
+                                stringResource(R.string.code),
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat))
                             )
-                            Column(modifier = Modifier.padding(top = 12.dp)) {
+                            Row(
+                                modifier = Modifier.align(Start)
+                            ) {
                                 Text(
-                                    AUTHOR,
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
+                                    stringResource(R.string.version),
+                                    modifier = Modifier,
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                                    fontWeight = FontWeight.Bold,
+                                    color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                        0.5f
+                                    )
                                 )
-                                Row(
-                                    modifier = Modifier.align(Start)
-                                ) {
-                                    Text(
-                                        "Github ",
-                                        modifier = Modifier,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
-                                            0.5f
-                                        )
+                                Text(
+                                    " " + BuildConfig.VERSION_NAME,
+                                    modifier = Modifier,
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                                    color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                        0.5f
                                     )
-                                    Text(
-                                        AUTHOR_NICKNAME,
-                                        modifier = Modifier,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
-                                            0.5f
-                                        )
-                                    )
-                                }
+                                )
                             }
                         }
                     }
 
-                    ItemCard(
+                    Spacer(
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(4.dp)
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null
-                            ) {
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(
+                        Modifier
+                            .padding(22.dp, 0.dp)
+                            .clickable {
                                 viewModel.setUri(CONSTELLATION_DATA_SOURCE_URL)
                                 viewModel.showDialog(DialogState.OpenLink)
-                                       },
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
-                        ),
-                    ) {
-                        Row {
-                            Box(
-                                modifier = Modifier
-                                    .size(72.dp)
-                                    .padding(12.dp)
-                                    .border(
-                                        1.dp,
-                                        SolidColor(viewModel.settings.colorScheme.outline),
-                                        RoundedCornerShape(16.dp)
-                                    )
-                            ) {
-                                Icon(
-                                    Icons.Outlined.Link,
-                                    modifier = Modifier.padding(12.dp),
-                                    contentDescription = null
-                                )
                             }
+                    )
+                    {
+                        Icon(
+                            Icons.Outlined.Link,
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(
+                            modifier = Modifier
+                                .align(CenterVertically)
+                        ) {
+                            Text(
+                                stringResource(R.string.data_source),
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat))
+                            )
+                            Text(
+                                SOURCE_SITE,
+                                modifier = Modifier,
+                                fontSize = 14.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat)),
+                                fontWeight = FontWeight.Bold,
+                                color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                    0.5f
+                                )
+                            )
 
-                            Column(modifier = Modifier.padding(top = 12.dp)) {
-                                Text(
-                                    stringResource(R.string.data_source),
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
-                                )
-                                Row(
-                                    modifier = Modifier.align(Start)
-                                ) {
-                                    Text(
-                                        SOURCE_SITE,
-                                        modifier = Modifier,
-                                        fontSize = 14.sp,
-                                        fontFamily = FontFamily(Font(R.font.montserrat)),
-                                        fontWeight = FontWeight.Bold,
-                                        color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
-                                            0.5f
-                                        )
-                                    )
-                                }
-                            }
                         }
                     }
 
-                    ItemCard(
+                    Spacer(
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(4.dp)
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource()},
-                                indication = null
-                            ) {
+                            .padding(8.dp, 16.dp)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                            .background(viewModel.settings.colorScheme.outline.copy(0.25f))
+                    )
+
+                    Row(Modifier
+                            .padding(22.dp, 0.dp)
+                            .clickable {
                                 viewModel.setUri(GITHUB_REPO_ISSUE_URL)
                                 viewModel.showDialog(DialogState.OpenLink)
-                              },
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        borderRadius = 16.dp,
-                        borderWidth = 1.dp,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            0.3f
-                        ),
-                    ) {
-                        Row {
-                            Box(
-                                modifier = Modifier
-                                    .size(72.dp)
-                                    .padding(12.dp)
-                                    .border(
-                                        1.dp,
-                                        SolidColor(viewModel.settings.colorScheme.outline),
-                                        RoundedCornerShape(16.dp)
-                                    )
-                            ) {
-                                Icon(
-                                    Icons.Outlined.QuestionMark,
-                                    modifier = Modifier.padding(12.dp),
-                                    contentDescription = null
-                                )
-                            }
+                            })
+                    {
+                        Icon(
+                            Icons.Outlined.BugReport,
+                            null,
+                            tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
+                            modifier = Modifier
+                                .align(CenterVertically)
+                                .size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Text(
+                            stringResource(R.string.error_report),
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(CenterVertically),
+                            fontSize = 16.sp,
+                            fontFamily = FontFamily(Font(R.font.montserrat))
+                        )
 
-                            Column(modifier = Modifier.padding(top = 12.dp)) {
+                    }
+
+                    Spacer(modifier = Modifier.size(16.dp))
+                }
+            }
+
+
+        }
+
+        item {
+
+            Spacer(modifier = Modifier.size(8.dp))
+
+            ItemCard(
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                borderRadius = 22.dp
+            ) {
+                Column {
+                    Spacer(modifier = Modifier.size(16.dp))
+                    Row(Modifier.padding(22.dp, 0.dp)) {
+                        Picture(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .border(
+                                    1.dp,
+                                    SolidColor(viewModel.settings.colorScheme.outline),
+                                    RoundedCornerShape(16.dp)
+                                )
+                                .align(CenterVertically),
+                            imageURL = AUTHOR_PICTURE_URL,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.size(12.dp))
+                        Column(Modifier.align(CenterVertically)) {
+                            Text(
+                                AUTHOR,
+                                textAlign = TextAlign.Start,
+                                modifier = Modifier.fillMaxWidth(),
+                                fontSize = 16.sp,
+                                fontFamily = FontFamily(Font(R.font.montserrat))
+                            )
+                            Row(
+                                modifier = Modifier.align(Start)
+                            ) {
                                 Text(
-                                    stringResource(R.string.error_report),
-                                    textAlign = TextAlign.Start,
-                                    modifier = Modifier.fillMaxWidth(),
-                                    fontSize = 16.sp,
-                                    fontFamily = FontFamily(Font(R.font.montserrat))
+                                    "Github ",
+                                    modifier = Modifier,
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                                    fontWeight = FontWeight.Bold,
+                                    color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                        0.5f
+                                    )
+                                )
+                                Text(
+                                    AUTHOR_NICKNAME,
+                                    modifier = Modifier,
+                                    fontSize = 14.sp,
+                                    fontFamily = FontFamily(Font(R.font.montserrat)),
+                                    color = viewModel.settings.colorScheme.onSecondaryContainer.copy(
+                                        0.5f
+                                    )
                                 )
                             }
                         }
                     }
-
+                    Spacer(modifier = Modifier.size(16.dp))
                 }
             }
+
+
         }
     }
+
     when (viewModel.dialogState) {
         is DialogState.OpenLink -> OpenLinkDialog(
             onDismiss = { viewModel.hideDialog() },
@@ -573,6 +662,7 @@ fun ProfileScreen(
                 viewModel.hideDialog()
             }
         )
+
         else -> {}
     }
 }

@@ -6,3 +6,10 @@ fun Int.toBoolean(): Boolean {
         else -> false
     }
 }
+
+fun Boolean.toInt(): Int {
+    return when(this) {
+        true -> 1
+        else -> 0
+    }
+}

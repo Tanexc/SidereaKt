@@ -15,8 +15,8 @@ android {
         minSdk = 24
         targetSdk = 34
         versionCode = 1
-        versionName = "1.3.4"
-        versionNameSuffix = "Cassiopeia"
+        versionName = "1.4.0"
+        versionNameSuffix = "Andromeda"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
