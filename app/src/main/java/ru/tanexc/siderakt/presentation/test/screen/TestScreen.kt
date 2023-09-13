@@ -21,8 +21,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -94,7 +94,7 @@ fun TestScreen(
                             )
                         }
                     } else {
-                        Modifier.shadowsPlus(type= ShadowsPlusType.SoftLayer, spread = 2.dp)
+                        Modifier.shadowsPlus(type = ShadowsPlusType.SoftLayer, spread = 2.dp)
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
                         containerColor = viewModel.settingsController.colorScheme.surfaceColorAtElevation(
@@ -112,12 +112,18 @@ fun TestScreen(
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { dialogState = DialogState.FinishTest }, modifier = Modifier.padding(8.dp)) {
-                            Icon(Icons.Outlined.ArrowBack, null)
+                        IconButton(
+                            onClick = { dialogState = DialogState.FinishTest },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Icon(Icons.AutoMirrored.Outlined.ArrowBack, null)
                         }
                     },
                     actions = {
-                        IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
+                        IconButton(
+                            onClick = { dialogState = DialogState.TestInfo },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
                             Icon(Icons.Outlined.Info, null)
                         }
                     }
@@ -160,7 +166,8 @@ fun TestScreen(
                 Box(
                     Modifier
                         .fillMaxSize()
-                        .weight(1f)) {
+                        .weight(1f)
+                ) {
                     ItemCard(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -168,7 +175,9 @@ fun TestScreen(
                             .padding(16.dp)
                             .align(Alignment.Center),
                         borderRadius = 16.dp,
-                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f)
+                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(
+                            if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
+                        )
                     ) {
 
                         Column(
@@ -188,7 +197,10 @@ fun TestScreen(
                             }
                             FilledTonalButton(onClick = { viewModel.endTest() }) {
                                 Row {
-                                    Text(stringResource(R.string.end_test), modifier = Modifier.align(CenterVertically))
+                                    Text(
+                                        stringResource(R.string.end_test),
+                                        modifier = Modifier.align(CenterVertically)
+                                    )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Icon(Icons.Filled.Check, null)
                                 }
@@ -202,25 +214,30 @@ fun TestScreen(
 
         }
 
-        is TestState.Ended -> TestResult(
-            modifier.fillMaxSize(),
-            answerGiven = viewModel.countOfAnswer,
-            items = viewModel.testData?: emptyList(),
-            cardColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f),
-            showInfoDialog = { dialogState = DialogState.TestInfo },
-            surfaceColor = viewModel.settingsController.colorScheme.surface,
-            onCloseTest = { viewModel.closeTest() }
+        is TestState.Ended -> Column(
+            Modifier
+                .zIndex(10f)
+                .fillMaxSize()) {
 
-        )
+            TestResult(
+                answerGiven = viewModel.countOfAnswer,
+                items = viewModel.testData ?: emptyList(),
+                cardColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f),
+                surfaceColor = viewModel.settingsController.colorScheme.surface,
+                onCloseTest = { viewModel.closeTest() }
+
+            )
+        }
 
     }
 
-    when(dialogState) {
+    when (dialogState) {
         is DialogState.TestInfo -> TestInfoDialog(onConfirm = { dialogState = null })
         is DialogState.FinishTest -> EndTestDialog(onDismiss = { dialogState = null }) {
             viewModel.endTest()
             dialogState = null
         }
+
         else -> {}
     }
 
