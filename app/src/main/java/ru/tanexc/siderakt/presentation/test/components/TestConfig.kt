@@ -86,9 +86,7 @@ fun TestConfig(
                     .fillMaxWidth()
                     .padding(16.dp),
                 borderColor = if (viewModel.settingsController.isOutlineElements()) viewModel.settingsController.colorScheme.outline else Color.Transparent,
-                backgroundColor = viewModel.settingsController.colorScheme.secondaryContainer.copy(
-                    0.3f
-                )
+                backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer
             ) {
                 Column(Modifier.padding(8.dp, 8.dp)) {
                     Row {
