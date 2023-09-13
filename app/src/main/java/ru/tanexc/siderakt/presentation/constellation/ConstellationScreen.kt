@@ -145,6 +145,7 @@ fun ConstellationScreen(
                                     ),
                                 imageURL = constellation.imageURL,
                                 contentDescription = "",
+                                imageCache = constellation.imageCache
                             )
                             FilledIconButton(
                                 onClick = { viewModel.changeImageCollapsedState() },

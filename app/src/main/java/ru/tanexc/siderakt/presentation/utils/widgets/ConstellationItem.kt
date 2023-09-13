@@ -62,6 +62,7 @@ fun ConstellationItem(
                 .height(height),
             imageURL = constellation.imageURL,
             contentDescription = "",
+            imageCache = constellation.imageCache
         )
         Box(modifier = Modifier
             .fillMaxSize()

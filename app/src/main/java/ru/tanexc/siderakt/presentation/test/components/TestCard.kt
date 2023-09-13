@@ -1,5 +1,7 @@
 package ru.tanexc.siderakt.presentation.test.components
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -46,6 +48,7 @@ import coil.compose.SubcomposeAsyncImageContent
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.domain.model.Constellation
 import ru.tanexc.siderakt.domain.model.TestItem
+import ru.tanexc.siderakt.presentation.utils.widgets.Picture
 
 
 @Composable
@@ -69,88 +72,24 @@ fun TestCard(
                 .fillMaxWidth()
         ) {
 
-            if (item.constellation.imageCache == null) {
-                SubcomposeAsyncImage(
-                    model = item.constellation.imageURL,
-                    contentDescription = null,
-                    modifier = if (isImageCollapsed) {
+            AnimatedContent(isImageCollapsed, label = "") { state ->
+                Picture(
+                    modifier = if (!state) {
                         Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(16.dp))
-                            .padding(8.dp)
-                            .height(256.dp)
                     } else {
                         Modifier
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(16.dp))
-                            .padding(8.dp)
-                    }
-                ) {
-
-                    when (painter.state) {
-                        is AsyncImagePainter.State.Loading ->
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                            ) {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .height(48.dp)
-                                )
-                            }
-
-                        is AsyncImagePainter.State.Success ->
-                            SubcomposeAsyncImageContent(
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .clip(RoundedCornerShape(16.dp)),
-                                contentScale = ContentScale.FillWidth
-                            )
-
-                        else ->
-                            Column(
-                                modifier = Modifier
-                                    .align(Alignment.Center),
-                                verticalArrangement = Arrangement.Center
-                            ) {
-                                Icon(
-                                    Icons.Default.Error,
-                                    null,
-                                    modifier = Modifier.align(CenterHorizontally)
-                                )
-                                Text(
-                                    text = stringResource(R.string.check_internet),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .align(CenterHorizontally)
-                                        .padding(4.dp),
-                                    textAlign = TextAlign.Center,
-                                    maxLines = 1
-                                )
-
-                            }
-                    }
-
-                }
-            } else {
-                Image(
-                    bitmap = item.constellation.imageCache.asImageBitmap(),
-                    contentDescription = null,
-                    modifier = if (isImageCollapsed) {
-                        Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp))
-                            .padding(8.dp)
                             .height(256.dp)
-                    } else {
-                        Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(16.dp))
-                            .padding(8.dp)
-                    }
+                    },
+                    imageURL = item.constellation.imageURL,
+                    imageCache = item.constellation.imageCache,
+                    contentDescription = null
                 )
             }
+
 
             FilledIconButton(
                 onClick = { isImageCollapsed = !isImageCollapsed },
