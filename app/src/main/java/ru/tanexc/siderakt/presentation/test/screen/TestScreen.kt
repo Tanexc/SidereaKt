@@ -46,9 +46,6 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
@@ -94,7 +91,7 @@ fun TestScreen(
                             )
                         }
                     } else {
-                        Modifier.shadow(elevation = 3.dp)
+                        Modifier.shadow(elevation = 6.dp)
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
                         containerColor = viewModel.settingsController.colorScheme.surfaceColorAtElevation(

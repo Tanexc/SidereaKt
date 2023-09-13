@@ -4,7 +4,6 @@ package ru.tanexc.siderakt.presentation.main.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,7 +23,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +33,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -57,7 +62,8 @@ fun NavHostScreen(
     modifier: Modifier = Modifier,
     startDestination: Screen,
     onScreenChanged: (screen: Screen) -> Unit,
-    colorScheme: ColorScheme
+    colorScheme: ColorScheme,
+    useOutlineBar: Boolean
 ) {
     val navController = rememberNavController(startDestination = startDestination)
 
@@ -74,12 +80,29 @@ fun NavHostScreen(
 
     Scaffold(modifier = modifier,
         topBar = {
-                when (selectedScreen) {
-                    Screen.Catalog -> {
+            when (selectedScreen) {
+                Screen.Catalog -> {
 
-                        CenterAlignedTopAppBar(title = {
-
-                            when(isSearchingMode) {
+                    CenterAlignedTopAppBar(
+                        modifier = if (useOutlineBar) {
+                            Modifier.drawWithContent {
+                                drawContent()
+                                drawRect(
+                                    colorScheme.outline,
+                                    topLeft = Offset(0f, this.size.height),
+                                    size = Size(this.size.width, density)
+                                )
+                            }
+                        } else {
+                            Modifier.shadow(elevation = 6.dp)
+                        },
+                        colors = TopAppBarDefaults.mediumTopAppBarColors(
+                            containerColor = colorScheme.surfaceColorAtElevation(
+                                1.dp
+                            )
+                        ),
+                        title = {
+                            when (isSearchingMode) {
                                 true -> BasicTextField(
                                     value = searchBarValue,
                                     onValueChange = {
@@ -92,7 +115,11 @@ fun NavHostScreen(
                                     maxLines = 1,
                                     singleLine = true,
                                     cursorBrush = SolidColor(contentColorFor(colorScheme.surface)),
-                                    textStyle = Typography.titleLarge.copy(color = contentColorFor(colorScheme.surface)),
+                                    textStyle = Typography.titleLarge.copy(
+                                        color = contentColorFor(
+                                            colorScheme.surface
+                                        ),
+                                    ),
                                     decorationBox = { innerTextField ->
                                         Row(
                                             modifier = Modifier
@@ -109,6 +136,7 @@ fun NavHostScreen(
                                         }
                                     }
                                 )
+
                                 else ->
                                     Text(
                                         stringResource(selectedScreen.label),
@@ -117,36 +145,65 @@ fun NavHostScreen(
                                     )
                             }
                         },
-                            actions = {
-                                if (isSearchingMode) IconButton(onClick = {
-                                    isSearchingMode = false
-                                    searchBarValue = ""
-                                }) { Icon(Icons.Outlined.Close, null) }
-                                else IconButton(onClick = { isSearchingMode = true }) {
-                                    Icon(Icons.Outlined.Search, null)
-                                }
+                        actions = {
+                            if (isSearchingMode) IconButton(onClick = {
+                                isSearchingMode = false
+                                searchBarValue = ""
+                            }) { Icon(Icons.Outlined.Close, null) }
+                            else IconButton(onClick = { isSearchingMode = true }) {
+                                Icon(Icons.Outlined.Search, null)
                             }
-                        )
-                    }
-
-                    else -> CenterAlignedTopAppBar(
-                        title = {
-                            Text(
-                                stringResource(selectedScreen.label),
-                                textAlign = TextAlign.Center,
-                                fontFamily = FontFamily(Font(R.font.montserrat))
-                            )
                         }
                     )
                 }
-            },
+
+                else -> CenterAlignedTopAppBar(
+                    modifier = if (useOutlineBar) {
+                        Modifier.drawWithContent {
+                            drawContent()
+                            drawRect(
+                                colorScheme.outline,
+                                topLeft = Offset(0f, this.size.height),
+                                size = Size(this.size.width, density)
+                            )
+                        }
+                    } else {
+                        Modifier.shadow(elevation = 6.dp)
+                    },
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(
+                        containerColor = colorScheme.surfaceColorAtElevation(
+                            1.dp
+                        )
+                    ),
+                    title = {
+                        Text(
+                            stringResource(selectedScreen.label),
+                            textAlign = TextAlign.Center,
+                            fontFamily = FontFamily(Font(R.font.montserrat))
+                        )
+                    }
+                )
+            }
+        },
         bottomBar = {
             AnimatedVisibility(
                 visible = bottomBarVisibility,
                 exit = ExitTransition.None,
                 enter = EnterTransition.None
             ) {
-                BottomAppBar(modifier) {
+                BottomAppBar(if (useOutlineBar) {
+                    Modifier.drawWithContent {
+                        drawContent()
+                        drawRect(
+                            colorScheme.outline,
+                            topLeft = Offset(0f, 0f),
+                            size = Size(this.size.width, density)
+                        )
+                    }
+                } else {
+                    Modifier.shadow(elevation = 6.dp)
+                },
+                    tonalElevation = 1.dp) {
                     screens.forEach {
                         NavigationBarItem(
                             selected = it.label == startDestination.label,

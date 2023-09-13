@@ -27,7 +27,7 @@ fun ItemCard(
             .border(
                 width = borderWidth,
                 shape = RoundedCornerShape(borderRadius),
-                brush = SolidColor(borderColor)
+                brush = if (borderWidth > 0.dp) SolidColor(borderColor) else SolidColor(Color.Transparent)
             )
             .background(backgroundColor, RoundedCornerShape(borderRadius))
     ) {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -25,12 +26,11 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -79,7 +79,11 @@ fun CatalogScreen(
                     val lazyListState: LazyListState = rememberLazyListState()
                     val coroutineScope = rememberCoroutineScope()
 
-                    LazyColumn(state = lazyListState) {
+                    LazyColumn(state = lazyListState, modifier = Modifier.padding(8.dp, 0.dp)) {
+
+                        item {
+                            Spacer(Modifier.size(16.dp))
+                        }
 
                         items(state.data?.filter {
                             it.title.lowercase().contains(viewModel.searchString)
@@ -93,10 +97,20 @@ fun CatalogScreen(
                                         0.7f
                                     }
                                 ),
-                                borderColor = viewModel.settings.colorScheme.outline
+                                borderColor = if (viewModel.settings.isOutlineElements()) {
+                                    viewModel.settings.colorScheme.outline
+                                } else {
+                                    Color.Transparent
+                                },
+                                borderWidth = if (viewModel.settings.isOutlineElements()) {
+                                    1.dp
+                                } else {
+                                    0.dp
+                                }
                             ) {
                                 viewModel.updateCurrentConstellation(it)
                             }
+                            Spacer(Modifier.size(8.dp))
                         }
                     }
                     AnimatedVisibility(

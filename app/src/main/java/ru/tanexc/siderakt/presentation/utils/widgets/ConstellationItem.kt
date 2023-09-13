@@ -38,7 +38,6 @@ fun ConstellationItem(
 ) {
     Box(
         modifier = modifier
-            .padding(4.dp)
             .border(
                 width = borderWidth,
                 shape = RoundedCornerShape(borderRadius),
