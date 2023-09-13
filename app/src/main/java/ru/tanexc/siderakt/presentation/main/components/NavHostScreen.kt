@@ -37,12 +37,18 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import com.gigamole.composeshadowsplus.common.ShadowsPlusType
+import com.gigamole.composeshadowsplus.common.shadowsPlus
+import com.gigamole.composeshadowsplus.softlayer.softLayerShadow
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.olshevski.navigation.reimagined.NavBackHandler
 import dev.olshevski.navigation.reimagined.NavHost
 import dev.olshevski.navigation.reimagined.navigate
@@ -78,6 +84,15 @@ fun NavHostScreen(
         Screen.Test
     )
 
+    val r = Color(0f, 0f, 0f, 0.3f)
+
+    val systemUIController = rememberSystemUiController()
+
+    systemUIController.setSystemBarsColor(
+        Color.Transparent,
+        isNavigationBarContrastEnforced = false
+    )
+
     Scaffold(modifier = modifier,
         topBar = {
             when (selectedScreen) {
@@ -94,7 +109,7 @@ fun NavHostScreen(
                                 )
                             }
                         } else {
-                            Modifier.shadow(elevation = 6.dp)
+                            Modifier.softLayerShadow(spread = 2.dp, offset = DpOffset(2.dp, 0.dp))
                         },
                         colors = TopAppBarDefaults.mediumTopAppBarColors(
                             containerColor = colorScheme.surfaceColorAtElevation(
@@ -168,7 +183,7 @@ fun NavHostScreen(
                             )
                         }
                     } else {
-                        Modifier.shadow(elevation = 6.dp)
+                        Modifier.softLayerShadow(spread = 2.dp, offset = DpOffset(2.dp, 0.dp))
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
                         containerColor = colorScheme.surfaceColorAtElevation(
@@ -201,7 +216,7 @@ fun NavHostScreen(
                         )
                     }
                 } else {
-                    Modifier.shadow(elevation = 6.dp)
+                    Modifier.softLayerShadow(spread = 2.dp, offset = DpOffset(2.dp, 0.dp))
                 },
                     tonalElevation = 1.dp) {
                     screens.forEach {

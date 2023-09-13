@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -40,7 +41,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -48,6 +48,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import com.gigamole.composeshadowsplus.common.ShadowsPlusType
+import com.gigamole.composeshadowsplus.common.shadowsPlus
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.core.util.state.DialogState
@@ -76,6 +78,7 @@ fun TestScreen(
                 .fillMaxSize()
                 .background(viewModel.settingsController.colorScheme.surface)
                 .zIndex(10f)
+                .navigationBarsPadding()
         ) {
 
             val testLazyListState = rememberLazyListState()
@@ -91,7 +94,7 @@ fun TestScreen(
                             )
                         }
                     } else {
-                        Modifier.shadow(elevation = 6.dp)
+                        Modifier.shadowsPlus(type= ShadowsPlusType.SoftLayer, spread = 2.dp)
                     },
                     colors = TopAppBarDefaults.mediumTopAppBarColors(
                         containerColor = viewModel.settingsController.colorScheme.surfaceColorAtElevation(
@@ -122,8 +125,7 @@ fun TestScreen(
                 Spacer(Modifier.size(16.dp))
                 LazyRow(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp, 0.dp),
+                        .fillMaxWidth(),
                     verticalAlignment = Alignment.Top,
                     flingBehavior = rememberSnapFlingBehavior(testLazyListState),
                     state = testLazyListState
@@ -134,8 +136,11 @@ fun TestScreen(
                             TestCard(
                                 modifier = Modifier
                                     .fillParentMaxWidth()
+                                    .padding(16.dp, 0.dp)
                                     .background(
-                                        viewModel.settingsController.colorScheme.tertiaryContainer,
+                                        viewModel.settingsController.colorScheme.tertiaryContainer.copy(
+                                            if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
+                                        ),
                                         RoundedCornerShape(16.dp)
                                     )
                                     .border(
@@ -163,7 +168,7 @@ fun TestScreen(
                             .padding(16.dp)
                             .align(Alignment.Center),
                         borderRadius = 16.dp,
-                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer
+                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f)
                     ) {
 
                         Column(
@@ -201,7 +206,7 @@ fun TestScreen(
             modifier.fillMaxSize(),
             answerGiven = viewModel.countOfAnswer,
             items = viewModel.testData?: emptyList(),
-            cardColor = viewModel.settingsController.colorScheme.tertiaryContainer,
+            cardColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f),
             showInfoDialog = { dialogState = DialogState.TestInfo },
             surfaceColor = viewModel.settingsController.colorScheme.surface,
             onCloseTest = { viewModel.closeTest() }

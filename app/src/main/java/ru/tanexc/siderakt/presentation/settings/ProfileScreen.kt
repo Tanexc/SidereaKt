@@ -95,7 +95,7 @@ fun ProfileScreen(
             )
 
             ItemCard(
-                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(if (!viewModel.settings.isThemeInDarkMode()) .6f else 1f),
                 borderRadius = 22.dp,
                 borderColor = if (viewModel.settings.isOutlineElements()) {
                     viewModel.settings.colorScheme.outline
@@ -237,7 +237,7 @@ fun ProfileScreen(
             )
 
             ItemCard(
-                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(if (!viewModel.settings.isThemeInDarkMode()) .6f else 1f),
                 borderRadius = 22.dp,
                 borderColor = if (viewModel.settings.isOutlineElements()) {
                     viewModel.settings.colorScheme.outline
@@ -290,7 +290,8 @@ fun ProfileScreen(
                                 for (theme in items) {
                                     SegmentedButton(
                                         selected = selectedTheme?.id == theme.id,
-                                        onClick = { selectedTheme = theme }
+                                        onClick = { selectedTheme = theme },
+                                        shape = RoundedCornerShape(0.dp)
                                     ) {
                                         Text(stringResource(theme.label))
                                     }
@@ -446,7 +447,7 @@ fun ProfileScreen(
             )
 
             ItemCard(
-                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(if (!viewModel.settings.isThemeInDarkMode()) .6f else 1f),
                 borderRadius = 22.dp,
                 borderColor = if (viewModel.settings.isOutlineElements()) {
                     viewModel.settings.colorScheme.outline
@@ -569,7 +570,8 @@ fun ProfileScreen(
                             .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
 
-                    Row(Modifier
+                    Row(
+                        Modifier
                             .padding(22.dp, 0.dp)
                             .clickable {
                                 viewModel.setUri(GITHUB_REPO_ISSUE_URL)
@@ -609,7 +611,7 @@ fun ProfileScreen(
             Spacer(modifier = Modifier.size(8.dp))
 
             ItemCard(
-                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
+                backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(if (!viewModel.settings.isThemeInDarkMode()) .6f else 1f),
                 borderRadius = 22.dp,
                 borderColor = if (viewModel.settings.isOutlineElements()) {
                     viewModel.settings.colorScheme.outline

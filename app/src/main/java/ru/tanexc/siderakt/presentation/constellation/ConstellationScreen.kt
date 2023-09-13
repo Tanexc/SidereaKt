@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.UnfoldLess
 import androidx.compose.material.icons.outlined.UnfoldMore
@@ -28,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
@@ -45,6 +47,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.gigamole.composeshadowsplus.common.ShadowsPlusType
+import com.gigamole.composeshadowsplus.common.shadowsPlus
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.domain.model.Constellation
@@ -84,7 +89,7 @@ fun ConstellationScreen(
                         )
                     }
                 } else {
-                    Modifier.shadow(elevation = 6.dp)
+                    Modifier.shadowsPlus(type = ShadowsPlusType.SoftLayer, spread = 2.dp)
                 }, colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = viewModel.settings.colorScheme.surfaceColorAtElevation(
                         1.dp
@@ -99,8 +104,11 @@ fun ConstellationScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = { onClose() }) {
-                        Icon(Icons.Outlined.ArrowBack, null)
+                    IconButton(onClick = {
+                        onClose()
+                    }
+                    ) {
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, null)
                     }
                 }
             )

@@ -86,7 +86,7 @@ fun TestConfig(
                     .fillMaxWidth()
                     .padding(16.dp),
                 borderColor = if (viewModel.settingsController.isOutlineElements()) viewModel.settingsController.colorScheme.outline else Color.Transparent,
-                backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer
+                backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f)
             ) {
                 Column(Modifier.padding(8.dp, 8.dp)) {
                     Row {
@@ -210,7 +210,8 @@ fun TestConfig(
                             for (state: TimerTimeState in listOf(TimerTimeState.Short, TimerTimeState.SemiShort, TimerTimeState.Medium, TimerTimeState.Large)) {
                                 SegmentedButton(
                                     selected = timeState == state,
-                                    onClick = { timeState = state }
+                                    onClick = { timeState = state },
+                                    shape = RoundedCornerShape(0.dp)
                                 ) {
                                     Text(text = "${state.time / 60} ${stringResource(R.string.minutes)}")
                                 }

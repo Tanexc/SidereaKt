@@ -17,16 +17,6 @@ fun SidereaApp(viewModel: MainViewModel) {
 
     val activity: Activity = LocalContext.current as Activity
 
-    val systemUIController = rememberSystemUiController()
-
-    systemUIController.setSystemBarsColor(
-        viewModel.settings.colorScheme.surfaceColorAtElevation(1.dp)
-    )
-
-    systemUIController.setNavigationBarColor(
-        viewModel.settings.colorScheme.surfaceColorAtElevation(1.dp)
-    )
-
     SidereaTheme(colorScheme = viewModel.settings.colorScheme) {
         NavHostScreen(
             useOutlineBar = viewModel.settings.isOutlineElements(),
