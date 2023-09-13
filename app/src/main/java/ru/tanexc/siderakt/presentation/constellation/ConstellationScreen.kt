@@ -1,12 +1,16 @@
 package ru.tanexc.siderakt.presentation.constellation
 
+import android.widget.Space
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,12 +30,22 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Alignment.Companion.TopEnd
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -43,7 +57,7 @@ import ru.tanexc.siderakt.presentation.ui.theme.Typography
 import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.Picture
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConstellationScreen(
     modifier: Modifier = Modifier,
@@ -53,12 +67,37 @@ fun ConstellationScreen(
 
     val viewModel: ConstellationViewModel = hiltViewModel()
 
+    val borderWidth = if (viewModel.settings.isOutlineElements()) {
+        1.dp
+    } else {
+        0.dp
+    }
+
     if (constellation != null) {
 
         Column(modifier) {
 
             CenterAlignedTopAppBar(
-                title = { constellation.title + "( " + constellation.lat + " )" },
+                modifier = if (viewModel.settings.isOutlineElements()) {
+                    Modifier.drawWithContent {
+                        drawContent()
+                        drawRect(
+                            viewModel.settings.colorScheme.outline,
+                            topLeft = Offset(0f, this.size.height),
+                            size = Size(this.size.width, density)
+                        )
+                    }
+                } else {
+                    Modifier.shadow(elevation = 12.dp)
+                },
+                title = {
+                    Text(
+                        constellation.title + " ( " + constellation.lat + " )",
+                        style = Typography.titleLarge,
+                        textAlign = TextAlign.Center,
+                        fontFamily = FontFamily(Font(R.font.montserrat))
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = { onClose() }) {
                         Icon(Icons.Outlined.ArrowBack, null)
@@ -66,8 +105,9 @@ fun ConstellationScreen(
                 }
             )
 
-            LazyColumn {
+            LazyColumn(Modifier.padding(8.dp, 0.dp)) {
                 item {
+                    Spacer(Modifier.size(16.dp))
                     AnimatedContent(
                         targetState = viewModel.isImageCollapsed,
                         label = ""
@@ -82,14 +122,19 @@ fun ConstellationScreen(
                                     Modifier
                                         .fillMaxWidth()
                                         .clip(RoundedCornerShape(16.dp))
-                                        .padding(6.dp)
                                 } else {
                                     Modifier
                                         .fillMaxWidth()
                                         .clip(RoundedCornerShape(16.dp))
-                                        .padding(6.dp)
                                         .height(256.dp)
-                                },
+                                }
+                                    .border(
+                                        width = borderWidth,
+                                        shape = RoundedCornerShape(16.dp),
+                                        brush = if (borderWidth > 0.dp) SolidColor(viewModel.settings.colorScheme.outline) else SolidColor(
+                                            Color.Transparent
+                                        )
+                                    ),
                                 imageURL = constellation.imageURL,
                                 contentDescription = "",
                             )
@@ -118,179 +163,203 @@ fun ConstellationScreen(
                         }
 
                     }
+                    Spacer(Modifier.size(4.dp))
+
                 }
 
                 item {
-                    Row(Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp)) {
+
+                    Row(
+                        Modifier
+                            .padding(0.dp, 4.dp)
+                            .height(intrinsicSize = IntrinsicSize.Max)
+                    ) {
+
                         ItemCard(
                             modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .height(128.dp)
-                                .padding(4.dp),
+                                .weight(0.5f)
+                                .fillMaxHeight(),
+                            borderWidth = borderWidth,
                             borderColor = viewModel.settings.colorScheme.outline,
                             backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                if (viewModel.settings.isThemeInDarkMode()) {
-                                    0.2f
-                                } else {
-                                    0f
-                                }
+                                0.3f
                             )
                         ) {
-                            Column(Modifier.fillMaxWidth()) {
+
+                            Column(
+                                Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(), horizontalAlignment = CenterHorizontally
+                            ) {
+
                                 Text(
                                     stringResource(R.string.ascent),
-                                    modifier = Modifier
-                                        .padding(top = 8.dp, bottom = 4.dp)
-                                        .fillMaxWidth(),
-                                    maxLines = 2,
                                     textAlign = TextAlign.Center,
-                                    lineHeight = 16.5.sp
+                                    style = Typography.bodyLarge.copy(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = FontFamily(Font(R.font.montserrat))
+                                    )
                                 )
-                                Box(Modifier.fillMaxSize()) {
-                                    Column(
-                                        Modifier
-                                            .wrapContentHeight()
-                                            .align(Center)
-                                    ) {
-                                        Text(
-                                            stringResource(R.string.from) + " " + constellation.ascent.split(
-                                                "/"
-                                            )[0],
-                                            modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp, bottom = 2.dp)
-                                        )
-                                        Text(
-                                            stringResource(R.string.to) + " " + constellation.ascent.split(
-                                                "/"
-                                            )[1],
-                                            modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(bottom = 8.dp, top = 2.dp)
-                                        )
-                                    }
-                                }
+
+                                Text(
+                                    stringResource(R.string.from) + " " + constellation.ascent.split(
+                                        "/"
+                                    )[0],
+                                    modifier = Modifier
+                                        .align(CenterHorizontally)
+                                        .padding(top = 4.dp, bottom = 2.dp)
+                                )
+                                Text(
+                                    stringResource(R.string.to) + " " + constellation.ascent.split(
+                                        "/"
+                                    )[1],
+                                    modifier = Modifier
+                                        .align(CenterHorizontally)
+                                        .padding(bottom = 8.dp, top = 2.dp)
+                                )
                             }
 
                         }
+
+                        Spacer(modifier = Modifier.size(8.dp))
+
                         ItemCard(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(128.dp)
-                                .padding(4.dp),
+                                .weight(0.5f)
+                                .fillMaxHeight(),
+                            borderWidth = borderWidth,
                             borderColor = viewModel.settings.colorScheme.outline,
                             backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                if (viewModel.settings.isThemeInDarkMode()) {
-                                    0.2f
-                                } else {
-                                    0f
-                                }
+                                0.3f
                             )
                         ) {
-                            Column(Modifier.fillMaxWidth()) {
+
+                            Column(
+                                Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(), horizontalAlignment = CenterHorizontally
+                            ) {
+
                                 Text(
                                     stringResource(R.string.declination),
-                                    modifier = Modifier
-                                        .basicMarquee()
-                                        .padding(top = 8.dp, bottom = 2.dp)
-                                        .align(CenterHorizontally),
-                                    maxLines = 1
+                                    textAlign = TextAlign.Center,
+                                    style = Typography.bodyLarge.copy(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = FontFamily(Font(R.font.montserrat))
+                                    )
                                 )
-                                Box(Modifier.fillMaxSize()) {
-                                    Column(
-                                        Modifier
-                                            .wrapContentHeight()
-                                            .align(Center)
-                                    ) {
-                                        Text(
-                                            stringResource(R.string.from) + " " + constellation.declination.split(
-                                                "/"
-                                            )[0],
-                                            modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(top = 4.dp, bottom = 2.dp)
-                                        )
-                                        Text(
-                                            stringResource(R.string.to) + " " + constellation.declination.split(
-                                                "/"
-                                            )[1],
-                                            modifier = Modifier
-                                                .align(CenterHorizontally)
-                                                .padding(bottom = 8.dp, top = 2.dp)
-                                        )
-                                    }
-                                }
 
+                                Text(
+                                    stringResource(R.string.from) + " " + constellation.declination.split(
+                                        "/"
+                                    )[0],
+                                    modifier = Modifier
+                                        .align(CenterHorizontally)
+                                        .padding(top = 4.dp, bottom = 2.dp)
+                                )
+                                Text(
+                                    stringResource(R.string.to) + " " + constellation.declination.split(
+                                        "/"
+                                    )[1],
+                                    modifier = Modifier
+                                        .align(CenterHorizontally)
+                                        .padding(bottom = 8.dp, top = 2.dp)
+                                )
                             }
 
                         }
 
                     }
+
                 }
 
                 item {
-                    Row(Modifier.padding(start = 2.dp, end = 2.dp, bottom = 2.dp)) {
+
+                    Row(
+                        Modifier
+                            .padding(0.dp, 4.dp)
+                            .height(intrinsicSize = IntrinsicSize.Max)
+                    ) {
 
                         ItemCard(
                             modifier = Modifier
-                                .fillMaxWidth(0.5f)
-                                .padding(4.dp),
+                                .weight(0.5f)
+                                .fillMaxHeight(),
+                            borderWidth = borderWidth,
                             borderColor = viewModel.settings.colorScheme.outline,
                             backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                if (viewModel.settings.isThemeInDarkMode()) {
-                                    0.2f
-                                } else {
-                                    0f
-                                }
+                                0.3f
                             )
                         ) {
 
-                            Column(Modifier.fillMaxWidth()) {
-                                Text(
-                                    stringResource(R.string.location),
-                                    modifier = Modifier
-                                        .padding(top = 8.dp, bottom = 4.dp)
-                                        .align(CenterHorizontally)
-                                )
-                                Text(
-                                    when (constellation.hemisphere) {
-                                        0 -> stringResource(R.string.equatorial)
-                                        1 -> stringResource(R.string.north_1)
-                                        else -> stringResource(R.string.south_1)
-                                    },
-                                    modifier = Modifier
-                                        .align(CenterHorizontally)
-                                        .padding(top = 4.dp, bottom = 8.dp)
-                                )
-                            }
+                            Column(
+                                Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(), horizontalAlignment = CenterHorizontally
+                            ) {
 
-                        }
-                        ItemCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(4.dp),
-                            borderColor = viewModel.settings.colorScheme.outline,
-                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                                if (viewModel.settings.isThemeInDarkMode()) {
-                                    0.2f
-                                } else {
-                                    0f
-                                }
-                            )
-                        ) {
-
-                            Column(Modifier.fillMaxWidth()) {
                                 Text(
                                     stringResource(R.string.alpha),
-                                    modifier = Modifier
-                                        .padding(top = 8.dp, bottom = 4.dp)
-                                        .align(CenterHorizontally)
+                                    textAlign = TextAlign.Center,
+                                    style = Typography.bodyLarge.copy(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = FontFamily(Font(R.font.montserrat))
+                                    )
                                 )
+
                                 Text(
                                     constellation.alphaStar,
                                     modifier = Modifier
                                         .align(CenterHorizontally)
-                                        .padding(top = 4.dp, bottom = 8.dp)
+                                        .padding(top = 4.dp, bottom = 2.dp)
+                                )
+                            }
+
+                        }
+
+
+
+                        Spacer(modifier = Modifier.size(8.dp))
+
+                        ItemCard(
+                            modifier = Modifier
+                                .weight(0.5f)
+                                .fillMaxHeight(),
+                            borderWidth = borderWidth,
+                            borderColor = viewModel.settings.colorScheme.outline,
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                                0.3f
+                            )
+                        ) {
+
+                            Column(
+                                Modifier
+                                    .padding(8.dp)
+                                    .fillMaxWidth(), horizontalAlignment = CenterHorizontally
+                            ) {
+
+                                Text(
+                                    stringResource(R.string.location),
+                                    textAlign = TextAlign.Center,
+                                    style = Typography.bodyLarge.copy(
+                                        fontSize = 18.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = FontFamily(Font(R.font.montserrat))
+                                    )
+                                )
+
+                                Text(
+                                    when (constellation.hemisphere) {
+                                        1 -> stringResource(R.string.north)
+                                        2 -> stringResource(R.string.south)
+                                        else -> stringResource(R.string.equatorial)
+                                    },
+                                    modifier = Modifier
+                                        .align(CenterHorizontally)
+                                        .padding(top = 4.dp, bottom = 2.dp)
                                 )
                             }
 
@@ -301,26 +370,37 @@ fun ConstellationScreen(
                 }
 
                 item {
-                    ItemCard(
-                        Modifier.padding(4.dp, 4.dp, 4.dp, 0.dp),
-                        borderColor = viewModel.settings.colorScheme.outline,
-                        backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
-                            if (viewModel.settings.isThemeInDarkMode()) {
-                                0.2f
-                            } else {
-                                0f
-                            }
-                        )
+
+                    Row(
+                        Modifier
+                            .padding(0.dp, 4.dp)
                     ) {
-                        Text(
-                            text = constellation.info,
-                            modifier = Modifier.padding(16.dp),
-                            textAlign = TextAlign.Justify,
-                            style = Typography.bodyLarge
-                        )
+
+                        ItemCard(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            borderWidth = borderWidth,
+                            borderColor = viewModel.settings.colorScheme.outline,
+                            backgroundColor = viewModel.settings.colorScheme.secondaryContainer.copy(
+                                0.3f
+                            )
+                        ) {
+
+                            Text(
+                                constellation.info,
+                                modifier = Modifier.padding(16.dp, 8.dp),
+                                textAlign = TextAlign.Justify,
+                                style = Typography.bodyLarge.copy(
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily(Font(R.font.montserrat))
+                                )
+                            )
+
+                        }
+
                     }
 
-                    Spacer(modifier = Modifier.size(16.dp))
                 }
 
             }
