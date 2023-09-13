@@ -150,8 +150,8 @@ fun TestScreen(
                                         RoundedCornerShape(16.dp)
                                     )
                                     .border(
-                                        0.dp,
-                                        SolidColor(Color.Transparent),
+                                        1.dp,
+                                        SolidColor(if (viewModel.settingsController.isOutlineElements()) { viewModel.settingsController.colorScheme.outline } else { Color.Transparent }),
                                         RoundedCornerShape(16.dp)
                                     ),
                                 item = it,
@@ -175,6 +175,7 @@ fun TestScreen(
                             .padding(16.dp)
                             .align(Alignment.Center),
                         borderRadius = 16.dp,
+                        borderColor = if (viewModel.settingsController.isOutlineElements()) { viewModel.settingsController.colorScheme.outline } else { Color.Transparent },
                         backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(
                             if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
                         )
@@ -195,7 +196,7 @@ fun TestScreen(
                                 )
                                 Text("${viewModel.countOfAnswer}")
                             }
-                            FilledTonalButton(onClick = { viewModel.endTest() }) {
+                            FilledTonalButton(onClick = { dialogState = DialogState.FinishTest }) {
                                 Row {
                                     Text(
                                         stringResource(R.string.end_test),
