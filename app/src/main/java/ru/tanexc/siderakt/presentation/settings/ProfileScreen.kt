@@ -3,6 +3,7 @@ package ru.tanexc.siderakt.presentation.settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Bookmark
+import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.BorderStyle
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.Check
@@ -56,6 +58,7 @@ import ru.tanexc.siderakt.core.util.AUTHOR
 import ru.tanexc.siderakt.core.util.AUTHOR_NICKNAME
 import ru.tanexc.siderakt.core.util.AUTHOR_PICTURE_URL
 import ru.tanexc.siderakt.core.util.CONSTELLATION_DATA_SOURCE_URL
+import ru.tanexc.siderakt.core.util.GITHUB_PROFILE_URL
 import ru.tanexc.siderakt.core.util.GITHUB_REPO_ISSUE_URL
 import ru.tanexc.siderakt.core.util.GITHUB_REPO_URL
 import ru.tanexc.siderakt.core.util.SOURCE_SITE
@@ -308,7 +311,14 @@ fun ProfileScreen(
                             .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
 
-                    Row(Modifier.padding(22.dp, 0.dp)) {
+                    Row(Modifier
+                        .padding(22.dp, 0.dp)
+                        .clickable(
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            },
+                            indication = null
+                        ) { viewModel.changeUseDarkTheme() }) {
                         Icon(
                             Icons.Outlined.DarkMode,
                             contentDescription = null,
@@ -350,7 +360,15 @@ fun ProfileScreen(
                             .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
 
-                    Row(Modifier.padding(22.dp, 0.dp)) {
+                    Row(
+                        Modifier
+                            .padding(22.dp, 0.dp)
+                            .clickable(
+                                interactionSource = remember {
+                                    MutableInteractionSource()
+                                },
+                                indication = null
+                            ) { viewModel.changeOutlineElemnts() }) {
                         Icon(
                             Icons.Outlined.BorderStyle,
                             null,
@@ -392,9 +410,17 @@ fun ProfileScreen(
                             .background(viewModel.settings.colorScheme.outline.copy(0.25f))
                     )
 
-                    Row(Modifier.padding(22.dp, 0.dp)) {
+                    Row(
+                        Modifier
+                            .padding(22.dp, 0.dp)
+                            .clickable(
+                                interactionSource = remember {
+                                    MutableInteractionSource()
+                                },
+                                indication = null
+                            ) { viewModel.changeMarkLearned() }) {
                         Icon(
-                            Icons.Outlined.Bookmark,
+                            if (viewModel.settings.isMarkLearned()) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder,
                             null,
                             tint = contentColorFor(viewModel.settings.colorScheme.tertiaryContainer),
                             modifier = Modifier.align(CenterVertically)
@@ -621,7 +647,10 @@ fun ProfileScreen(
             ) {
                 Column {
                     Spacer(modifier = Modifier.size(16.dp))
-                    Row(Modifier.padding(22.dp, 0.dp)) {
+                    Row(Modifier.padding(22.dp, 0.dp).clickable {
+                        viewModel.setUri(GITHUB_PROFILE_URL)
+                        viewModel.showDialog(DialogState.OpenLink)
+                    }) {
                         Picture(
                             modifier = Modifier
                                 .size(48.dp)
