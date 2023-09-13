@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.core.util.state.DialogState
 import ru.tanexc.siderakt.domain.model.Screen
@@ -39,8 +41,19 @@ fun SidereaApp(viewModel: MainViewModel) {
 
     val activity: Activity = LocalContext.current as Activity
 
+    val systemUIController = rememberSystemUiController()
+
+    systemUIController.setSystemBarsColor(
+        viewModel.settings.colorScheme.surfaceColorAtElevation(1.dp)
+    )
+
+    systemUIController.setNavigationBarColor(
+        viewModel.settings.colorScheme.surfaceColorAtElevation(1.dp)
+    )
+
     SidereaTheme(colorScheme = viewModel.settings.colorScheme) {
         NavHostScreen(
+            useOutlineBar = viewModel.settings.isOutlineElements(),
             startDestination = viewModel.currentScreen,
             onScreenChanged = { screen ->
                 viewModel.screenChanged(screen)
