@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.HorizontalRule
 import androidx.compose.material.icons.filled.Start
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Timer
+import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
@@ -43,6 +44,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -85,7 +87,7 @@ fun TestConfig(
                 Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                borderColor = viewModel.settingsController.colorScheme.outline,
+                borderColor = if (viewModel.settingsController.isOutlineElements()) viewModel.settingsController.colorScheme.outline else Color.Transparent,
                 backgroundColor = viewModel.settingsController.colorScheme.secondaryContainer.copy(
                     0.3f
                 )
@@ -224,16 +226,49 @@ fun TestConfig(
 
             Spacer(modifier = Modifier.size(24.dp))
 
-            OutlinedButton(
-                enabled = count != 0,
-                onClick = { viewModel.startTest(count, notLearned, north, south, equatorial, timeState.time) },
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            ) {
-                Text(stringResource(R.string.start), modifier = Modifier.padding(4.dp, 0.dp))
-                Icon(
-                    imageVector = Icons.Filled.Start,
-                    contentDescription = null
-                )
+            if (viewModel.settingsController.isOutlineElements()) {
+
+                OutlinedButton(
+                    enabled = count != 0,
+                    onClick = {
+                        viewModel.startTest(
+                            count,
+                            notLearned,
+                            north,
+                            south,
+                            equatorial,
+                            timeState.time
+                        )
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(stringResource(R.string.start), modifier = Modifier.padding(4.dp, 0.dp))
+                    Icon(
+                        imageVector = Icons.Filled.Start,
+                        contentDescription = null
+                    )
+                }
+            } else {
+                Button(
+                    enabled = count != 0,
+                    onClick = {
+                        viewModel.startTest(
+                            count,
+                            notLearned,
+                            north,
+                            south,
+                            equatorial,
+                            timeState.time
+                        )
+                    },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(stringResource(R.string.start), modifier = Modifier.padding(4.dp, 0.dp))
+                    Icon(
+                        imageVector = Icons.Filled.Start,
+                        contentDescription = null
+                    )
+                }
             }
         }
 

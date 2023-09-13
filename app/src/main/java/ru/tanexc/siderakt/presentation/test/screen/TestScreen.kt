@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -22,10 +23,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,9 +39,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
@@ -51,7 +63,7 @@ import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.EndTestDialog
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.TestInfoDialog
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun TestScreen(
     modifier: Modifier = Modifier
@@ -70,36 +82,51 @@ fun TestScreen(
         ) {
 
             val testLazyListState = rememberLazyListState()
-
-
-            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                .fillMaxWidth()
-                .zIndex(11f)) {
-                IconButton(onClick = { dialogState = DialogState.FinishTest }, modifier = Modifier.padding(8.dp)) {
-                    Icon(Icons.Outlined.ArrowBack, null)
-                }
-
-                if (viewModel.enableTimer) {
-                    Text(
-                        modifier = Modifier.align(CenterVertically),
-                        text = "${viewModel.timerTime / 60}".padStart(
-                            2,
-                            '0'
-                        ) + ":" + "${viewModel.timerTime % 60}".padStart(2, '0')
-                    )
-                }
-
-                IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
-                    Icon(Icons.Outlined.Info, null)
-                }
-            }
-
-
-
             Column(Modifier.fillMaxSize()) {
+                CenterAlignedTopAppBar(
+                    modifier = if (viewModel.settingsController.isOutlineElements()) {
+                        Modifier.drawWithContent {
+                            drawContent()
+                            drawRect(
+                                viewModel.settingsController.colorScheme.outline,
+                                topLeft = Offset(0f, this.size.height),
+                                size = Size(this.size.width, density)
+                            )
+                        }
+                    } else {
+                        Modifier.shadow(elevation = 3.dp)
+                    },
+                    colors = TopAppBarDefaults.mediumTopAppBarColors(
+                        containerColor = viewModel.settingsController.colorScheme.surfaceColorAtElevation(
+                            1.dp
+                        )
+                    ),
+                    title = {
+                        if (viewModel.enableTimer) {
+                            Text(
+                                text = "${viewModel.timerTime / 60}".padStart(
+                                    2,
+                                    '0'
+                                ) + ":" + "${viewModel.timerTime % 60}".padStart(2, '0')
+                            )
+                        }
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { dialogState = DialogState.FinishTest }, modifier = Modifier.padding(8.dp)) {
+                            Icon(Icons.Outlined.ArrowBack, null)
+                        }
+                    },
+                    actions = {
+                        IconButton(onClick = { dialogState = DialogState.TestInfo }, modifier = Modifier.padding(8.dp)) {
+                            Icon(Icons.Outlined.Info, null)
+                        }
+                    }
+                )
+                Spacer(Modifier.size(16.dp))
                 LazyRow(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(16.dp, 0.dp),
                     verticalAlignment = Alignment.Top,
                     flingBehavior = rememberSnapFlingBehavior(testLazyListState),
                     state = testLazyListState
@@ -110,7 +137,6 @@ fun TestScreen(
                             TestCard(
                                 modifier = Modifier
                                     .fillParentMaxWidth()
-                                    .padding(16.dp, 64.dp, 16.dp, 0.dp)
                                     .background(
                                         viewModel.settingsController.colorScheme.tertiaryContainer,
                                         RoundedCornerShape(16.dp)

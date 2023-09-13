@@ -177,7 +177,7 @@ fun TestCard(
 
         }
 
-        Spacer(modifier = Modifier.size(24.dp))
+        Spacer(modifier = Modifier.size(12.dp))
 
         for (it in item.answers) {
             Row(Modifier.padding(8.dp, 2.dp)) {
