@@ -21,14 +21,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.HorizontalRule
 import androidx.compose.material.icons.filled.Start
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MultiChoiceSegmentedButtonRow
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow

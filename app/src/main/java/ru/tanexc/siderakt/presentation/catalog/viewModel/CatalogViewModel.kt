@@ -1,9 +1,8 @@
 package ru.tanexc.siderakt.presentation.catalog.viewModel
 
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.decapitalize
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel

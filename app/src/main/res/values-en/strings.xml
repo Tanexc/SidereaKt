@@ -61,4 +61,5 @@
     <string name="use_border">Elements outline</string>
     <string name="main_color">Main color</string>
     <string name="mark_learned">Mark learned constellations</string>
+    <string name="enter_name">Enter title…</string>
 </resources>
