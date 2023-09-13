@@ -23,10 +23,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,10 +37,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -72,6 +77,8 @@ fun NavHostScreen(
     useOutlineBar: Boolean
 ) {
     val navController = rememberNavController(startDestination = startDestination)
+    val focusRequester = remember { FocusRequester() }
+    var showKeyboard: Boolean by remember { mutableStateOf(false) }
 
     var selectedScreen by remember { mutableStateOf(startDestination) }
     var searchBarValue by remember { mutableStateOf("") }
@@ -83,15 +90,16 @@ fun NavHostScreen(
         Screen.Catalog,
         Screen.Test
     )
-
-    val r = Color(0f, 0f, 0f, 0.3f)
-
     val systemUIController = rememberSystemUiController()
 
     systemUIController.setSystemBarsColor(
         Color.Transparent,
         isNavigationBarContrastEnforced = false
     )
+
+    LaunchedEffect(showKeyboard) {
+        if (showKeyboard) focusRequester.requestFocus()
+    }
 
     Scaffold(modifier = modifier,
         topBar = {
@@ -125,7 +133,8 @@ fun NavHostScreen(
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .height(48.dp),
+                                        .height(48.dp)
+                                        .focusRequester(focusRequester),
                                     enabled = true,
                                     maxLines = 1,
                                     singleLine = true,
@@ -164,8 +173,13 @@ fun NavHostScreen(
                             if (isSearchingMode) IconButton(onClick = {
                                 isSearchingMode = false
                                 searchBarValue = ""
+                                showKeyboard = false
                             }) { Icon(Icons.Outlined.Close, null) }
-                            else IconButton(onClick = { isSearchingMode = true }) {
+                            else IconButton(onClick = {
+                                isSearchingMode = true
+                                showKeyboard = true
+
+                            }) {
                                 Icon(Icons.Outlined.Search, null)
                             }
                         }

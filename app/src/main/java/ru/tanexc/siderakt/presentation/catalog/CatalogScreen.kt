@@ -106,7 +106,8 @@ fun CatalogScreen(
                                     1.dp
                                 } else {
                                     0.dp
-                                }
+                                },
+                                markLearned = viewModel.settings.isMarkLearned()
                             ) {
                                 viewModel.updateCurrentConstellation(it)
                             }
