@@ -35,7 +35,7 @@ android {
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
-                targetCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -59,8 +59,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
 
     // Coroutine Lifecycle Scopes
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.48")
@@ -68,16 +68,16 @@ dependencies {
 
     // Compose
     implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.ui:ui:1.6.0-alpha04")
-    implementation("androidx.compose.material3:material3:1.2.0-alpha06")
-    implementation("androidx.compose.material3:material3-window-size-class:1.2.0-alpha06")
-    implementation("androidx.compose.material:material-icons-core:1.6.0-alpha04")
-    implementation("androidx.compose.material:material-icons-extended:1.6.0-alpha04")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.compose.ui:ui:1.6.0-alpha05")
+    implementation("androidx.compose.material3:material3:1.2.0-alpha07")
+    implementation("androidx.compose.material3:material3-window-size-class:1.2.0-alpha07")
+    implementation("androidx.compose.material:material-icons-core:1.6.0-alpha05")
+    implementation("androidx.compose.material:material-icons-extended:1.6.0-alpha05")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     implementation("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha12")
-    implementation("androidx.compose.foundation:foundation:1.6.0-alpha04")
-    implementation("androidx.compose.ui:ui-util:1.6.0-alpha04")
-    implementation("androidx.compose.material:material:1.5.0")
+    implementation("androidx.compose.foundation:foundation:1.6.0-alpha05")
+    implementation("androidx.compose.ui:ui-util:1.6.0-alpha05")
+    implementation("androidx.compose.material:material:1.5.1")
 
     // Coil
     implementation("io.coil-kt:coil:2.3.0")
@@ -108,4 +108,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-placeholder-material:0.29.1-alpha")
     implementation("com.google.accompanist:accompanist-pager:0.29.1-alpha")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.29.1-alpha")
+
+    implementation("com.github.GIGAMOLE:ComposeShadowsPlus:1.0.2")
 }
