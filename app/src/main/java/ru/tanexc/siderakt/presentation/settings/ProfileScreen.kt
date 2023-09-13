@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
@@ -95,7 +96,12 @@ fun ProfileScreen(
 
             ItemCard(
                 backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
-                borderRadius = 22.dp
+                borderRadius = 22.dp,
+                borderColor = if (viewModel.settings.isOutlineElements()) {
+                    viewModel.settings.colorScheme.outline
+                } else {
+                    Color.Transparent
+                }
             ) {
                 Column {
                     Spacer(modifier = Modifier.size(16.dp))
@@ -232,7 +238,12 @@ fun ProfileScreen(
 
             ItemCard(
                 backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
-                borderRadius = 22.dp
+                borderRadius = 22.dp,
+                borderColor = if (viewModel.settings.isOutlineElements()) {
+                    viewModel.settings.colorScheme.outline
+                } else {
+                    Color.Transparent
+                }
             ) {
                 Column {
                     Spacer(modifier = Modifier.size(16.dp))
@@ -436,7 +447,12 @@ fun ProfileScreen(
 
             ItemCard(
                 backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
-                borderRadius = 22.dp
+                borderRadius = 22.dp,
+                borderColor = if (viewModel.settings.isOutlineElements()) {
+                    viewModel.settings.colorScheme.outline
+                } else {
+                    Color.Transparent
+                }
             ) {
                 Column {
                     Spacer(modifier = Modifier.size(16.dp))
@@ -594,7 +610,12 @@ fun ProfileScreen(
 
             ItemCard(
                 backgroundColor = viewModel.settings.colorScheme.tertiaryContainer.copy(0.6f),
-                borderRadius = 22.dp
+                borderRadius = 22.dp,
+                borderColor = if (viewModel.settings.isOutlineElements()) {
+                    viewModel.settings.colorScheme.outline
+                } else {
+                    Color.Transparent
+                }
             ) {
                 Column {
                     Spacer(modifier = Modifier.size(16.dp))
