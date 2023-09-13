@@ -102,6 +102,12 @@ dependencies {
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+
     // Accompanist
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.29.1-alpha")
     implementation("com.google.accompanist:accompanist-flowlayout:0.29.1-alpha")
@@ -109,5 +115,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.29.1-alpha")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.29.1-alpha")
 
+    // ComposeShadowPlus
     implementation("com.github.GIGAMOLE:ComposeShadowsPlus:1.0.2")
 }
