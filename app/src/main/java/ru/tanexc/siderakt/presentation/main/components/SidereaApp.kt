@@ -2,11 +2,8 @@ package ru.tanexc.siderakt.presentation.main.components
 
 import android.app.Activity
 import androidx.activity.compose.BackHandler
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import ru.tanexc.siderakt.core.util.state.DialogState
 import ru.tanexc.siderakt.presentation.main.viewModel.MainViewModel
 import ru.tanexc.siderakt.presentation.ui.theme.SidereaTheme

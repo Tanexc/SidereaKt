@@ -2,7 +2,6 @@ package ru.tanexc.siderakt.presentation.main.viewModel
 
 
 import android.graphics.BitmapFactory
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,7 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -24,7 +22,6 @@ import ru.tanexc.siderakt.domain.model.Screen
 import ru.tanexc.siderakt.domain.use_case.constellation_use_case.EditConstellationUseCase
 import ru.tanexc.siderakt.domain.use_case.constellation_use_case.GetAllConstellationsUseCase
 import ru.tanexc.siderakt.domain.use_case.personal_use_case.GetPersonalInfoUseCase
-import java.util.concurrent.RecursiveAction
 import javax.inject.Inject
 
 @HiltViewModel

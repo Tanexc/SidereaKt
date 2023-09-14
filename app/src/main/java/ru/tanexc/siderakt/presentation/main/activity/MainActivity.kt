@@ -1,4 +1,4 @@
-package ru.tanexc.siderakt.presentation.main
+package ru.tanexc.siderakt.presentation.main.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,16 +11,17 @@ import ru.tanexc.siderakt.presentation.main.viewModel.MainViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        val viewModel: MainViewModel by viewModels()
-
         setContent {
             actionBar?.hide()
-            SidereaApp(viewModel)
+            SidereaApp(mainViewModel)
         }
     }
 
