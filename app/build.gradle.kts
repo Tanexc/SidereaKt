@@ -14,7 +14,7 @@ android {
         applicationId = "ru.tanexc.siderakt"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.4.0"
         versionNameSuffix = "Andromeda"
 

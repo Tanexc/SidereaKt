@@ -2,8 +2,11 @@ package ru.tanexc.siderakt.presentation.utils.widgets
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,16 +14,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import ru.tanexc.siderakt.R
 
 @Composable
 fun Picture(
@@ -39,12 +46,11 @@ fun Picture(
                 is AsyncImagePainter.State.Loading ->
                     Box(
                         modifier = Modifier
-                            .align(Alignment.Center)
+                            .fillMaxSize()
                     ) {
                         CircularProgressIndicator(
                             modifier = Modifier
                                 .align(Alignment.Center)
-                                .fillMaxHeight()
                                 .padding(8.dp)
                         )
                     }
@@ -58,22 +64,28 @@ fun Picture(
                     )
 
                 else ->
-                    Box(
+                    Column(
                         modifier = Modifier
-                            .align(Alignment.Center)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly
                     ) {
                         Icon(
                             Icons.Default.Error,
                             null,
-                            modifier = Modifier.align(Alignment.Center)
                         )
+
+                        Text(stringResource(R.string.check_internet), textAlign = TextAlign.Center)
+
                     }
             }
         }
     } else {
 
         Image(
-            modifier = modifier.clip(RoundedCornerShape(16.dp)).fillMaxWidth(),
+            modifier = modifier
+                .clip(RoundedCornerShape(16.dp))
+                .fillMaxWidth(),
             bitmap = imageCache.asImageBitmap(),
             contentDescription = null,
             contentScale = ContentScale.FillWidth

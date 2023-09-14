@@ -3,6 +3,10 @@ package ru.tanexc.siderakt.presentation.test.screen
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.gestures.scrollBy
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +29,7 @@ import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -38,6 +43,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -48,9 +54,13 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewModelScope
 import com.gigamole.composeshadowsplus.common.ShadowsPlusType
 import com.gigamole.composeshadowsplus.common.shadowsPlus
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
 import dev.olshevski.navigation.reimagined.hilt.hiltViewModel
+import kotlinx.coroutines.launch
 import ru.tanexc.siderakt.R
 import ru.tanexc.siderakt.core.util.state.DialogState
 import ru.tanexc.siderakt.core.util.state.TestState
@@ -62,7 +72,10 @@ import ru.tanexc.siderakt.presentation.utils.widgets.ItemCard
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.EndTestDialog
 import ru.tanexc.siderakt.presentation.utils.widgets.dialogs.TestInfoDialog
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class,
+    ExperimentalPagerApi::class
+)
 @Composable
 fun TestScreen(
     modifier: Modifier = Modifier
@@ -81,7 +94,6 @@ fun TestScreen(
                 .navigationBarsPadding()
         ) {
 
-            val testLazyListState = rememberLazyListState()
             Column(Modifier.fillMaxSize()) {
                 CenterAlignedTopAppBar(
                     modifier = if (viewModel.settingsController.isOutlineElements()) {
@@ -129,88 +141,100 @@ fun TestScreen(
                     }
                 )
                 Spacer(Modifier.size(16.dp))
-                LazyRow(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.Top,
-                    flingBehavior = rememberSnapFlingBehavior(testLazyListState),
-                    state = testLazyListState
-                ) {
 
-                    viewModel.testData?.let { items ->
-                        items(items) {
-                            TestCard(
-                                modifier = Modifier
-                                    .fillParentMaxWidth()
-                                    .padding(16.dp, 0.dp)
-                                    .background(
-                                        viewModel.settingsController.colorScheme.tertiaryContainer.copy(
-                                            if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
-                                        ),
-                                        RoundedCornerShape(16.dp)
-                                    )
-                                    .border(
-                                        1.dp,
-                                        SolidColor(if (viewModel.settingsController.isOutlineElements()) { viewModel.settingsController.colorScheme.outline } else { Color.Transparent }),
-                                        RoundedCornerShape(16.dp)
-                                    ),
-                                item = it,
-                                setAnswer = { answer ->
-                                    viewModel.setItemAnswer(answer, items.indexOf(it))
-                                }
-                            )
-                        }
-                    }
-                }
-
-                Box(
-                    Modifier
-                        .fillMaxSize()
-                        .weight(1f)
-                ) {
-                    ItemCard(
+                viewModel.testData?.let { items ->
+                    HorizontalPager(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .fillMaxHeight()
-                            .padding(16.dp)
-                            .align(Alignment.Center),
-                        borderRadius = 16.dp,
-                        borderColor = if (viewModel.settingsController.isOutlineElements()) { viewModel.settingsController.colorScheme.outline } else { Color.Transparent },
-                        backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(
-                            if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
-                        )
-                    ) {
-
-                        Column(
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.Top,
+                        userScrollEnabled = true,
+                        count = viewModel.testData?.size ?: 0
+                    ) { n ->
+                        TestCard(
                             modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxHeight(),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row {
-                                Text(
-                                    stringResource(R.string.answers_given), modifier = Modifier
-                                        .fillMaxWidth()
-                                        .weight(1f)
+                                .fillMaxWidth()
+                                .padding(16.dp, 0.dp)
+                                .background(
+                                    viewModel.settingsController.colorScheme.tertiaryContainer.copy(
+                                        if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
+                                    ),
+                                    RoundedCornerShape(16.dp)
                                 )
-                                Text("${viewModel.countOfAnswer}")
+                                .border(
+                                    1.dp,
+                                    SolidColor(
+                                        if (viewModel.settingsController.isOutlineElements()) {
+                                            viewModel.settingsController.colorScheme.outline
+                                        } else {
+                                            Color.Transparent
+                                        }
+                                    ),
+                                    RoundedCornerShape(16.dp)
+                                ),
+                            item = items[n],
+                            setAnswer = { answer ->
+                                viewModel.setItemAnswer(answer, n)
                             }
-                            FilledTonalButton(onClick = { dialogState = DialogState.FinishTest }) {
+                        )
+                    }
+
+                    Box(
+                        Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                    ) {
+                        ItemCard(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(16.dp)
+                                .align(Alignment.Center),
+                            borderRadius = 16.dp,
+                            borderColor = if (viewModel.settingsController.isOutlineElements()) {
+                                viewModel.settingsController.colorScheme.outline
+                            } else {
+                                Color.Transparent
+                            },
+                            backgroundColor = viewModel.settingsController.colorScheme.tertiaryContainer.copy(
+                                if (!viewModel.settingsController.isThemeInDarkMode()) .6f else 1f
+                            )
+                        ) {
+
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxHeight(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.SpaceBetween
+                            ) {
                                 Row {
                                     Text(
-                                        stringResource(R.string.end_test),
-                                        modifier = Modifier.align(CenterVertically)
+                                        stringResource(R.string.answers_given), modifier = Modifier
+                                            .fillMaxWidth()
+                                            .weight(1f)
                                     )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Icon(Icons.Filled.Check, null)
+                                    Text("${viewModel.countOfAnswer}")
+                                }
+                                FilledTonalButton(onClick = { dialogState = DialogState.FinishTest }) {
+                                    Row {
+                                        Text(
+                                            stringResource(R.string.end_test),
+                                            modifier = Modifier.align(CenterVertically)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        Icon(Icons.Filled.Check, null)
+                                    }
                                 }
                             }
+
+
                         }
-
-
                     }
+                }?: Box(Modifier.fillMaxSize()) {
+                    CircularProgressIndicator(modifier = Modifier.align(Center))
                 }
+
+
             }
 
         }
@@ -218,7 +242,8 @@ fun TestScreen(
         is TestState.Ended -> Column(
             Modifier
                 .zIndex(10f)
-                .fillMaxSize()) {
+                .fillMaxSize()
+        ) {
 
             TestResult(
                 answerGiven = viewModel.countOfAnswer,

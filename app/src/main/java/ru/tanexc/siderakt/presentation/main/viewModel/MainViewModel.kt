@@ -18,6 +18,7 @@ import retrofit2.Retrofit
 import ru.tanexc.siderakt.core.util.state.DialogState
 import ru.tanexc.siderakt.core.util.state.State
 import ru.tanexc.siderakt.domain.interfaces.SettingsController
+import ru.tanexc.siderakt.domain.model.Constellation
 import ru.tanexc.siderakt.domain.model.Screen
 import ru.tanexc.siderakt.domain.use_case.constellation_use_case.EditConstellationUseCase
 import ru.tanexc.siderakt.domain.use_case.constellation_use_case.GetAllConstellationsUseCase
@@ -49,14 +50,13 @@ class MainViewModel @Inject constructor(
                 when (it) {
                     is State.Success -> {
                         for (item in it.data?: emptyList()) {
-                            viewModelScope.launch(Dispatchers.IO) {
-                                if (item.imageCache == null) {
-                                    val bytes = retrofit.callFactory()
-                                        .newCall(Request(item.imageURL.toHttpUrl()))
-                                        .execute().body.bytes()
+                            if (item.imageCache == null) {
+                                runCatching {
+                                    val bytes = retrofit.callFactory().newCall(Request(item.imageURL.toHttpUrl())).execute().body.bytes()
                                     val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                                     editConstellationUseCase(item.copy(imageCache = bitmap))
                                 }
+
                             }
                         }
                     }
