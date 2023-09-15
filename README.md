@@ -43,7 +43,7 @@
  
 # Download
 
-Latest release is <a href="https://github.com/Tanexc/TreeTask/releases/tag/1.4.0-Andromeda" target="_blank">Siderea: Andromeda 1.4.0</a>
+Latest release is <a href="https://github.com/Tanexc/SidereaKt/releases/tag/1.4.0-Andromeda" target="_blank">Siderea: Andromeda 1.4.0</a>
 
 You can download older versions <a href="https://github.com/Tanexc/TreeTask/releases" target="_blank">here</a>
 
