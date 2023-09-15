@@ -10,7 +10,7 @@
      <a href="https://github.com/tannec"><img alt="Profile" src="https://img.shields.io/badge/Github-Tannec-6495ed?logo=github&logoColor=white&style=for-the-badge"/></a>
      <br>
 </p>
-<h4 align="center">Interested in astronomy and constellations? Siderea is a lightweight application that allows you to explore constellations using user friendly Material You designed UI and modern android technology stack</h4>
+<h4 align="center">Interested in astronomy and constellations? Siderea is a lightweight application that allows you to explore constellations using user friendly Material You designed UI and modern android technology stack. Russian and english language supported</h4>
 <br>
 <img src="https://github.com/Tanexc/SidereaKt/assets/74925839/ce2fa9b3-76c1-4a14-88e1-d521da8d1dc4"/>
 
