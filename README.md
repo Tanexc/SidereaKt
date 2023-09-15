@@ -45,7 +45,7 @@
 
 Latest release is <a href="https://github.com/Tanexc/SidereaKt/releases/tag/1.4.0-Andromeda" target="_blank">Siderea: Andromeda 1.4.0</a>
 
-You can download older versions <a href="https://github.com/Tanexc/TreeTask/releases" target="_blank">here</a>
+You can download older versions <a href="https://github.com/Tanexc/SidereaKt/releases" target="_blank">here</a>
 
 If you are having problems launching a new version of the application, you should try clearing the app cache or reinstalling the application.
 
