@@ -9,13 +9,46 @@
      <img alt="Jetpack Compose" src="https://img.shields.io/static/v1?style=for-the-badge&message=Jetpack+Compose&color=4285F4&logo=Jetpack+Compose&logoColor=FFFFFF&label="/></a> 
      <a href="https://github.com/tannec"><img alt="Profile" src="https://img.shields.io/badge/Github-Tannec-6495ed?logo=github&logoColor=white&style=for-the-badge"/></a>
      <br>
-     <br>
 </p>
-
-<h4 align="center">Siderea is the app that allows you to explore constellations using friendly UI according Material You and modern android technology stack</h4>
-
-
+<h4 align="center">Interested in astronomy and constellations? Siderea is a lightweight application that allows you to explore constellations using user friendly Material You designed UI and modern android technology stack</h4>
+<br>
 <img src="https://github.com/Tanexc/SidereaKt/assets/74925839/ce2fa9b3-76c1-4a14-88e1-d521da8d1dc4"/>
+
+# Tech stack
+
+- [Kotlin](https://kotlinlang.org/) based 
+
+- [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for asynchronous work
+
+- [Flow](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/) to emit values from data layer reactively
+
+- [Accompanist](https://github.com/google/accompanist) to expand jetpack compose opportunities
+
+- [Hilt](https://dagger.dev/hilt/) for dependency injection
+
+- [Room](https://developer.android.com/training/data-storage/room/) to access to the database
+
+- [ComposeShadowsPlus](https://github.com/GIGAMOLE/ComposeShadowsPlus) to make custom shadows
+
+- [Retrofit](https://github.com/square/retrofit) to construct network requests
+
+- [Coil](https://github.com/coil-kt/coil) to load images.
+
+- [Compose Navigation Reimagined](https://github.com/olshevski/compose-navigation-reimagined) - high intelligence navigation library for Jetpack Compose
+
+- Architecture
+  - Repository Pattern
+  - Use cases
+  - MVVM
+ 
+# Download
+
+Latest release is <a href="https://github.com/Tanexc/TreeTask/releases/tag/1.4.0-Andromeda" target="_blank">Siderea: Andromeda 1.4.0</a>
+
+You can download older versions <a href="https://github.com/Tanexc/TreeTask/releases" target="_blank">here</a>
+
+If you are having problems launching a new version of the application, you should try clearing the app cache or reinstalling the application.
+
 
 # License
 ```xml
